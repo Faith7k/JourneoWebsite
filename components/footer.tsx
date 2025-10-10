@@ -2,38 +2,38 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 export function Footer() {
-  const t = useTranslations();
+  const t = useTranslations('footer');
   
   const footerLinks = {
     product: {
-      name: t('footer.product'),
+      name: t('product'),
       items: [
-        { label: t('footer.features'), href: '/features' },
-        { label: t('footer.pricing'), href: '/pricing' },
-        { label: t('footer.screenshots'), href: '/screenshots' },
+        { label: t('features'), href: '/features' },
+        { label: t('pricing'), href: '/pricing' },
+        { label: t('screenshots'), href: '/screenshots' },
       ]
     },
     company: {
-      name: t('footer.company'),
+      name: t('company'),
       items: [
-        { label: t('footer.contact'), href: '/contact' },
-        { label: t('footer.pressKit'), href: '/press-kit' },
-        { label: t('footer.changelog'), href: '/changelog' },
+        { label: t('contact'), href: '/contact' },
+        { label: t('pressKit'), href: '/press-kit' },
+        { label: t('changelog'), href: '/changelog' },
       ]
     },
     legal: {
-      name: t('footer.legal'),
+      name: t('legal'),
       items: [
-        { label: t('footer.privacy'), href: '/privacy' },
-        { label: t('footer.terms'), href: '/terms' },
-        { label: t('footer.eula'), href: '/eula' },
+        { label: t('privacy'), href: '/privacy' },
+        { label: t('terms'), href: '/terms' },
+        { label: t('eula'), href: '/eula' },
       ]
     },
     support: {
-      name: t('footer.support'),
+      name: t('support'),
       items: [
-        { label: t('footer.supportCenter'), href: '/support' },
-        { label: t('footer.dataDeletion'), href: '/support/data-deletion' },
+        { label: t('supportCenter'), href: '/support' },
+        { label: t('dataDeletion'), href: '/support/data-deletion' },
       ]
     },
   };
@@ -61,7 +61,7 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-12 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>{t('footer.rights')}</p>
+          <p>{t('rights')}</p>
         </div>
       </div>
     </footer>
