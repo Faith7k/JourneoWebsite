@@ -142,22 +142,34 @@ export default function AdminPage() {
     setUploadStatus('uploading');
     
     try {
-      // Simulate upload process
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Create a preview URL for the uploaded file
+      const reader = new FileReader();
       
-      const newSrc = `/images/screenshot-${screenshotId || Date.now()}.png`;
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        
+        if (screenshotId) {
+          setScreenshots(prev => prev.map(s => 
+            s.id === screenshotId ? { ...s, src: result } : s
+          ));
+        } else {
+          setNewScreenshot(prev => ({ ...prev, src: result }));
+        }
+        
+        setUploadStatus('success');
+        setTimeout(() => setUploadStatus('idle'), 3000);
+      };
       
-      if (screenshotId) {
-        setScreenshots(prev => prev.map(s => 
-          s.id === screenshotId ? { ...s, src: newSrc } : s
-        ));
-      } else {
-        setNewScreenshot(prev => ({ ...prev, src: newSrc }));
-      }
+      reader.onerror = () => {
+        setUploadStatus('error');
+        setTimeout(() => setUploadStatus('idle'), 3000);
+      };
       
-      setUploadStatus('success');
-      setTimeout(() => setUploadStatus('idle'), 3000);
+      // Read the file as data URL for preview
+      reader.readAsDataURL(file);
+      
     } catch (error) {
+      console.error('Upload error:', error);
       setUploadStatus('error');
       setTimeout(() => setUploadStatus('idle'), 3000);
     }
@@ -459,11 +471,19 @@ export default function AdminPage() {
                   
                   <CardContent>
                     {/* Preview */}
-                    <div className="aspect-[9/19] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl mb-4 flex items-center justify-center">
-                      <div className="text-center text-white">
-                        <div className="text-4xl mb-2">📱</div>
-                        <div className="text-sm">{screenshot.alt}</div>
-                      </div>
+                    <div className="aspect-[9/19] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl mb-4 flex items-center justify-center overflow-hidden">
+                      {screenshot.src && screenshot.src.startsWith('data:') ? (
+                        <img 
+                          src={screenshot.src} 
+                          alt={screenshot.alt}
+                          className="w-full h-full object-cover rounded-2xl"
+                        />
+                      ) : (
+                        <div className="text-center text-white">
+                          <div className="text-4xl mb-2">📱</div>
+                          <div className="text-sm">{screenshot.alt}</div>
+                        </div>
+                      )}
                     </div>
                     
                     {/* Edit Form */}
@@ -486,6 +506,18 @@ export default function AdminPage() {
                               s.id === screenshot.id ? { ...s, description: e.target.value } : s
                             ))}
                             rows={2}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Upload New Image</Label>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) handleImageUpload(file, screenshot.id);
+                            }}
+                            className="w-full p-2 border rounded-lg"
                           />
                         </div>
                         <div className="flex gap-2">
