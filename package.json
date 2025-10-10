@@ -1,0 +1,59 @@
+{
+  "name": "journeo-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Journeo - AI Destekli Seyahat Rehberi Web Sitesi",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "echo 'Skipping contentlayer build'",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "clean": "rm -rf .next node_modules",
+    "sitemap": "next-sitemap"
+  },
+  "dependencies": {
+    "@emotion/is-prop-valid": "^1.4.0",
+    "@radix-ui/react-accordion": "^1.2.1",
+    "@radix-ui/react-avatar": "^1.1.1",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-dropdown-menu": "^2.1.2",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-select": "^2.1.2",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.1",
+    "@radix-ui/react-toast": "^1.2.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "contentlayer2": "^0.5.0",
+    "firebase": "^10.14.0",
+    "framer-motion": "^11.11.0",
+    "lucide-react": "^0.451.0",
+    "next": "^15.0.0",
+    "next-contentlayer2": "^0.5.0",
+    "next-intl": "^3.23.0",
+    "next-seo": "^6.6.0",
+    "next-sitemap": "^4.2.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.53.0",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.6.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

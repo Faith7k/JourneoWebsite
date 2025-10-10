@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "features": "Özellikler",
+    "pricing": "Fiyatlandırma",
+    "screenshots": "Ekran Görüntüleri",
+    "support": "Destek",
+    "contact": "İletişim"
+  },
+  "hero": {
+    "title": "Journeo",
+    "subtitle": "Yapay Zekâ Destekli Kişisel Seyahat Rehberin",
+    "description": "Seyahatlerinizi planlamaktan keşfetmeye, her anını unutulmaz kılmak için yapay zeka gücüyle tasarlanmış akıllı seyahat asistanınız.",
+    "cta": {
+      "appStore": "App Store'dan İndir",
+      "playStore": "Google Play'den İndir"
+    }
+  },
+  "features": {
+    "title": "Güçlü Özellikler",
+    "subtitle": "Seyahatinizi kolaylaştıran akıllı araçlar",
+    "aiRoute": {
+      "title": "AI Rota Planlama",
+      "description": "Yapay zeka destekli akıllı rota önerileri ile zamanınızı en verimli şekilde kullanın."
+    },
+    "interactiveMap": {
+      "title": "İnteraktif Harita",
+      "description": "Gerçek zamanlı harita üzerinde gezilecek yerleri keşfedin ve rotanızı planlayın."
+    },
+    "ttsGuide": {
+      "title": "Sesli Rehber (TTS)",
+      "description": "Elleriniz serbest kalırken sesli rehberlik ile yolunuzu bulun."
+    },
+    "smartSuitcase": {
+      "title": "Akıllı Bavul",
+      "description": "Seyahatiniz için neye ihtiyacınız olduğunu yapay zeka ile organize edin."
+    },
+    "weather": {
+      "title": "Hava Durumu",
+      "description": "Hedef noktanızın anlık hava durumunu öğrenin ve hazırlıklı olun."
+    },
+    "sharing": {
+      "title": "Paylaşım",
+      "description": "Seyahat deneyimlerinizi arkadaşlarınız ve ailenizle paylaşın."
+    },
+    "expenses": {
+      "title": "Harcama Takibi",
+      "description": "Seyahat bütçenizi kolayca takip edin ve raporlayın."
+    },
+    "trips": {
+      "title": "Seyahat Yönetimi",
+      "description": "Geçmiş ve gelecek seyahatlerinizi tek yerden yönetin."
+    }
+  },
+  "pricing": {
+    "title": "Basit ve Şeffaf Fiyatlandırma",
+    "subtitle": "Size uygun planı seçin",
+    "free": {
+      "title": "Ücretsiz",
+      "price": "$0",
+      "period": "Süresiz",
+      "features": [
+        "Temel harita özellikleri",
+        "Sınırlı AI önerileri",
+        "Hava durumu bilgisi",
+        "Temel bavul listesi"
+      ],
+      "cta": "Başlayın"
+    },
+    "monthly": {
+      "title": "Aylık Premium",
+      "price": "$9.99",
+      "period": "Ay",
+      "features": [
+        "Tüm ücretsiz özellikler",
+        "Sınırsız AI rota planlama",
+        "Sesli rehberlik (TTS)",
+        "Harcama takibi",
+        "Seyahat paylaşımı",
+        "Öncelikli destek"
+      ],
+      "cta": "Hemen Abone Ol",
+      "popular": true
+    },
+    "yearly": {
+      "title": "Yıllık Premium",
+      "price": "$35.00",
+      "period": "Yıl",
+      "save": "%70 tasarruf",
+      "features": [
+        "Tüm aylık özellikler",
+        "En uygun fiyat",
+        "Yıllık faturalandırma",
+        "İstediğiniz zaman iptal"
+      ],
+      "cta": "Yıllık Abone Ol"
+    },
+    "faq": {
+      "title": "Sık Sorulan Sorular",
+      "cancel": {
+        "question": "Aboneliğimi nasıl iptal edebilirim?",
+        "answer": "iOS için App Store ayarlarından, Android için Google Play ayarlarından aboneliğinizi istediğiniz zaman iptal edebilirsiniz. İptal işlemi sonrası mevcut dönem sonuna kadar premium özelliklerden yararlanmaya devam edersiniz."
+      },
+      "refund": {
+        "question": "İade politikanız nedir?",
+        "answer": "Apple ve Google'ın iade politikaları geçerlidir. Satın alma işleminden sonraki ilk 14 gün içinde platform üzerinden iade talebinde bulunabilirsiniz."
+      }
+    }
+  },
+  "footer": {
+    "company": "Şirket",
+    "product": "Ürün",
+    "legal": "Yasal",
+    "support": "Destek",
+    "terms": "Kullanım Koşulları",
+    "privacy": "Gizlilik Politikası",
+    "eula": "Son Kullanıcı Lisans Sözleşmesi",
+    "dataDeletion": "Veri Silme",
+    "pressKit": "Basın Kiti",
+    "changelog": "Değişiklik Günlüğü",
+    "rights": "© 2025 Journeo. Tüm hakları saklıdır."
+  },
+  "contact": {
+    "title": "İletişim",
+    "subtitle": "Size nasıl yardımcı olabiliriz?",
+    "name": "Adınız",
+    "email": "E-posta Adresiniz",
+    "message": "Mesajınız",
+    "send": "Gönder",
+    "sending": "Gönderiliyor...",
+    "success": "Mesajınız başarıyla gönderildi!",
+    "error": "Bir hata oluştu. Lütfen tekrar deneyin."
+  },
+  "support": {
+    "title": "Destek Merkezi",
+    "subtitle": "Size yardımcı olmak için buradayız",
+    "faq": "Sık Sorulan Sorular",
+    "contactUs": "Bize Ulaşın",
+    "dataDeletion": {
+      "title": "Hesap ve Veri Silme",
+      "description": "Hesabınızı ve verilerinizi kalıcı olarak silmek için aşağıdaki adımları takip edebilirsiniz."
+    }
+  }
+}
+

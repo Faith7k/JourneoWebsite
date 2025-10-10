@@ -1,0 +1,12 @@
+{
+  "versions": [
+    {
+      "id": "1",
+      "timestamp": "2025-01-10T00:00:00.000Z",
+      "author": "admin@journeo.ai",
+      "changes": "Initial content creation",
+      "pages": ["hero", "features", "pricing", "privacy", "terms", "eula"]
+    }
+  ]
+}
+

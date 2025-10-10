@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "screenshots": "Screenshots",
+    "support": "Support",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Journeo",
+    "subtitle": "Your AI-Powered Personal Travel Guide",
+    "description": "From planning your trips to exploring, your intelligent travel assistant designed with the power of artificial intelligence to make every moment unforgettable.",
+    "cta": {
+      "appStore": "Download on the App Store",
+      "playStore": "Get it on Google Play"
+    }
+  },
+  "features": {
+    "title": "Powerful Features",
+    "subtitle": "Smart tools to make your travel easier",
+    "aiRoute": {
+      "title": "AI Route Planning",
+      "description": "Use your time most efficiently with AI-powered smart route suggestions."
+    },
+    "interactiveMap": {
+      "title": "Interactive Map",
+      "description": "Discover places to visit on a real-time map and plan your route."
+    },
+    "ttsGuide": {
+      "title": "Voice Guide (TTS)",
+      "description": "Find your way with voice guidance while keeping your hands free."
+    },
+    "smartSuitcase": {
+      "title": "Smart Suitcase",
+      "description": "Organize what you need for your trip with artificial intelligence."
+    },
+    "weather": {
+      "title": "Weather Forecast",
+      "description": "Learn the current weather at your destination and be prepared."
+    },
+    "sharing": {
+      "title": "Sharing",
+      "description": "Share your travel experiences with friends and family."
+    },
+    "expenses": {
+      "title": "Expense Tracking",
+      "description": "Easily track and report your travel budget."
+    },
+    "trips": {
+      "title": "Trip Management",
+      "description": "Manage your past and future trips from one place."
+    }
+  },
+  "pricing": {
+    "title": "Simple and Transparent Pricing",
+    "subtitle": "Choose the plan that suits you",
+    "free": {
+      "title": "Free",
+      "price": "$0",
+      "period": "Forever",
+      "features": [
+        "Basic map features",
+        "Limited AI suggestions",
+        "Weather information",
+        "Basic packing list"
+      ],
+      "cta": "Get Started"
+    },
+    "monthly": {
+      "title": "Monthly Premium",
+      "price": "$9.99",
+      "period": "Month",
+      "features": [
+        "All free features",
+        "Unlimited AI route planning",
+        "Voice guidance (TTS)",
+        "Expense tracking",
+        "Travel sharing",
+        "Priority support"
+      ],
+      "cta": "Subscribe Now",
+      "popular": true
+    },
+    "yearly": {
+      "title": "Yearly Premium",
+      "price": "$35.00",
+      "period": "Year",
+      "save": "Save 70%",
+      "features": [
+        "All monthly features",
+        "Best value",
+        "Annual billing",
+        "Cancel anytime"
+      ],
+      "cta": "Subscribe Yearly"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "cancel": {
+        "question": "How can I cancel my subscription?",
+        "answer": "You can cancel your subscription anytime from App Store settings for iOS or Google Play settings for Android. After cancellation, you will continue to enjoy premium features until the end of the current period."
+      },
+      "refund": {
+        "question": "What is your refund policy?",
+        "answer": "Apple and Google's refund policies apply. You can request a refund through the platform within the first 14 days after purchase."
+      }
+    }
+  },
+  "footer": {
+    "company": "Company",
+    "product": "Product",
+    "legal": "Legal",
+    "support": "Support",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "eula": "End User License Agreement",
+    "dataDeletion": "Data Deletion",
+    "pressKit": "Press Kit",
+    "changelog": "Changelog",
+    "rights": "© 2025 Journeo. All rights reserved."
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "How can we help you?",
+    "name": "Your Name",
+    "email": "Your Email",
+    "message": "Your Message",
+    "send": "Send",
+    "sending": "Sending...",
+    "success": "Your message has been sent successfully!",
+    "error": "An error occurred. Please try again."
+  },
+  "support": {
+    "title": "Support Center",
+    "subtitle": "We're here to help you",
+    "faq": "Frequently Asked Questions",
+    "contactUs": "Contact Us",
+    "dataDeletion": {
+      "title": "Account and Data Deletion",
+      "description": "You can follow the steps below to permanently delete your account and data."
+    }
+  }
+}
+
