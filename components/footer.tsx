@@ -1,36 +1,39 @@
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export function Footer() {
+  const t = useTranslations('footer');
+  
   const footerLinks = {
     product: {
-      name: 'Ürün',
+      name: t('product'),
       items: [
-        { label: 'Özellikler', href: '/features' },
-        { label: 'Fiyatlandırma', href: '/pricing' },
-        { label: 'Ekran Görüntüleri', href: '/screenshots' },
+        { label: t('features'), href: '/features' },
+        { label: t('pricing'), href: '/pricing' },
+        { label: t('screenshots'), href: '/screenshots' },
       ]
     },
     company: {
-      name: 'Şirket',
+      name: t('company'),
       items: [
-        { label: 'İletişim', href: '/contact' },
-        { label: 'Basın Kiti', href: '/press-kit' },
-        { label: 'Değişiklik Günlüğü', href: '/changelog' },
+        { label: t('contact'), href: '/contact' },
+        { label: t('pressKit'), href: '/press-kit' },
+        { label: t('changelog'), href: '/changelog' },
       ]
     },
     legal: {
-      name: 'Yasal',
+      name: t('legal'),
       items: [
-        { label: 'Gizlilik Politikası', href: '/privacy' },
-        { label: 'Kullanım Koşulları', href: '/terms' },
-        { label: 'EULA', href: '/eula' },
+        { label: t('privacy'), href: '/privacy' },
+        { label: t('terms'), href: '/terms' },
+        { label: t('eula'), href: '/eula' },
       ]
     },
     support: {
-      name: 'Destek',
+      name: t('support'),
       items: [
-        { label: 'Destek Merkezi', href: '/support' },
-        { label: 'Veri Silme', href: '/support/data-deletion' },
+        { label: t('supportCenter'), href: '/support' },
+        { label: t('dataDeletion'), href: '/support/data-deletion' },
       ]
     },
   };
@@ -58,7 +61,7 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-12 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>© 2025 Journeo. Tüm hakları saklıdır.</p>
+          <p>{t('rights')}</p>
         </div>
       </div>
     </footer>

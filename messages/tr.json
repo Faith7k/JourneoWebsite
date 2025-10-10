@@ -112,12 +112,17 @@
     "product": "Ürün",
     "legal": "Yasal",
     "support": "Destek",
+    "features": "Özellikler",
+    "pricing": "Fiyatlandırma",
+    "screenshots": "Ekran Görüntüleri",
+    "contact": "İletişim",
     "terms": "Kullanım Koşulları",
     "privacy": "Gizlilik Politikası",
     "eula": "Son Kullanıcı Lisans Sözleşmesi",
     "dataDeletion": "Veri Silme",
     "pressKit": "Basın Kiti",
     "changelog": "Değişiklik Günlüğü",
+    "supportCenter": "Destek Merkezi",
     "rights": "© 2025 Journeo. Tüm hakları saklıdır."
   },
   "contact": {
