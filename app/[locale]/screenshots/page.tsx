@@ -3,70 +3,108 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Smartphone, MapPin, Route, Calendar, Wallet, Briefcase, Settings, Plus } from 'lucide-react';
 
+interface Screenshot {
+  id: number;
+  title: string;
+  description: string;
+  alt: string;
+  src: string;
+  icon: string;
+  color: string;
+}
+
 export default function ScreenshotsPage() {
   const [selectedScreenshot, setSelectedScreenshot] = useState<number | null>(null);
-  
-  // Enhanced screenshots with more details
-  const screenshots = [
-    { 
-      id: 1, 
-      alt: 'Main Screen', 
-      src: '/images/screenshot-1.png',
-      title: 'Welcome Dashboard',
-      description: 'Your personal travel hub with AI-powered insights',
-      icon: Smartphone,
-      color: 'from-blue-500 to-cyan-500'
-    },
-    { 
-      id: 2, 
-      alt: 'Map View', 
-      src: '/images/screenshot-2.png',
-      title: 'Interactive Map',
-      description: 'Real-time navigation with smart route suggestions',
-      icon: MapPin,
-      color: 'from-green-500 to-emerald-500'
-    },
-    { 
-      id: 3, 
-      alt: 'Route Planning', 
-      src: '/images/screenshot-3.png',
-      title: 'AI Route Planning',
-      description: 'Intelligent route optimization for your journey',
-      icon: Route,
-      color: 'from-purple-500 to-pink-500'
-    },
-    { 
-      id: 4, 
-      alt: 'Travel Details', 
-      src: '/images/screenshot-4.png',
-      title: 'Trip Management',
-      description: 'Organize and track your travel experiences',
-      icon: Calendar,
-      color: 'from-orange-500 to-red-500'
-    },
-    { 
-      id: 5, 
-      alt: 'Smart Suitcase', 
-      src: '/images/screenshot-5.png',
-      title: 'Smart Packing',
-      description: 'AI-powered packing suggestions for your trip',
-      icon: Briefcase,
-      color: 'from-indigo-500 to-blue-500'
-    },
-    { 
-      id: 6, 
-      alt: 'Expenses', 
-      src: '/images/screenshot-6.png',
-      title: 'Expense Tracking',
-      description: 'Keep track of your travel budget effortlessly',
-      icon: Wallet,
-      color: 'from-teal-500 to-green-500'
-    },
-  ];
+  const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Icon mapping
+  const iconMap = {
+    'Smartphone': Smartphone,
+    'MapPin': MapPin,
+    'Route': Route,
+    'Calendar': Calendar,
+    'Wallet': Wallet,
+    'Briefcase': Briefcase,
+  };
+
+  // Fetch screenshots from API
+  useEffect(() => {
+    const fetchScreenshots = async () => {
+      try {
+        const response = await fetch('/api/screenshots');
+        const data = await response.json();
+        setScreenshots(data);
+      } catch (error) {
+        console.error('Error fetching screenshots:', error);
+        // Fallback to default screenshots
+        setScreenshots([
+          { 
+            id: 1, 
+            alt: 'Main Screen', 
+            src: '/images/screenshot-1.png',
+            title: 'Welcome Dashboard',
+            description: 'Your personal travel hub with AI-powered insights',
+            icon: 'Smartphone',
+            color: 'from-blue-500 to-cyan-500'
+          },
+          { 
+            id: 2, 
+            alt: 'Map View', 
+            src: '/images/screenshot-2.png',
+            title: 'Interactive Map',
+            description: 'Real-time navigation with smart route suggestions',
+            icon: 'MapPin',
+            color: 'from-green-500 to-emerald-500'
+          },
+          { 
+            id: 3, 
+            alt: 'Route Planning', 
+            src: '/images/screenshot-3.png',
+            title: 'AI Route Planning',
+            description: 'Intelligent route optimization for your journey',
+            icon: 'Route',
+            color: 'from-purple-500 to-pink-500'
+          },
+          { 
+            id: 4, 
+            alt: 'Travel Details', 
+            src: '/images/screenshot-4.png',
+            title: 'Trip Management',
+            description: 'Organize and track your travel experiences',
+            icon: 'Calendar',
+            color: 'from-orange-500 to-red-500'
+          },
+          { 
+            id: 5, 
+            alt: 'Smart Suitcase', 
+            src: '/images/screenshot-5.png',
+            title: 'Smart Packing',
+            description: 'AI-powered packing suggestions for your trip',
+            icon: 'Briefcase',
+            color: 'from-indigo-500 to-blue-500'
+          },
+          { 
+            id: 6, 
+            alt: 'Expenses', 
+            src: '/images/screenshot-6.png',
+            title: 'Expense Tracking',
+            description: 'Keep track of your travel budget effortlessly',
+            icon: 'Wallet',
+            color: 'from-teal-500 to-green-500'
+          },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchScreenshots();
+  }, []);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -119,17 +157,26 @@ export default function ScreenshotsPage() {
           </motion.div>
         </motion.div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-20">
+            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-white/80">Loading screenshots...</p>
+          </div>
+        )}
+
         {/* Interactive Screenshots Grid */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
-        >
-          {screenshots.map((screenshot, index) => {
-            const IconComponent = screenshot.icon;
-            return (
+        {!loading && (
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+          >
+            {screenshots.map((screenshot, index) => {
+              const IconComponent = iconMap[screenshot.icon as keyof typeof iconMap] || Smartphone;
+              return (
               <motion.div
                 key={screenshot.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -197,7 +244,8 @@ export default function ScreenshotsPage() {
               </motion.div>
             );
           })}
-        </motion.div>
+          </motion.div>
+        )}
 
 
         {/* Bottom Info */}

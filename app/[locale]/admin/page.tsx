@@ -40,62 +40,7 @@ export default function AdminPage() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [screenshots, setScreenshots] = useState<Screenshot[]>([
-    {
-      id: 1,
-      title: 'Welcome Dashboard',
-      description: 'Your personal travel hub with AI-powered insights',
-      alt: 'Main Screen',
-      src: '/images/screenshot-1.png',
-      icon: 'Smartphone',
-      color: 'from-blue-500 to-cyan-500'
-    },
-    {
-      id: 2,
-      title: 'Interactive Map',
-      description: 'Real-time navigation with smart route suggestions',
-      alt: 'Map View',
-      src: '/images/screenshot-2.png',
-      icon: 'MapPin',
-      color: 'from-green-500 to-emerald-500'
-    },
-    {
-      id: 3,
-      title: 'AI Route Planning',
-      description: 'Intelligent route optimization for your journey',
-      alt: 'Route Planning',
-      src: '/images/screenshot-3.png',
-      icon: 'Route',
-      color: 'from-purple-500 to-pink-500'
-    },
-    {
-      id: 4,
-      title: 'Trip Management',
-      description: 'Organize and track your travel experiences',
-      alt: 'Travel Details',
-      src: '/images/screenshot-4.png',
-      icon: 'Calendar',
-      color: 'from-orange-500 to-red-500'
-    },
-    {
-      id: 5,
-      title: 'Smart Packing',
-      description: 'AI-powered packing suggestions for your trip',
-      alt: 'Smart Suitcase',
-      src: '/images/screenshot-5.png',
-      icon: 'Briefcase',
-      color: 'from-indigo-500 to-blue-500'
-    },
-    {
-      id: 6,
-      title: 'Expense Tracking',
-      description: 'Keep track of your travel budget effortlessly',
-      alt: 'Expenses',
-      src: '/images/screenshot-6.png',
-      icon: 'Wallet',
-      color: 'from-teal-500 to-green-500'
-    }
-  ]);
+  const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
 
   const [editingId, setEditingId] = useState<number | null>(null);
   const [newScreenshot, setNewScreenshot] = useState<Partial<Screenshot>>({});
@@ -109,6 +54,7 @@ export default function AdminPage() {
       const auth = localStorage.getItem('admin_auth');
       if (auth === 'true') {
         setIsAuthenticated(true);
+        fetchScreenshots();
       } else {
         router.push('/admin-login');
       }
@@ -117,6 +63,17 @@ export default function AdminPage() {
 
     checkAuth();
   }, [router]);
+
+  // Fetch screenshots from API
+  const fetchScreenshots = async () => {
+    try {
+      const response = await fetch('/api/screenshots');
+      const data = await response.json();
+      setScreenshots(data);
+    } catch (error) {
+      console.error('Error fetching screenshots:', error);
+    }
+  };
 
   const iconOptions = [
     { value: 'Smartphone', label: 'Smartphone', icon: Smartphone },
@@ -175,22 +132,52 @@ export default function AdminPage() {
     }
   };
 
-  const handleSave = (screenshot: Screenshot) => {
-    setScreenshots(prev => prev.map(s => s.id === screenshot.id ? screenshot : s));
-    setEditingId(null);
-  };
-
-  const handleAdd = () => {
-    if (newScreenshot.title && newScreenshot.description && newScreenshot.src) {
-      const newId = Math.max(...screenshots.map(s => s.id)) + 1;
-      setScreenshots(prev => [...prev, { ...newScreenshot, id: newId } as Screenshot]);
-      setNewScreenshot({});
-      setShowAddForm(false);
+  const handleSave = async (screenshot: Screenshot) => {
+    try {
+      const response = await fetch('/api/screenshots', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(screenshot)
+      });
+      if (response.ok) {
+        fetchScreenshots(); // Refresh data
+        setEditingId(null);
+      }
+    } catch (error) {
+      console.error('Error updating screenshot:', error);
     }
   };
 
-  const handleDelete = (id: number) => {
-    setScreenshots(prev => prev.filter(s => s.id !== id));
+  const handleAdd = async () => {
+    if (newScreenshot.title && newScreenshot.description && newScreenshot.src) {
+      try {
+        const response = await fetch('/api/screenshots', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newScreenshot)
+        });
+        if (response.ok) {
+          fetchScreenshots(); // Refresh data
+          setNewScreenshot({});
+          setShowAddForm(false);
+        }
+      } catch (error) {
+        console.error('Error adding screenshot:', error);
+      }
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await fetch(`/api/screenshots?id=${id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        fetchScreenshots(); // Refresh data
+      }
+    } catch (error) {
+      console.error('Error deleting screenshot:', error);
+    }
   };
 
   // Show loading while checking authentication
