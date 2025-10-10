@@ -156,7 +156,7 @@ export default function HomePage() {
                       <img 
                         src={item.icon} 
                         alt={item.title}
-                        className="w-12 h-12 object-contain"
+                        className="w-16 h-16 object-contain"
                       />
                     ) : (
                       <span className="text-4xl">{item.icon}</span>
