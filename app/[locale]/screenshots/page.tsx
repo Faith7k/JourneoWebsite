@@ -189,71 +189,71 @@ export default function ScreenshotsPage() {
                 className="group cursor-pointer"
                 onClick={() => setSelectedScreenshot(selectedScreenshot === screenshot.id ? null : screenshot.id)}
               >
-                <div className="relative aspect-[9/19] rounded-3xl overflow-hidden border-4 border-white/20 shadow-2xl bg-white/10 backdrop-blur-sm transition-all duration-300 group-hover:border-white/40 group-hover:shadow-3xl">
-                  {/* Phone Frame */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl">
-                    {/* Status Bar */}
-                    <div className="absolute top-0 left-0 right-0 h-8 bg-black/50 flex items-center justify-between px-4 text-white text-xs">
-                      <span>9:41</span>
-                      <div className="flex items-center gap-1">
-                        <div className="w-4 h-2 bg-white rounded-sm"></div>
-                        <div className="w-4 h-2 bg-white rounded-sm"></div>
-                        <div className="w-4 h-2 bg-white rounded-sm"></div>
-                      </div>
-                    </div>
-                    
-                    {/* App Content */}
-                    <div className="absolute inset-0 pt-8 flex flex-col items-center justify-center p-6">
-                      {screenshot.src && screenshot.src.startsWith('data:') ? (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <img 
-                            src={screenshot.src} 
-                            alt={screenshot.alt}
-                            className="w-full h-full object-cover rounded-2xl"
-                          />
+                {screenshot.src && screenshot.src.startsWith('data:') ? (
+                  /* Direct Image Display - No Phone Frame */
+                  <div className="relative aspect-[9/19] rounded-3xl overflow-hidden border-4 border-white/20 shadow-2xl bg-white/10 backdrop-blur-sm transition-all duration-300 group-hover:border-white/40 group-hover:shadow-3xl">
+                    <img 
+                      src={screenshot.src} 
+                      alt={screenshot.alt}
+                      className="w-full h-full object-cover rounded-3xl"
+                    />
+                  </div>
+                ) : (
+                  /* Phone Frame for Mock Screenshots */
+                  <div className="relative aspect-[9/19] rounded-3xl overflow-hidden border-4 border-white/20 shadow-2xl bg-white/10 backdrop-blur-sm transition-all duration-300 group-hover:border-white/40 group-hover:shadow-3xl">
+                    {/* Phone Frame */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl">
+                      {/* Status Bar */}
+                      <div className="absolute top-0 left-0 right-0 h-8 bg-black/50 flex items-center justify-between px-4 text-white text-xs">
+                        <span>9:41</span>
+                        <div className="flex items-center gap-1">
+                          <div className="w-4 h-2 bg-white rounded-sm"></div>
+                          <div className="w-4 h-2 bg-white rounded-sm"></div>
+                          <div className="w-4 h-2 bg-white rounded-sm"></div>
                         </div>
-                      ) : (
-                        <>
-                          <motion.div
-                            whileHover={{ rotate: 360 }}
-                            transition={{ duration: 0.6 }}
-                            className={`w-16 h-16 bg-gradient-to-br ${screenshot.color} rounded-full flex items-center justify-center mb-4`}
-                          >
-                            <IconComponent className="w-8 h-8 text-white" />
-                          </motion.div>
-                          
-                          <h3 className="text-white font-bold text-lg mb-2 text-center">
-                            {screenshot.title}
-                          </h3>
-                          
-                          <p className="text-white/80 text-sm text-center leading-relaxed">
-                            {screenshot.description}
-                          </p>
-                        </>
-                      )}
+                      </div>
                       
-                      {/* App-like UI elements */}
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <div className="bg-white/20 rounded-2xl p-3 backdrop-blur-sm">
-                          <div className="flex items-center justify-between">
-                            <div className="w-8 h-8 bg-white/30 rounded-full"></div>
-                            <div className="w-8 h-8 bg-white/30 rounded-full"></div>
-                            <div className="w-8 h-8 bg-white/30 rounded-full"></div>
+                      {/* App Content */}
+                      <div className="absolute inset-0 pt-8 flex flex-col items-center justify-center p-6">
+                        <motion.div
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          className={`w-16 h-16 bg-gradient-to-br ${screenshot.color} rounded-full flex items-center justify-center mb-4`}
+                        >
+                          <IconComponent className="w-8 h-8 text-white" />
+                        </motion.div>
+                        
+                        <h3 className="text-white font-bold text-lg mb-2 text-center">
+                          {screenshot.title}
+                        </h3>
+                        
+                        <p className="text-white/80 text-sm text-center leading-relaxed">
+                          {screenshot.description}
+                        </p>
+                        
+                        {/* App-like UI elements */}
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="bg-white/20 rounded-2xl p-3 backdrop-blur-sm">
+                            <div className="flex items-center justify-between">
+                              <div className="w-8 h-8 bg-white/30 rounded-full"></div>
+                              <div className="w-8 h-8 bg-white/30 rounded-full"></div>
+                              <div className="w-8 h-8 bg-white/30 rounded-full"></div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                    <Button 
-                      size="sm" 
-                      className="bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30"
-                    >
-                      View Details
-                    </Button>
-                  </div>
+                )}
+                
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                  <Button 
+                    size="sm" 
+                    className="bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30"
+                  >
+                    View Details
+                  </Button>
                 </div>
               </motion.div>
             );
