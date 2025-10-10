@@ -3,13 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Smartphone, MapPin, Route, Calendar, Wallet, Briefcase, Settings, Plus, Upload, Save, X } from 'lucide-react';
+import { Smartphone, MapPin, Route, Calendar, Wallet, Briefcase } from 'lucide-react';
 
 interface Screenshot {
   id: number;
@@ -25,10 +21,6 @@ export default function ScreenshotsPage() {
   const [selectedScreenshot, setSelectedScreenshot] = useState<number | null>(null);
   const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [newScreenshot, setNewScreenshot] = useState<Partial<Screenshot>>({});
-  const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Icon mapping
   const iconMap = {
@@ -114,73 +106,6 @@ export default function ScreenshotsPage() {
     fetchScreenshots();
   }, []);
 
-  // Handle image upload
-  const handleImageUpload = async (file: File) => {
-    setUploadStatus('uploading');
-    
-    try {
-      const reader = new FileReader();
-      
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setNewScreenshot(prev => ({ ...prev, src: result }));
-        setUploadStatus('success');
-        setTimeout(() => setUploadStatus('idle'), 3000);
-      };
-      
-      reader.onerror = () => {
-        setUploadStatus('error');
-        setTimeout(() => setUploadStatus('idle'), 3000);
-      };
-      
-      reader.readAsDataURL(file);
-    } catch (error) {
-      console.error('Upload error:', error);
-      setUploadStatus('error');
-      setTimeout(() => setUploadStatus('idle'), 3000);
-    }
-  };
-
-  // Handle adding new screenshot
-  const handleAddScreenshot = async () => {
-    if (newScreenshot.title && newScreenshot.description && newScreenshot.src) {
-      try {
-        const response = await fetch('/api/screenshots', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newScreenshot)
-        });
-        if (response.ok) {
-          fetchScreenshots(); // Refresh data
-          setNewScreenshot({});
-          setShowAddForm(false);
-        }
-      } catch (error) {
-        console.error('Error adding screenshot:', error);
-      }
-    }
-  };
-
-  // Icon options for dropdown
-  const iconOptions = [
-    { value: 'Smartphone', label: 'Smartphone' },
-    { value: 'MapPin', label: 'Map Pin' },
-    { value: 'Route', label: 'Route' },
-    { value: 'Calendar', label: 'Calendar' },
-    { value: 'Wallet', label: 'Wallet' },
-    { value: 'Briefcase', label: 'Briefcase' }
-  ];
-
-  const colorOptions = [
-    'from-blue-500 to-cyan-500',
-    'from-green-500 to-emerald-500',
-    'from-purple-500 to-pink-500',
-    'from-orange-500 to-red-500',
-    'from-indigo-500 to-blue-500',
-    'from-teal-500 to-green-500',
-    'from-pink-500 to-rose-500',
-    'from-yellow-500 to-orange-500'
-  ];
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -233,170 +158,6 @@ export default function ScreenshotsPage() {
           </motion.div>
         </motion.div>
 
-        {/* Upload Status */}
-        {uploadStatus !== 'idle' && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
-          >
-            <div className={`p-4 rounded-lg text-center ${
-              uploadStatus === 'success' ? 'bg-green-100 text-green-800' :
-              uploadStatus === 'error' ? 'bg-red-100 text-red-800' :
-              'bg-blue-100 text-blue-800'
-            }`}>
-              {uploadStatus === 'uploading' && '📤 Uploading image...'}
-              {uploadStatus === 'success' && '✅ Image uploaded successfully!'}
-              {uploadStatus === 'error' && '❌ Upload failed. Please try again.'}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Add New Screenshot Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="mb-12"
-        >
-          <Card className="bg-white/95 backdrop-blur-sm border-2 border-white/20 shadow-2xl">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <Plus className="w-6 h-6 text-blue-600" />
-                Add New Screenshot
-              </CardTitle>
-              <CardDescription>
-                Upload and share your app screenshots with the community
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {!showAddForm ? (
-                <Button 
-                  onClick={() => setShowAddForm(true)}
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-                >
-                  <Plus className="w-5 h-5 mr-2" />
-                  Add New Screenshot
-                </Button>
-              ) : (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="title">Title</Label>
-                      <Input
-                        id="title"
-                        value={newScreenshot.title || ''}
-                        onChange={(e) => setNewScreenshot(prev => ({ ...prev, title: e.target.value }))}
-                        placeholder="Welcome Dashboard"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="alt">Alt Text</Label>
-                      <Input
-                        id="alt"
-                        value={newScreenshot.alt || ''}
-                        onChange={(e) => setNewScreenshot(prev => ({ ...prev, alt: e.target.value }))}
-                        placeholder="Main Screen"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="description">Description</Label>
-                    <Textarea
-                      id="description"
-                      value={newScreenshot.description || ''}
-                      onChange={(e) => setNewScreenshot(prev => ({ ...prev, description: e.target.value }))}
-                      placeholder="Your personal travel hub with AI-powered insights"
-                      rows={3}
-                    />
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label>Icon</Label>
-                      <select
-                        value={newScreenshot.icon || ''}
-                        onChange={(e) => setNewScreenshot(prev => ({ ...prev, icon: e.target.value }))}
-                        className="w-full p-2 border rounded-lg"
-                      >
-                        <option value="">Select Icon</option>
-                        {iconOptions.map(option => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Color Theme</Label>
-                      <select
-                        value={newScreenshot.color || ''}
-                        onChange={(e) => setNewScreenshot(prev => ({ ...prev, color: e.target.value }))}
-                        className="w-full p-2 border rounded-lg"
-                      >
-                        <option value="">Select Color</option>
-                        {colorOptions.map(color => (
-                          <option key={color} value={color}>
-                            {color}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label>Upload Image</Label>
-                    <div className="flex items-center gap-4">
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) handleImageUpload(file);
-                        }}
-                        className="hidden"
-                      />
-                      <Button
-                        onClick={() => fileInputRef.current?.click()}
-                        variant="outline"
-                        className="flex-1"
-                      >
-                        <Upload className="w-4 h-4 mr-2" />
-                        Choose Image
-                      </Button>
-                      {newScreenshot.src && (
-                        <div className="text-sm text-green-600">✅ Image selected</div>
-                      )}
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-4">
-                    <Button 
-                      onClick={handleAddScreenshot}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700"
-                    >
-                      <Save className="w-4 h-4 mr-2" />
-                      Save Screenshot
-                    </Button>
-                    <Button 
-                      onClick={() => {
-                        setShowAddForm(false);
-                        setNewScreenshot({});
-                      }}
-                      variant="outline"
-                    >
-                      <X className="w-4 h-4 mr-2" />
-                      Cancel
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
 
         {/* Loading State */}
         {loading && (
