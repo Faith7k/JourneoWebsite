@@ -1,11 +1,12 @@
 {
-  "nav": {
+  "navigation": {
     "home": "Home",
     "features": "Features",
     "pricing": "Pricing",
     "screenshots": "Screenshots",
     "support": "Support",
-    "contact": "Contact"
+    "contact": "Contact",
+    "language": "Language"
   },
   "hero": {
     "title": "JOURNEO",

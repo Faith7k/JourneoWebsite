@@ -5,8 +5,10 @@ import { Menu, X, Globe } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export function Header() {
+  const t = useTranslations('navigation');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -44,12 +46,12 @@ export function Header() {
   }, [languageMenuOpen]);
 
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Features', href: '/features' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'Screenshots', href: '/screenshots' },
-    { name: 'Support', href: '/support' },
-    { name: 'Contact', href: '/contact' },
+    { name: t('home'), href: '/' },
+    { name: t('features'), href: '/features' },
+    { name: t('pricing'), href: '/pricing' },
+    { name: t('screenshots'), href: '/screenshots' },
+    { name: t('support'), href: '/support' },
+    { name: t('contact'), href: '/contact' },
   ];
 
   return (
@@ -170,7 +172,7 @@ export function Header() {
             
             {/* Mobile Language Options */}
             <div className="pt-4 border-t">
-              <div className="text-sm font-medium text-muted-foreground mb-3">Language</div>
+              <div className="text-sm font-medium text-muted-foreground mb-3">{t('language')}</div>
               <div className="flex gap-2">
                 {languages.map((lang) => (
                   <button

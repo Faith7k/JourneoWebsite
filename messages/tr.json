@@ -1,11 +1,12 @@
 {
-  "nav": {
+  "navigation": {
     "home": "Ana Sayfa",
     "features": "Özellikler",
     "pricing": "Fiyatlandırma",
     "screenshots": "Ekran Görüntüleri",
     "support": "Destek",
-    "contact": "İletişim"
+    "contact": "İletişim",
+    "language": "Dil"
   },
   "hero": {
     "title": "JOURNEO",

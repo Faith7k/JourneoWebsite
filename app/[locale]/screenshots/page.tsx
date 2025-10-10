@@ -199,39 +199,6 @@ export default function ScreenshotsPage() {
           })}
         </motion.div>
 
-        {/* Admin Panel Button */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="text-center"
-        >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border-2 border-white/20 max-w-2xl mx-auto"
-          >
-            <div className="space-y-6">
-              <div className="text-6xl">⚙️</div>
-              <h3 className="text-2xl font-bold text-gray-800">
-                Manage Screenshots
-              </h3>
-              <p className="text-gray-600 text-lg">
-                Upload and manage app screenshots from the admin panel
-              </p>
-              <Link href="/admin">
-                <Button 
-                  size="lg" 
-                  className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                >
-                  <Plus className="w-5 h-5 mr-2" />
-                  Admin Panel
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        </motion.div>
 
         {/* Bottom Info */}
         <motion.div 

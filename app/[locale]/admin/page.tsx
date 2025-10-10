@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -36,6 +37,9 @@ interface Screenshot {
 }
 
 export default function AdminPage() {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [screenshots, setScreenshots] = useState<Screenshot[]>([
     {
       id: 1,
@@ -98,6 +102,21 @@ export default function AdminPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Authentication check
+  useEffect(() => {
+    const checkAuth = () => {
+      const auth = localStorage.getItem('admin_auth');
+      if (auth === 'true') {
+        setIsAuthenticated(true);
+      } else {
+        router.push('/admin-login');
+      }
+      setIsLoading(false);
+    };
+
+    checkAuth();
+  }, [router]);
 
   const iconOptions = [
     { value: 'Smartphone', label: 'Smartphone', icon: Smartphone },
@@ -162,6 +181,23 @@ export default function AdminPage() {
     setScreenshots(prev => prev.filter(s => s.id !== id));
   };
 
+  // Show loading while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-white">Yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login redirect if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Background */}
@@ -188,12 +224,27 @@ export default function AdminPage() {
             <Settings className="w-12 h-12 text-white" />
           </div>
           
-          <h1 className="heading-modern text-white drop-shadow-lg">
-            🛠️ Admin Panel 🛠️
-          </h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">
-            Manage your app screenshots and content
-          </p>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <h1 className="heading-modern text-white drop-shadow-lg">
+                🛠️ Admin Panel 🛠️
+              </h1>
+              <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">
+                Manage your app screenshots and content
+              </p>
+            </div>
+            <Button
+              onClick={() => {
+                localStorage.removeItem('admin_auth');
+                localStorage.removeItem('admin_token');
+                router.push('/admin-login');
+              }}
+              variant="outline"
+              className="bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-500/50"
+            >
+              🚪 Çıkış Yap
+            </Button>
+          </div>
         </motion.div>
 
         {/* Upload Status */}
