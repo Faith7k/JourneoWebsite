@@ -74,7 +74,7 @@ export default function ContactPage() {
                 <MapPin className="h-10 w-10 text-primary mb-2" />
                 <CardTitle>Address</CardTitle>
                 <CardDescription>
-                  İstanbul, Turkey
+                  Istanbul, Turkey
                 </CardDescription>
               </CardHeader>
             </Card>

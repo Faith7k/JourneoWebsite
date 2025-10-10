@@ -20,63 +20,63 @@ import { motion } from 'framer-motion';
 export default function FeaturesPage() {
   const allFeatures = [
     {
-      title: 'AI Rota Planlama',
-      description: 'Yapay zeka destekli akıllı rota önerileri ile zamanınızı en verimli şekilde kullanın.',
+      title: 'AI Route Planning',
+      description: 'Use your time most efficiently with AI-powered smart route suggestions.',
       iconName: 'Brain',
     },
     {
-      title: 'İnteraktif Harita',
-      description: 'Gerçek zamanlı harita üzerinde gezilecek yerleri keşfedin ve rotanızı planlayın.',
+      title: 'Interactive Map',
+      description: 'Discover places to visit on a real-time map and plan your route.',
       iconName: 'MapPin',
     },
     {
-      title: 'Sesli Rehber (TTS)',
-      description: 'Elleriniz serbest kalırken sesli rehberlik ile yolunuzu bulun.',
+      title: 'Voice Guide (TTS)',
+      description: 'Find your way with voice guidance while keeping your hands free.',
       iconName: 'Volume2',
     },
     {
-      title: 'Akıllı Bavul',
-      description: 'Seyahatiniz için neye ihtiyacınız olduğunu yapay zeka ile organize edin.',
+      title: 'Smart Suitcase',
+      description: 'Organize what you need for your trip with artificial intelligence.',
       iconName: 'Briefcase',
     },
     {
-      title: 'Hava Durumu',
-      description: 'Hedef noktanızın anlık hava durumunu öğrenin ve hazırlıklı olun.',
+      title: 'Weather Forecast',
+      description: 'Learn the current weather at your destination and be prepared.',
       iconName: 'Cloud',
     },
     {
-      title: 'Paylaşım',
-      description: 'Seyahat deneyimlerinizi arkadaşlarınız ve ailenizle paylaşın.',
+      title: 'Sharing',
+      description: 'Share your travel experiences with friends and family.',
       iconName: 'Share2',
     },
     {
-      title: 'Harcama Takibi',
-      description: 'Seyahat bütçenizi kolayca takip edin ve raporlayın.',
+      title: 'Expense Tracking',
+      description: 'Easily track and report your travel budget.',
       iconName: 'Wallet',
     },
     {
-      title: 'Seyahat Yönetimi',
-      description: 'Geçmiş ve gelecek seyahatlerinizi tek yerden yönetin.',
+      title: 'Trip Management',
+      description: 'Manage your past and future trips from one place.',
       iconName: 'Calendar',
     },
     {
-      title: 'Offline Mod',
-      description: 'İnternet bağlantısı olmadan seyahat bilgilerinize erişin.',
+      title: 'Offline Mode',
+      description: 'Access your travel information without internet connection.',
       iconName: 'Globe',
     },
     {
-      title: 'Güvenli & Özel',
-      description: 'Verileriniz endüstri standardı güvenlik ile şifrelenir ve korunur.',
+      title: 'Secure & Private',
+      description: 'Your data is encrypted and protected with industry-standard security.',
       iconName: 'Shield',
     },
     {
-      title: 'Hızlı & Güvenilir',
-      description: 'Güvenilir navigasyon ve yönlendirme ile yıldırım hızında performans.',
+      title: 'Fast & Reliable',
+      description: 'Lightning-fast performance with reliable navigation and guidance.',
       iconName: 'Zap',
     },
     {
-      title: 'Kullanıcı Dostu',
-      description: 'Her deneyim seviyesindeki gezginler için tasarlanmış sezgisel arayüz.',
+      title: 'User Friendly',
+      description: 'Intuitive interface designed for travelers of all experience levels.',
       iconName: 'Heart',
     },
   ];
@@ -100,9 +100,9 @@ export default function FeaturesPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20 space-y-6"
         >
-          <h1 className="heading-modern text-gradient">Özellikler</h1>
+          <h1 className="heading-modern text-gradient">Features</h1>
           <p className="text-modern text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Journeo'nun güçlü özellikleri ile seyahatinizi keşfedin
+            Discover your travel with Journeo's powerful features
           </p>
         </motion.div>
 

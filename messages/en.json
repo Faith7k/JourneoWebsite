@@ -8,17 +8,32 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "Journeo",
+    "title": "JOURNEO",
     "subtitle": "Your AI-Powered Personal Travel Guide",
     "description": "From planning your trips to exploring, your intelligent travel assistant designed with the power of artificial intelligence to make every moment unforgettable.",
     "cta": {
       "appStore": "Download on the App Store",
       "playStore": "Get it on Google Play"
+    },
+    "features": {
+      "ai": {
+        "title": "AI-Powered",
+        "description": "AI-powered smart recommendations"
+      },
+      "voice": {
+        "title": "Voice Guide",
+        "description": "AI-powered voice narration"
+      },
+      "language": {
+        "title": "Multi-Language",
+        "description": "Travel guidance in 100+ languages"
+      }
     }
   },
   "features": {
     "title": "Powerful Features",
     "subtitle": "Smart tools to make your travel easier",
+    "allFeatures": "All Features",
     "aiRoute": {
       "title": "AI Route Planning",
       "description": "Use your time most efficiently with AI-powered smart route suggestions."
@@ -50,6 +65,22 @@
     "trips": {
       "title": "Trip Management",
       "description": "Manage your past and future trips from one place."
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works?",
+    "subtitle": "Plan your trips with AI support in just 3 steps",
+    "plan": {
+      "title": "Plan",
+      "desc": "Set your destination and get AI-powered recommendations"
+    },
+    "explore": {
+      "title": "Explore",
+      "desc": "Discover the best routes with interactive maps"
+    },
+    "travel": {
+      "title": "Travel",
+      "desc": "Travel safely with voice guidance"
     }
   },
   "pricing": {

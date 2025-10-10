@@ -100,9 +100,9 @@ export default function PricingPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20 space-y-6"
         >
-          <h1 className="heading-modern text-gradient">Fiyatlandırma</h1>
+          <h1 className="heading-modern text-gradient">Pricing</h1>
           <p className="text-modern text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Seyahatleriniz için en uygun planı seçin
+            Choose the most suitable plan for your travels
           </p>
         </motion.div>
 
@@ -125,30 +125,30 @@ export default function PricingPage() {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="heading-modern text-gradient text-center mb-12">Sıkça Sorulan Sorular</h2>
+          <h2 className="heading-modern text-gradient text-center mb-12">Frequently Asked Questions</h2>
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="cancel">
               <AccordionTrigger className="text-left text-white hover:text-primary">
-                Aboneliğimi nasıl iptal edebilirim?
+                How can I cancel my subscription?
               </AccordionTrigger>
               <AccordionContent className="text-white/80">
-                Aboneliğinizi istediğiniz zaman iptal edebilirsiniz. Ayarlar &gt; Abonelik &gt; İptal Et bölümünden kolayca iptal işlemini gerçekleştirebilirsiniz.
+                You can cancel your subscription at any time. You can easily perform the cancellation process from Settings &gt; Subscription &gt; Cancel section.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="refund">
               <AccordionTrigger className="text-left text-white hover:text-primary">
-                Para iadesi alabilir miyim?
+                Can I get a refund?
               </AccordionTrigger>
               <AccordionContent className="text-white/80">
-                İlk 7 gün içinde para iadesi talep edebilirsiniz. Daha sonraki dönemler için iptal işlemi bir sonraki faturalandırma döneminde geçerli olur.
+                You can request a refund within the first 7 days. For later periods, the cancellation takes effect in the next billing period.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="change">
               <AccordionTrigger className="text-left text-white hover:text-primary">
-                Planımı değiştirebilir miyim?
+                Can I change my plan?
               </AccordionTrigger>
               <AccordionContent className="text-white/80">
-                Evet, istediğiniz zaman planınızı yükseltebilir veya düşürebilirsiniz. Değişiklikler bir sonraki faturalandırma döneminde geçerli olur.
+                Yes, you can upgrade or downgrade your plan at any time. Changes take effect in the next billing period.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

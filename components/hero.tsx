@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { Apple, Smartphone, Sparkles, Languages, Zap, Volume2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 // Gezi ile alakalı emoji'ler
 const travelEmojis = ['✈️', '🗺️', '🧳', '📸', '🏖️', '⛰️', '🏛️', '🎒', '🚂', '🚢', '🏨', '🗼', '🎡', '🎢', '🎪', '🎭', '🎨', '🏰', '⛪', '🕌', '🗿', '🌋', '🏔️', '🏕️', '🏞️', '🌅', '🌄', '🌠', '🎆', '🎇', '🌃', '🌆', '🌉'];
@@ -29,6 +30,8 @@ interface Confetti {
 }
 
 export function Hero() {
+  const t = useTranslations();
+  const [mounted, setMounted] = useState(false);
   const [emojis, setEmojis] = useState<FloatingEmoji[]>([]);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -36,9 +39,16 @@ export function Hero() {
   const [confettis, setConfettis] = useState<Confetti[]>([]);
   const [isClickable, setIsClickable] = useState(false);
   const [autoClick, setAutoClick] = useState(false);
-  const fullText = 'JOURNEO';
+  const fullText = t('hero.title');
+
+  // Hydration sorununu önlemek için
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
+    if (!mounted) return;
+    
     // Typewriter effect
     let timeout: NodeJS.Timeout;
     
@@ -72,7 +82,7 @@ export function Hero() {
     }
 
     return () => clearTimeout(timeout);
-  }, [displayedText, isDeleting, fullText]);
+  }, [displayedText, isDeleting, fullText, mounted]);
 
   const createConfetti = () => {
     const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff'];
@@ -122,6 +132,8 @@ export function Hero() {
   }, [autoClick]);
 
   useEffect(() => {
+    if (!mounted) return;
+    
     // Generate random emojis
     const generateEmojis = () => {
       const newEmojis: FloatingEmoji[] = [];
@@ -140,7 +152,7 @@ export function Hero() {
     };
 
     generateEmojis();
-  }, []);
+  }, [mounted]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -149,7 +161,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-grid-pattern opacity-10" />
       
       {/* Floating Emojis */}
-      {emojis.map((emoji) => (
+      {mounted && emojis.map((emoji) => (
         <motion.div
           key={emoji.id}
           className="absolute pointer-events-none select-none"
@@ -181,7 +193,7 @@ export function Hero() {
       <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-cyan-500/20 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }} />
       
       {/* Confetti Animation */}
-      {confettis.map((confetti) => (
+      {mounted && confettis.map((confetti) => (
         <motion.div
           key={confetti.id}
           className="absolute pointer-events-none"
@@ -225,18 +237,20 @@ export function Hero() {
               className="heading-modern text-gradient inline-flex justify-center items-center min-h-[120px] relative"
             >
               <span className="inline-block">
-                {displayedText}
-                <motion.span
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-                  className="inline-block ml-1 text-blue-500"
-                >
-                  |
-                </motion.span>
+                {mounted ? displayedText : fullText}
+                {mounted && (
+                  <motion.span
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+                    className="inline-block ml-1 text-blue-500"
+                  >
+                    |
+                  </motion.span>
+                )}
               </span>
               
               {/* Mouse Icon */}
-              {showMouse && (
+              {mounted && showMouse && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -277,7 +291,7 @@ export function Hero() {
             transition={{ delay: 0.6, duration: 1 }}
             className="subheading-modern text-glow"
           >
-            Your AI-Powered Personal Travel Guide
+            {t('hero.subtitle')}
           </motion.p>
 
           {/* Description */}
@@ -287,7 +301,7 @@ export function Hero() {
             transition={{ delay: 0.9, duration: 1 }}
             className="text-modern text-white/90 max-w-3xl mx-auto leading-relaxed"
           >
-            From planning your trips to exploring, your intelligent travel assistant designed with the power of artificial intelligence to make every moment unforgettable.
+            {t('hero.description')}
           </motion.p>
 
           {/* Modern CTA Buttons */}
@@ -299,11 +313,11 @@ export function Hero() {
           >
             <Button size="lg" className="btn-modern w-full sm:w-auto gap-3 text-lg px-10 py-6">
               <Apple className="h-6 w-6" />
-              Download on the App Store
+              {t('hero.cta.appStore')}
             </Button>
             <Button size="lg" variant="outline" className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-white/30 text-white hover:bg-white/10 bg-white/10 backdrop-blur-sm">
               <Smartphone className="h-6 w-6" />
-              Get it on Google Play
+              {t('hero.cta.playStore')}
             </Button>
           </motion.div>
 
@@ -352,8 +366,8 @@ export function Hero() {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-400 to-blue-500 rounded-2xl flex items-center justify-center">
                   <Zap className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">AI-Powered</h3>
-                <p className="text-white/70">AI-powered smart recommendations</p>
+                <h3 className="text-xl font-semibold text-white mb-2">{t('hero.features.ai.title')}</h3>
+                <p className="text-white/70">{t('hero.features.ai.description')}</p>
               </div>
             </div>
             
@@ -396,8 +410,8 @@ export function Hero() {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center">
                   <Volume2 className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">Voice Guide</h3>
-                <p className="text-white/70">AI-powered voice narration</p>
+                <h3 className="text-xl font-semibold text-white mb-2">{t('hero.features.voice.title')}</h3>
+                <p className="text-white/70">{t('hero.features.voice.description')}</p>
               </div>
             </div>
             
@@ -440,8 +454,8 @@ export function Hero() {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center">
                   <Languages className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">Multi-Language</h3>
-                <p className="text-white/70">Travel guidance in 100+ languages</p>
+                <h3 className="text-xl font-semibold text-white mb-2">{t('hero.features.language.title')}</h3>
+                <p className="text-white/70">{t('hero.features.language.description')}</p>
               </div>
             </div>
           </motion.div>

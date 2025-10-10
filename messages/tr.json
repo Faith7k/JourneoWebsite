@@ -8,17 +8,32 @@
     "contact": "İletişim"
   },
   "hero": {
-    "title": "Journeo",
+    "title": "JOURNEO",
     "subtitle": "Yapay Zekâ Destekli Kişisel Seyahat Rehberin",
     "description": "Seyahatlerinizi planlamaktan keşfetmeye, her anını unutulmaz kılmak için yapay zeka gücüyle tasarlanmış akıllı seyahat asistanınız.",
     "cta": {
       "appStore": "App Store'dan İndir",
       "playStore": "Google Play'den İndir"
+    },
+    "features": {
+      "ai": {
+        "title": "Yapay Zeka Destekli",
+        "description": "Yapay zeka destekli akıllı öneriler"
+      },
+      "voice": {
+        "title": "Sesli Rehber",
+        "description": "Yapay zeka destekli sesli anlatım"
+      },
+      "language": {
+        "title": "Çoklu Dil",
+        "description": "100+ dilde seyahat rehberliği"
+      }
     }
   },
   "features": {
     "title": "Güçlü Özellikler",
     "subtitle": "Seyahatinizi kolaylaştıran akıllı araçlar",
+    "allFeatures": "Tüm Özellikler",
     "aiRoute": {
       "title": "AI Rota Planlama",
       "description": "Yapay zeka destekli akıllı rota önerileri ile zamanınızı en verimli şekilde kullanın."
@@ -50,6 +65,22 @@
     "trips": {
       "title": "Seyahat Yönetimi",
       "description": "Geçmiş ve gelecek seyahatlerinizi tek yerden yönetin."
+    }
+  },
+  "howItWorks": {
+    "title": "Nasıl Çalışır?",
+    "subtitle": "Seyahatlerinizi AI desteği ile sadece 3 adımda planlayın",
+    "plan": {
+      "title": "Planla",
+      "desc": "Hedefinizi belirleyin ve AI destekli öneriler alın"
+    },
+    "explore": {
+      "title": "Keşfet",
+      "desc": "İnteraktif haritalarla en iyi rotaları keşfedin"
+    },
+    "travel": {
+      "title": "Seyahat Et",
+      "desc": "Sesli rehberlik ile güvenli seyahat edin"
     }
   },
   "pricing": {

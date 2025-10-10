@@ -15,49 +15,57 @@ import {
   Smartphone,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export default function HomePage() {
+  const [isExploding, setIsExploding] = useState(false);
+  const t = useTranslations();
+  
+  // Planning.png resmi patlaması için
+  const explosionImages = Array.from({ length: 8 }, () => '/images/planning.png');
+  
   const features = [
     {
-      title: 'AI Route Planning',
-      description: 'Use your time most efficiently with AI-powered smart route suggestions.',
+      title: t('features.aiRoute.title'),
+      description: t('features.aiRoute.description'),
       iconName: 'Brain',
     },
     {
-      title: 'Interactive Map',
-      description: 'Discover places to visit on a real-time map and plan your route.',
+      title: t('features.interactiveMap.title'),
+      description: t('features.interactiveMap.description'),
       iconName: 'MapPin',
     },
     {
-      title: 'Voice Guide (TTS)',
-      description: 'Find your way with voice guidance while keeping your hands free.',
+      title: t('features.ttsGuide.title'),
+      description: t('features.ttsGuide.description'),
       iconName: 'Volume2',
     },
     {
-      title: 'Smart Suitcase',
-      description: 'Organize what you need for your trip with artificial intelligence.',
+      title: t('features.smartSuitcase.title'),
+      description: t('features.smartSuitcase.description'),
       iconName: 'Briefcase',
     },
     {
-      title: 'Weather Forecast',
-      description: 'Learn the current weather at your destination and be prepared.',
+      title: t('features.weather.title'),
+      description: t('features.weather.description'),
       iconName: 'Cloud',
     },
     {
-      title: 'Sharing',
-      description: 'Share your travel experiences with friends and family.',
+      title: t('features.sharing.title'),
+      description: t('features.sharing.description'),
       iconName: 'Share2',
     },
     {
-      title: 'Expense Tracking',
-      description: 'Easily track and report your travel budget.',
+      title: t('features.expenses.title'),
+      description: t('features.expenses.description'),
       iconName: 'Wallet',
     },
     {
-      title: 'Trip Management',
-      description: 'Manage your past and future trips from one place.',
+      title: t('features.trips.title'),
+      description: t('features.trips.description'),
       iconName: 'Calendar',
     },
   ];
@@ -80,9 +88,9 @@ export default function HomePage() {
               transition={{ duration: 0.8 }}
               className="text-center mb-20 space-y-6"
             >
-              <h2 className="heading-modern text-gradient">Powerful Features</h2>
+              <h2 className="heading-modern text-gradient">{t('features.title')}</h2>
               <p className="text-modern text-muted-foreground max-w-3xl mx-auto">
-                Smart tools and AI-powered features to make your travel easier
+                {t('features.subtitle')}
               </p>
             </motion.div>
 
@@ -105,7 +113,7 @@ export default function HomePage() {
             >
               <Link href="/features">
                 <Button size="lg" className="btn-modern">
-                  All Features →
+                  {t('features.allFeatures')} →
                 </Button>
               </Link>
             </motion.div>
@@ -126,18 +134,18 @@ export default function HomePage() {
               className="text-center mb-20"
             >
               <h2 className="heading-modern text-gradient mb-6">
-                How It Works?
+                {t('howItWorks.title')}
               </h2>
               <p className="text-modern text-muted-foreground max-w-2xl mx-auto">
-                Plan your trips with AI support in just 3 steps
+                {t('howItWorks.subtitle')}
               </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {[
-                { step: 1, title: 'Plan', desc: 'Set your destination and get AI-powered recommendations', icon: '/images/planning.png', isImage: true },
-                { step: 2, title: 'Explore', desc: 'Discover the best routes with interactive maps', icon: '🗺️' },
-                { step: 3, title: 'Travel', desc: 'Travel safely with voice guidance', icon: '🚀' }
+                { step: 1, title: t('howItWorks.plan.title'), desc: t('howItWorks.plan.desc'), icon: '/images/planning.png', isImage: true },
+                { step: 2, title: t('howItWorks.explore.title'), desc: t('howItWorks.explore.desc'), icon: '🗺️' },
+                { step: 3, title: t('howItWorks.travel.title'), desc: t('howItWorks.travel.desc'), icon: '🚀' }
               ].map((item, index) => (
                 <motion.div 
                   key={item.step}
@@ -145,12 +153,18 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.2, duration: 0.6 }}
-                  className="text-center space-y-6 group"
+                  className="text-center space-y-6 group relative overflow-visible"
                 >
                   <motion.div 
-                    className="mx-auto h-24 w-24 rounded-3xl gradient-primary shadow-glow flex items-center justify-center text-3xl font-bold text-white relative overflow-hidden"
+                    className="mx-auto h-24 w-24 rounded-3xl gradient-primary shadow-glow flex items-center justify-center text-3xl font-bold text-white relative"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 300 }}
+                    onHoverStart={() => {
+                      if (item.isImage) {
+                        setIsExploding(true);
+                        setTimeout(() => setIsExploding(false), 2000);
+                      }
+                    }}
                   >
                     {item.isImage ? (
                       <img 
@@ -162,6 +176,53 @@ export default function HomePage() {
                       <span className="text-4xl">{item.icon}</span>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Planning.png Patlaması Animasyonu - Sadece Plan adımı için */}
+                    {item.isImage && (
+                      <AnimatePresence>
+                        {isExploding && (
+                          <div className="absolute inset-0 pointer-events-none overflow-visible">
+                            {explosionImages.map((image, imageIndex) => (
+                              <motion.div
+                                key={imageIndex}
+                                initial={{ 
+                                  scale: 0,
+                                  x: 0,
+                                  y: 0,
+                                  opacity: 1,
+                                  rotate: 0
+                                }}
+                                animate={{
+                                  scale: [0, 0.8, 0.6],
+                                  x: Math.cos((imageIndex * 45) * Math.PI / 180) * (120 + Math.random() * 60),
+                                  y: Math.sin((imageIndex * 45) * Math.PI / 180) * (120 + Math.random() * 60),
+                                  opacity: [1, 1, 0],
+                                  rotate: [0, 180, 360]
+                                }}
+                                transition={{
+                                  duration: 2.5,
+                                  delay: imageIndex * 0.1,
+                                  ease: "easeOut"
+                                }}
+                                className="absolute"
+                                style={{
+                                  left: '50%',
+                                  top: '50%',
+                                  transform: 'translate(-50%, -50%)',
+                                  zIndex: 1000
+                                }}
+                              >
+                                <img 
+                                  src={image} 
+                                  alt="Planning explosion"
+                                  className="w-12 h-12 object-contain"
+                                />
+                              </motion.div>
+                            ))}
+                          </div>
+                        )}
+                      </AnimatePresence>
+                    )}
                   </motion.div>
                   
                   <div className="space-y-4">
@@ -202,10 +263,10 @@ export default function HomePage() {
               className="space-y-8"
             >
               <h2 className="heading-modern text-white">
-                Your AI-Powered Personal Travel Guide
+                {t('hero.subtitle')}
               </h2>
               <p className="text-modern text-white/90 max-w-4xl mx-auto leading-relaxed">
-                From planning your trips to exploring, your intelligent travel assistant designed with the power of artificial intelligence to make every moment unforgettable.
+                {t('hero.description')}
               </p>
             </motion.div>
             
@@ -218,11 +279,11 @@ export default function HomePage() {
             >
               <Button size="lg" className="glass-card text-white border-white/30 hover:bg-white/10 text-lg px-10 py-6">
                 <Apple className="h-6 w-6 mr-3" />
-                Download on the App Store
+                {t('hero.cta.appStore')}
               </Button>
               <Button size="lg" className="glass-card text-white border-white/30 hover:bg-white/10 text-lg px-10 py-6">
                 <Smartphone className="h-6 w-6 mr-3" />
-                Get it on Google Play
+                {t('hero.cta.playStore')}
               </Button>
             </motion.div>
             
