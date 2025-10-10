@@ -277,7 +277,7 @@ export function Hero() {
             transition={{ delay: 0.6, duration: 1 }}
             className="subheading-modern text-glow"
           >
-            Yapay Zekâ Destekli Kişisel Seyahat Rehberin
+            Your AI-Powered Personal Travel Guide
           </motion.p>
 
           {/* Description */}
@@ -287,7 +287,7 @@ export function Hero() {
             transition={{ delay: 0.9, duration: 1 }}
             className="text-modern text-white/90 max-w-3xl mx-auto leading-relaxed"
           >
-            Seyahatlerinizi planlamaktan keşfetmeye, her anını unutulmaz kılmak için yapay zeka gücüyle tasarlanmış akıllı seyahat asistanınız.
+            From planning your trips to exploring, your intelligent travel assistant designed with the power of artificial intelligence to make every moment unforgettable.
           </motion.p>
 
           {/* Modern CTA Buttons */}
@@ -299,11 +299,11 @@ export function Hero() {
           >
             <Button size="lg" className="btn-modern w-full sm:w-auto gap-3 text-lg px-10 py-6">
               <Apple className="h-6 w-6" />
-              App Store'dan İndir
+              Download on the App Store
             </Button>
             <Button size="lg" variant="outline" className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-white/30 text-white hover:bg-white/10 bg-white/10 backdrop-blur-sm">
               <Smartphone className="h-6 w-6" />
-              Google Play'den İndir
+              Get it on Google Play
             </Button>
           </motion.div>
 
@@ -353,7 +353,7 @@ export function Hero() {
                   <Zap className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">AI-Powered</h3>
-                <p className="text-white/70">Yapay zeka destekli akıllı öneriler</p>
+                <p className="text-white/70">AI-powered smart recommendations</p>
               </div>
             </div>
             
@@ -396,8 +396,8 @@ export function Hero() {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center">
                   <Volume2 className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">Sesli Rehber</h3>
-                <p className="text-white/70">Yapay zeka destekli sesli anlatım</p>
+                <h3 className="text-xl font-semibold text-white mb-2">Voice Guide</h3>
+                <p className="text-white/70">AI-powered voice narration</p>
               </div>
             </div>
             
@@ -440,8 +440,8 @@ export function Hero() {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center">
                   <Languages className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">Çoklu Dil</h3>
-                <p className="text-white/70">100+ dilde seyahat rehberliği</p>
+                <h3 className="text-xl font-semibold text-white mb-2">Multi-Language</h3>
+                <p className="text-white/70">Travel guidance in 100+ languages</p>
               </div>
             </div>
           </motion.div>

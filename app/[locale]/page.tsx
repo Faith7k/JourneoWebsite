@@ -21,43 +21,43 @@ import Link from 'next/link';
 export default function HomePage() {
   const features = [
     {
-      title: 'AI Rota Planlama',
-      description: 'Yapay zeka destekli akıllı rota önerileri ile zamanınızı en verimli şekilde kullanın.',
+      title: 'AI Route Planning',
+      description: 'Use your time most efficiently with AI-powered smart route suggestions.',
       iconName: 'Brain',
     },
     {
-      title: 'İnteraktif Harita',
-      description: 'Gerçek zamanlı harita üzerinde gezilecek yerleri keşfedin ve rotanızı planlayın.',
+      title: 'Interactive Map',
+      description: 'Discover places to visit on a real-time map and plan your route.',
       iconName: 'MapPin',
     },
     {
-      title: 'Sesli Rehber (TTS)',
-      description: 'Elleriniz serbest kalırken sesli rehberlik ile yolunuzu bulun.',
+      title: 'Voice Guide (TTS)',
+      description: 'Find your way with voice guidance while keeping your hands free.',
       iconName: 'Volume2',
     },
     {
-      title: 'Akıllı Bavul',
-      description: 'Seyahatiniz için neye ihtiyacınız olduğunu yapay zeka ile organize edin.',
+      title: 'Smart Suitcase',
+      description: 'Organize what you need for your trip with artificial intelligence.',
       iconName: 'Briefcase',
     },
     {
-      title: 'Hava Durumu',
-      description: 'Hedef noktanızın anlık hava durumunu öğrenin ve hazırlıklı olun.',
+      title: 'Weather Forecast',
+      description: 'Learn the current weather at your destination and be prepared.',
       iconName: 'Cloud',
     },
     {
-      title: 'Paylaşım',
-      description: 'Seyahat deneyimlerinizi arkadaşlarınız ve ailenizle paylaşın.',
+      title: 'Sharing',
+      description: 'Share your travel experiences with friends and family.',
       iconName: 'Share2',
     },
     {
-      title: 'Harcama Takibi',
-      description: 'Seyahat bütçenizi kolayca takip edin ve raporlayın.',
+      title: 'Expense Tracking',
+      description: 'Easily track and report your travel budget.',
       iconName: 'Wallet',
     },
     {
-      title: 'Seyahat Yönetimi',
-      description: 'Geçmiş ve gelecek seyahatlerinizi tek yerden yönetin.',
+      title: 'Trip Management',
+      description: 'Manage your past and future trips from one place.',
       iconName: 'Calendar',
     },
   ];
@@ -80,9 +80,9 @@ export default function HomePage() {
               transition={{ duration: 0.8 }}
               className="text-center mb-20 space-y-6"
             >
-              <h2 className="heading-modern text-gradient">Güçlü Özellikler</h2>
+              <h2 className="heading-modern text-gradient">Powerful Features</h2>
               <p className="text-modern text-muted-foreground max-w-3xl mx-auto">
-                Seyahatinizi kolaylaştıran akıllı araçlar ve yapay zeka destekli özellikler
+                Smart tools and AI-powered features to make your travel easier
               </p>
             </motion.div>
 
@@ -105,7 +105,7 @@ export default function HomePage() {
             >
               <Link href="/features">
                 <Button size="lg" className="btn-modern">
-                  Tüm Özellikler →
+                  All Features →
                 </Button>
               </Link>
             </motion.div>
@@ -126,18 +126,18 @@ export default function HomePage() {
               className="text-center mb-20"
             >
               <h2 className="heading-modern text-gradient mb-6">
-                Nasıl Çalışır?
+                How It Works?
               </h2>
               <p className="text-modern text-muted-foreground max-w-2xl mx-auto">
-                Sadece 3 adımda seyahatlerinizi AI destekli olarak planlayın
+                Plan your trips with AI support in just 3 steps
               </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {[
-                { step: 1, title: 'Planla', desc: 'Hedefinizi belirleyin ve AI destekli öneriler alın', icon: '🎯' },
-                { step: 2, title: 'Keşfet', desc: 'İnteraktif harita ile en iyi rotaları keşfedin', icon: '🗺️' },
-                { step: 3, title: 'Seyahat Et', desc: 'Sesli rehberlik ile güvenli seyahat edin', icon: '🚀' }
+                { step: 1, title: 'Plan', desc: 'Set your destination and get AI-powered recommendations', icon: '🎯' },
+                { step: 2, title: 'Explore', desc: 'Discover the best routes with interactive maps', icon: '🗺️' },
+                { step: 3, title: 'Travel', desc: 'Travel safely with voice guidance', icon: '🚀' }
               ].map((item, index) => (
                 <motion.div 
                   key={item.step}
@@ -194,10 +194,10 @@ export default function HomePage() {
               className="space-y-8"
             >
               <h2 className="heading-modern text-white">
-                Yapay Zekâ Destekli Kişisel Seyahat Rehberin
+                Your AI-Powered Personal Travel Guide
               </h2>
               <p className="text-modern text-white/90 max-w-4xl mx-auto leading-relaxed">
-                Seyahatlerinizi planlamaktan keşfetmeye, her anını unutulmaz kılmak için yapay zeka gücüyle tasarlanmış akıllı seyahat asistanınız.
+                From planning your trips to exploring, your intelligent travel assistant designed with the power of artificial intelligence to make every moment unforgettable.
               </p>
             </motion.div>
             
@@ -210,11 +210,11 @@ export default function HomePage() {
             >
               <Button size="lg" className="glass-card text-white border-white/30 hover:bg-white/10 text-lg px-10 py-6">
                 <Apple className="h-6 w-6 mr-3" />
-                App Store'dan İndir
+                Download on the App Store
               </Button>
               <Button size="lg" className="glass-card text-white border-white/30 hover:bg-white/10 text-lg px-10 py-6">
                 <Smartphone className="h-6 w-6 mr-3" />
-                Google Play'den İndir
+                Get it on Google Play
               </Button>
             </motion.div>
             
@@ -228,15 +228,15 @@ export default function HomePage() {
             >
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
-                <span className="font-medium">100K+ İndirme</span>
+                <span className="font-medium">100K+ Downloads</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-blue-400 animate-pulse" />
-                <span className="font-medium">4.9/5 Puan</span>
+                <span className="font-medium">4.9/5 Rating</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-purple-400 animate-pulse" />
-                <span className="font-medium">AI Destekli</span>
+                <span className="font-medium">AI-Powered</span>
               </div>
             </motion.div>
           </div>

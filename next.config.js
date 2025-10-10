@@ -7,6 +7,9 @@ const withNextIntl = createNextIntlPlugin('./i18n.ts');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
+  },
   images: {
     domains: ['firebasestorage.googleapis.com'],
     formats: ['image/avif', 'image/webp'],

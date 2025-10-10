@@ -44,12 +44,12 @@ export function Header() {
   }, [languageMenuOpen]);
 
   const navigation = [
-    { name: 'Ana Sayfa', href: '/' },
-    { name: 'Özellikler', href: '/features' },
-    { name: 'Fiyatlandırma', href: '/pricing' },
-    { name: 'Ekran Görüntüleri', href: '/screenshots' },
-    { name: 'Destek', href: '/support' },
-    { name: 'İletişim', href: '/contact' },
+    { name: 'Home', href: '/' },
+    { name: 'Features', href: '/features' },
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Screenshots', href: '/screenshots' },
+    { name: 'Support', href: '/support' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -170,7 +170,7 @@ export function Header() {
             
             {/* Mobile Language Options */}
             <div className="pt-4 border-t">
-              <div className="text-sm font-medium text-muted-foreground mb-3">Dil / Language</div>
+              <div className="text-sm font-medium text-muted-foreground mb-3">Language</div>
               <div className="flex gap-2">
                 {languages.map((lang) => (
                   <button
