@@ -135,7 +135,7 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {[
-                { step: 1, title: 'Plan', desc: 'Set your destination and get AI-powered recommendations', icon: '🎯' },
+                { step: 1, title: 'Plan', desc: 'Set your destination and get AI-powered recommendations', icon: '/images/planning.png', isImage: true },
                 { step: 2, title: 'Explore', desc: 'Discover the best routes with interactive maps', icon: '🗺️' },
                 { step: 3, title: 'Travel', desc: 'Travel safely with voice guidance', icon: '🚀' }
               ].map((item, index) => (
@@ -152,7 +152,15 @@ export default function HomePage() {
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <span className="text-4xl">{item.icon}</span>
+                    {item.isImage ? (
+                      <img 
+                        src={item.icon} 
+                        alt={item.title}
+                        className="w-12 h-12 object-contain"
+                      />
+                    ) : (
+                      <span className="text-4xl">{item.icon}</span>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </motion.div>
                   
