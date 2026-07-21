@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
-  Image,
+  Image as ImageIcon,
   Mail,
   Activity,
   Users,
@@ -15,7 +16,7 @@ import { cn } from '@/lib/utils';
 
 const navItems = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
-  { href: '/admin/screenshots', label: 'Screenshots', icon: Image },
+  { href: '/admin/screenshots', label: 'Screenshots', icon: ImageIcon },
   { href: '/admin/messages', label: 'Messages', icon: Mail },
   { href: '/admin/api-usage', label: 'API Usage', icon: Activity },
   { href: '/admin/users', label: 'App Users', icon: Users },
@@ -27,10 +28,14 @@ export function AdminSidebar() {
 
   return (
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-slate-800 bg-slate-900/80 backdrop-blur-xl lg:flex">
-      <div className="flex h-16 items-center gap-2 border-b border-slate-800 px-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500">
-          <Globe className="h-5 w-5 text-white" />
-        </div>
+      <div className="flex h-16 items-center gap-3 border-b border-slate-800 px-6">
+        <Image
+          src="/logo.png"
+          alt="Journeo Logo"
+          width={32}
+          height={32}
+          className="w-8 h-8 rounded-lg shadow-sm object-cover"
+        />
         <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-lg font-bold text-transparent">
           Journeo
         </span>

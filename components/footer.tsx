@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 function resolveLegalUrl(url: string | undefined | null, defaultPath: string): string {
@@ -57,6 +58,20 @@ export function Footer({
   return (
     <footer className="border-t bg-muted/40">
       <div className="container py-12 md:py-16">
+        <div className="mb-10 flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3 group">
+            <Image
+              src="/logo.png"
+              alt="Journeo Logo"
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-xl shadow-md group-hover:scale-105 transition-transform object-cover"
+            />
+            <span className="text-2xl font-bold text-gradient">
+              Journeo
+            </span>
+          </Link>
+        </div>
         <div className="grid grid-cols-2 gap-8 md:grid-cols-3">
           {Object.values(footerLinks).map((section) => (
             <div key={section.name}>

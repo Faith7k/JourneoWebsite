@@ -5,6 +5,7 @@ import { Apple, Smartphone, Sparkles, Languages, Zap, Volume2 } from 'lucide-rea
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 // Gezi ile alakalı emoji'ler
 const travelEmojis = ['✈️', '🗺️', '🧳', '📸', '🏖️', '⛰️', '🏛️', '🎒', '🚂', '🚢', '🏨', '🗼', '🎡', '🎢', '🎪', '🎭', '🎨', '🏰', '⛪', '🕌', '🗿', '🌋', '🏔️', '🏕️', '🏞️', '🌅', '🌄', '🌠', '🎆', '🎇', '🌃', '🌆', '🌉'];
@@ -159,6 +160,29 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
       {/* Modern Background Effects */}
       <div className="absolute inset-0 mesh-gradient" />
       <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+
+      {/* Top-Right Corner App Logo Badge */}
+      <div className="absolute top-6 right-6 z-20">
+        <motion.div
+          initial={{ opacity: 0, y: -20, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.8, type: "spring" }}
+          className="glass-card p-2.5 sm:p-3 rounded-2xl flex items-center gap-3 border border-white/20 shadow-2xl backdrop-blur-md bg-white/10 hover:bg-white/20 transition-all group"
+        >
+          <Image
+            src="/logo.png"
+            alt="Journeo App Logo"
+            width={48}
+            height={48}
+            priority
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl shadow-lg group-hover:scale-105 transition-transform object-cover"
+          />
+          <div className="hidden sm:block text-left pr-1">
+            <div className="text-xs font-bold text-white tracking-wide">Journeo</div>
+            <div className="text-[10px] font-medium text-white/70">AI Travel Guide</div>
+          </div>
+        </motion.div>
+      </div>
       
       {/* Floating Emojis */}
       {mounted && emojis.map((emoji) => (
@@ -234,8 +258,23 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
             className="relative"
           >
             <h1 
-              className="heading-modern text-gradient inline-flex justify-center items-center min-h-[120px] relative"
+              className="heading-modern text-gradient inline-flex justify-center items-center gap-4 sm:gap-6 min-h-[120px] relative flex-wrap sm:flex-nowrap"
             >
+              <motion.div
+                initial={{ scale: 0, rotate: -10 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                className="inline-block flex-shrink-0"
+              >
+                <Image
+                  src="/logo.png"
+                  alt="Journeo App Icon"
+                  width={96}
+                  height={96}
+                  priority
+                  className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl md:rounded-3xl shadow-2xl shadow-purple-500/30 border-2 border-white/20 object-cover hover:scale-105 transition-transform"
+                />
+              </motion.div>
               <span className="inline-block">
                 {mounted ? displayedText : fullText}
                 {mounted && (

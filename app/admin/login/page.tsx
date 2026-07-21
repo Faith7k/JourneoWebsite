@@ -3,6 +3,7 @@
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Loader2, Lock, Mail, ShieldAlert } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -44,7 +45,14 @@ function LoginForm() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 px-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <Link href="/" className="inline-block">
+          <Link href="/" className="inline-flex items-center gap-3">
+            <Image
+              src="/logo.png"
+              alt="Journeo Logo"
+              width={40}
+              height={40}
+              className="w-10 h-10 rounded-xl shadow-md object-cover"
+            />
             <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-3xl font-bold text-transparent">
               Journeo
             </span>
