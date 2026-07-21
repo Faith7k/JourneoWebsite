@@ -3,18 +3,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { AlertCircle, Trash2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return genMeta({
-    title: params.locale === 'tr' ? 'Hesap ve Veri Silme' : 'Account and Data Deletion',
-    description: params.locale === 'tr'
+    title: locale === 'tr' ? 'Hesap ve Veri Silme' : 'Account and Data Deletion',
+    description: locale === 'tr'
       ? 'Journeo hesabınızı ve verilerinizi nasıl silebilirsiniz'
       : 'How to delete your Journeo account and data',
-    locale: params.locale === 'tr' ? 'tr_TR' : 'en_US',
+    locale: locale === 'tr' ? 'tr_TR' : 'en_US',
+    path: '/support/data-deletion',
   });
 }
 
-export default function DataDeletionPage({ params }: { params: { locale: string } }) {
-  const isTurkish = params.locale === 'tr';
+export default async function DataDeletionPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const isTurkish = locale === 'tr';
 
   return (
     <div className="py-24">
