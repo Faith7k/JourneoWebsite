@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rate-limit';
+import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: NextRequest) {
   try {
-    // Get client IP for rate limiting
-    const ip = request.headers.get('x-forwarded-for') || 'unknown';
-    
-    // Apply rate limiting
-    const rateLimitResult = rateLimit(ip, 5, 60000); // 5 requests per minute
-    
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+
+    const rateLimitResult = rateLimit(ip, 5, 60000);
     if (!rateLimitResult.success) {
       return NextResponse.json(
         { error: 'Too many requests. Please try again later.' },
@@ -17,9 +15,8 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, message } = body;
+    const { name, email, message, locale } = body;
 
-    // Validation
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: 'All fields are required' },
@@ -27,26 +24,41 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
+    }
+
+    if (message.length > 5000) {
       return NextResponse.json(
-        { error: 'Invalid email address' },
+        { error: 'Message is too long (max 5000 characters).' },
         { status: 400 }
       );
     }
 
-    // In a real application, you would send an email here
-    // For now, we'll just log it
-    console.log('Contact form submission:', { name, email, message });
+    const supabase = await createClient();
 
-    // TODO: Integrate with email service (SendGrid, AWS SES, etc.)
-    // Example:
-    // await sendEmail({
-    //   to: 'support@journeo.ai',
-    //   subject: `New contact form submission from ${name}`,
-    //   text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-    // });
+    // Hash IP for privacy — store only a hash so we can correlate abuse without
+    // storing raw IPs.
+    const ipHash = await hashIp(ip);
+
+    const { error: insertError } = await supabase.from('contact_messages').insert({
+      name: String(name).slice(0, 200),
+      email: String(email).slice(0, 320),
+      message: String(message).slice(0, 5000),
+      locale: locale ?? null,
+      user_agent: request.headers.get('user-agent')?.slice(0, 500) ?? null,
+      ip_hash: ipHash,
+      is_read: false,
+    });
+
+    if (insertError) {
+      console.error('Contact insert error:', insertError);
+      return NextResponse.json(
+        { error: 'Could not store your message. Please try again.' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
       { success: true, message: 'Message sent successfully' },
@@ -54,10 +66,15 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error('Contact form error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
+async function hashIp(ip: string): Promise<string> {
+  const data = new TextEncoder().encode(`journeo:${ip}`);
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(digest))
+    .slice(0, 8)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}

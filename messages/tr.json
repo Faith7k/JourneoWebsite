@@ -140,7 +140,6 @@
     }
   },
   "footer": {
-    "company": "Şirket",
     "product": "Ürün",
     "legal": "Yasal",
     "support": "Destek",
@@ -152,8 +151,6 @@
     "privacy": "Gizlilik Politikası",
     "eula": "Son Kullanıcı Lisans Sözleşmesi",
     "dataDeletion": "Veri Silme",
-    "pressKit": "Basın Kiti",
-    "changelog": "Değişiklik Günlüğü",
     "supportCenter": "Destek Merkezi",
     "rights": "© 2025 Journeo. Tüm hakları saklıdır."
   },
@@ -176,6 +173,167 @@
     "dataDeletion": {
       "title": "Hesap ve Veri Silme",
       "description": "Hesabınızı ve verilerinizi kalıcı olarak silmek için aşağıdaki adımları takip edebilirsiniz."
+    }
+  },
+  "privacy": {
+    "title": "Gizlilik Politikası",
+    "lastUpdated": "10 Ocak 2025",
+    "intro": "Journeo olarak gizliliğinize önem veriyoruz. Bu gizlilik politikası, kişisel verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklar.",
+    "informationWeCollect": "Topladığımız Bilgiler",
+    "locationInfo": {
+      "title": "Konum Bilgileri",
+      "body": "Journeo, size en iyi seyahat deneyimini sunmak için konum verilerinizi kullanır: Gerçek zamanlı navigasyon için GPS konumu, yakındaki ilgi çekici noktaları göstermek ve yapay zeka destekli rota önerileri oluşturmak. Konum verileri yalnızca uygulamayı kullanırken toplanır ve izniniz olmadan paylaşılmaz."
+    },
+    "accountInfo": {
+      "title": "Hesap Bilgileri",
+      "email": "E-posta adresi",
+      "name": "Ad ve soyad",
+      "photo": "Profil fotoğrafı (isteğe bağlı)"
+    },
+    "usageData": {
+      "title": "Kullanım Verileri",
+      "statistics": "Uygulama kullanım istatistikleri",
+      "preferences": "Tercihleriniz ve ayarlarınız",
+      "history": "Seyahat geçmişiniz"
+    },
+    "howWeUse": {
+      "title": "Verileri Kullanım Şeklimiz",
+      "functionality": "Uygulama işlevselliğini sağlamak",
+      "recommendations": "Kişiselleştirilmiş öneriler sunmak",
+      "experience": "Kullanıcı deneyimini iyileştirmek",
+      "support": "Müşteri desteği sağlamak"
+    },
+    "dataSecurity": {
+      "title": "Veri Güvenliği",
+      "encrypted": "Tüm veriler Supabase platformunda şifreli olarak saklanır",
+      "tls": "SSL/TLS protokolleriyle güvenli aktarım",
+      "audits": "Düzenli güvenlik denetimleri",
+      "measures": "Endüstri standardı güvenlik önlemleri"
+    },
+    "thirdParty": {
+      "title": "Üçüncü Taraf Hizmetleri",
+      "intro": "Journeo aşağıdaki üçüncü taraf hizmetlerini kullanır:",
+      "supabase": "Kimlik doğrulama ve veri depolama",
+      "maps": "Harita ve konum hizmetleri",
+      "openai": "Yapay zeka destekli öneriler",
+      "note": "Bu hizmetler kendi gizlilik politikalarına tabidir."
+    },
+    "dataRetention": {
+      "title": "Veri Saklama",
+      "active": "Verileriniz hesabınız aktif olduğu sürece saklanır",
+      "deletion": "Hesap silme talep ettiğinizde, verileriniz 30 gün içinde kalıcı olarak silinir",
+      "legal": "Yasal yükümlülükler için gereken veriler saklanabilir"
+    },
+    "yourRights": {
+      "title": "Haklarınız",
+      "intro": "KVKK ve CCPA kapsamında aşağıdaki haklara sahipsiniz:",
+      "access": "Verilerinize erişme hakkı",
+      "rectification": "Düzeltme hakkı",
+      "erasure": "Silme (unutulma hakkı)",
+      "object": "İşlemeye itiraz hakkı",
+      "portability": "Veri taşınabilirliği hakkı"
+    },
+    "children": {
+      "title": "Çocukların Gizliliği",
+      "body": "Journeo 13 yaşın altındaki çocuklar için tasarlanmamıştır ve bu yaş grubundan bilerek veri toplamıyoruz."
+    },
+    "changes": {
+      "title": "Değişiklikler",
+      "body": "Bu gizlilik politikası zaman zaman güncellenebilir. Önemli değişikliklerde size bildirimde bulunacağız."
+    },
+    "contact": {
+      "title": "İletişim",
+      "body": "Gizlilik ile ilgili sorularınız için:",
+      "email": "E-posta: privacy@journeo.ai",
+      "web": "Web: https://journeo.ai/contact"
+    }
+  },
+  "terms": {
+    "title": "Kullanım Koşulları",
+    "lastUpdated": "10 Ocak 2025",
+    "intro": "Journeo'ya hoş geldiniz. Uygulamamızı ve hizmetlerimizi kullanarak aşağıdaki koşulları kabul etmiş olursunuz.",
+    "acceptance": {
+      "title": "Koşulların Kabulü",
+      "body": "Journeo'yu indirerek, yükleyerek veya kullanarak bu Kullanım Koşulları'na bağlı kalmayı kabul edersiniz. Kabul etmiyorsanız uygulamayı kullanmayın."
+    },
+    "license": {
+      "title": "Lisans",
+      "body": "Size Journeo'yu kişisel seyahat planlama amaçlarınız için kullanmak üzere kişisel, münhasır olmayan, devredilemez bir lisans veriyoruz."
+    },
+    "use": {
+      "title": "Hizmetin Kullanımı",
+      "body": "Journeo'yu yalnızca yasal amaçlar için kullanmayı kabul edersiniz. Şunlardan sorumlusunuz:",
+      "legal": "Tüm yürürlükteki yasalara uymak",
+      "account": "Hesabınızın gizliliğini korumak",
+      "responsibility": "Hesabınız altında gerçekleşen tüm faaliyetler"
+    },
+    "payments": {
+      "title": "Ödemeler ve Abonelikler",
+      "body": "Premium özellikler uygulama içi abonelikler ile kullanılabilir. Abonelik ücretleri, Apple App Store veya Google Play Store üzerinden kendi koşullarına göre faturalandırılır."
+    },
+    "termination": {
+      "title": "Sonlandırma",
+      "body": "Journeo'ya erişiminizi herhangi bir nedenle, sebep bildirmeden ve önceden haber vermeden sonlandırabilir veya askıya alabiliriz."
+    },
+    "disclaimer": {
+      "title": "Sorumluluk Reddi",
+      "body": "Journeo herhangi bir garanti olmadan \"olduğu gibi\" sunulur. Seyahat önerilerinin doğru veya ihtiyaçlarınıza uygun olacağını garanti etmiyoruz."
+    },
+    "liability": {
+      "title": "Sorumluluğun Sınırlandırılması",
+      "body": "Yasanın izin verdiği en geniş ölçüde, Journeo uygulamayı kullanmanızdan kaynaklanan dolaylı, arızi veya sonuç olarak ortaya çıkan zararlardan sorumlu tutulamaz."
+    },
+    "changes": {
+      "title": "Koşul Değişiklikleri",
+      "body": "Kullanım Koşullarını zaman zaman güncelleyebiliriz. Uygulamayı kullanmaya devam etmeniz, güncellenmiş koşulları kabul ettiğiniz anlamına gelir."
+    },
+    "contact": {
+      "title": "İletişim",
+      "body": "Bu Koşullar hakkında sorularınız için bize legal@journeo.ai adresinden ulaşın."
+    }
+  },
+  "eula": {
+    "title": "Son Kullanıcı Lisans Sözleşmesi",
+    "lastUpdated": "10 Ocak 2025",
+    "intro": "Bu Son Kullanıcı Lisans Sözleşmesi (\"EULA\"), Journeo mobil uygulamasının kullanımına ilişkin sizinle Journeo arasında bir hukuki sözleşmedir.",
+    "license": {
+      "title": "Lisans Verme",
+      "body": "Bu EULA'ya uymanız koşuluyla, uygulamayı tek bir cihazda kurmak ve kullanmak için size sınırlı, kişisel, münhasır olmayan, devredilemez bir lisans veriyoruz."
+    },
+    "permitted": {
+      "title": "İzin Verilen Kullanımlar",
+      "body": "Uygulamayı kişisel, ticari olmayan seyahat planlama amaçları için kullanabilirsiniz."
+    },
+    "restrictions": {
+      "title": "Kısıtlamalar",
+      "modify": "Uygulamayı değiştiremez, uyarlayamaz veya çeviremezsiniz",
+      "distribute": "Uygulamayı dağıtamaz, alt lisans veremez veya kiralayamazsınız",
+      "reverse": "Uygulamayı tersine mühendislik yapamaz, derleyemez veya parçalarına ayıramazsınız",
+      "transfer": "Yazılı onımız olmadan bu EULA kapsamındaki haklarınızı devredemezsiniz"
+    },
+    "ownership": {
+      "title": "Sahiplik",
+      "body": "Uygulama ve içindeki tüm fikri mülkiyet hakları Journeo'nun mülkiyetinde kalır. Bu EULA, ticari markalarımız veya diğer fikri mülkiyetimiz üzerinde size hiçbir hak vermez."
+    },
+    "termination": {
+      "title": "Sonlandırma",
+      "body": "Herhangi bir koşula uymamanız durumunda bu EULA otomatik olarak sona erer. Sonlandırma durumunda uygulamayı kullanmayı bırakmalı ve cihazınızdan silmelisiniz."
+    },
+    "warranty": {
+      "title": "Garanti Yok",
+      "body": "Uygulama herhangi bir garanti olmadan \"olduğu gibi\" sunulur. Uygulamanın hatasız veya kesintisiz olacağını garanti etmiyoruz."
+    },
+    "liability": {
+      "title": "Sorumluluğun Sınırlandırılması",
+      "body": "Hiçbir durumda Journeo, uygulamayı kullanma veya kullanamama durumundan kaynaklanan zararlardan sorumlu tutulamaz."
+    },
+    "governing": {
+      "title": "Uygulanacak Hukuk",
+      "body": "Bu EULA, hukuk ilkeleri çatışması dikkate alınmaksızın Türkiye Cumhuriyeti yasalarına tabi olacaktır."
+    },
+    "contact": {
+      "title": "İletişim",
+      "body": "Bu EULA hakkında sorularınız için bize legal@journeo.ai adresinden ulaşın."
     }
   }
 }

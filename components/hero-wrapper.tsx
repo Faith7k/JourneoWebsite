@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
-import { HomePageClient } from './home-client';
+import { Hero } from './hero';
 
-export default async function HomePage() {
+export async function HeroWrapper() {
   const supabase = await createClient();
   const { data: settings } = await supabase
     .from('site_settings')
@@ -10,7 +10,7 @@ export default async function HomePage() {
     .single();
 
   return (
-    <HomePageClient
+    <Hero
       appStoreUrl={settings?.app_store_url ?? undefined}
       playStoreUrl={settings?.play_store_url ?? undefined}
     />

@@ -29,7 +29,7 @@ interface Confetti {
   velocity: { x: number; y: number };
 }
 
-export function Hero() {
+export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; playStoreUrl?: string }) {
   const t = useTranslations();
   const [mounted, setMounted] = useState(false);
   const [emojis, setEmojis] = useState<FloatingEmoji[]>([]);
@@ -311,14 +311,45 @@ export function Hero() {
             transition={{ delay: 1.2, duration: 1 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <Button size="lg" className="btn-modern w-full sm:w-auto gap-3 text-lg px-10 py-6">
-              <Apple className="h-6 w-6" />
-              {t('hero.cta.appStore')}
-            </Button>
-            <Button size="lg" variant="outline" className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-white/30 text-white hover:bg-white/10 bg-white/10 backdrop-blur-sm">
-              <Smartphone className="h-6 w-6" />
-              {t('hero.cta.playStore')}
-            </Button>
+            {/* App Store Button */}
+            {appStoreUrl ? (
+              <a
+                href={appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto"
+              >
+                <Button size="lg" className="btn-modern w-full sm:w-auto gap-3 text-lg px-10 py-6">
+                  <Apple className="h-6 w-6" />
+                  {t('hero.cta.appStore')}
+                </Button>
+              </a>
+            ) : (
+              <Button size="lg" disabled className="btn-modern w-full sm:w-auto gap-3 text-lg px-10 py-6 opacity-50 cursor-not-allowed">
+                <Apple className="h-6 w-6" />
+                {t('hero.cta.appStore')}
+              </Button>
+            )}
+
+            {/* Play Store Button */}
+            {playStoreUrl ? (
+              <a
+                href={playStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto"
+              >
+                <Button size="lg" variant="outline" className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-white/30 text-white hover:bg-white/10 bg-white/10 backdrop-blur-sm">
+                  <Smartphone className="h-6 w-6" />
+                  {t('hero.cta.playStore')}
+                </Button>
+              </a>
+            ) : (
+              <Button size="lg" variant="outline" disabled className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-white/30 text-white bg-white/10 backdrop-blur-sm opacity-50 cursor-not-allowed">
+                <Smartphone className="h-6 w-6" />
+                {t('hero.cta.playStore')}
+              </Button>
+            )}
           </motion.div>
 
           {/* Modern Stats with Icons */}

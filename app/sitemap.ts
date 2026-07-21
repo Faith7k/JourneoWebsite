@@ -16,8 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/support',
     '/support/data-deletion',
     '/contact',
-    '/press-kit',
-    '/changelog',
   ];
 
   const sitemap: MetadataRoute.Sitemap = [];

@@ -6,6 +6,7 @@ export interface SEOConfig {
   canonical?: string;
   locale?: string;
   type?: string;
+  path?: string;
   images?: Array<{
     url: string;
     width?: number;
@@ -20,21 +21,23 @@ export function generateMetadata({
   canonical,
   locale = 'tr_TR',
   type = 'website',
+  path,
   images = [],
 }: SEOConfig) {
   const baseUrl = getBaseUrl();
+  const url = path ? `${baseUrl}${path}` : canonical || baseUrl;
   const defaultImage = `${baseUrl}/images/og-image.png`;
 
   return {
     title: `${title} | Journeo`,
     description,
     alternates: {
-      canonical: canonical || baseUrl,
+      canonical: url,
     },
     openGraph: {
       title: `${title} | Journeo`,
       description,
-      url: canonical || baseUrl,
+      url,
       siteName: 'Journeo',
       locale,
       type,

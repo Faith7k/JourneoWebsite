@@ -140,7 +140,6 @@
     }
   },
   "footer": {
-    "company": "Company",
     "product": "Product",
     "legal": "Legal",
     "support": "Support",
@@ -152,8 +151,6 @@
     "privacy": "Privacy Policy",
     "eula": "End User License Agreement",
     "dataDeletion": "Data Deletion",
-    "pressKit": "Press Kit",
-    "changelog": "Changelog",
     "supportCenter": "Support Center",
     "rights": "© 2025 Journeo. All rights reserved."
   },
@@ -176,6 +173,167 @@
     "dataDeletion": {
       "title": "Account and Data Deletion",
       "description": "You can follow the steps below to permanently delete your account and data."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "January 10, 2025",
+    "intro": "At Journeo, we take your privacy seriously. This privacy policy explains how we collect, use, and protect your personal data.",
+    "informationWeCollect": "Information We Collect",
+    "locationInfo": {
+      "title": "Location Information",
+      "body": "Journeo uses your location data to provide you with the best travel experience: GPS location for real-time navigation, to show nearby points of interest, and to generate AI-powered route suggestions. Location data is only collected while using the app and is not shared without your permission."
+    },
+    "accountInfo": {
+      "title": "Account Information",
+      "email": "Email address",
+      "name": "Name and surname",
+      "photo": "Profile photo (optional)"
+    },
+    "usageData": {
+      "title": "Usage Data",
+      "statistics": "App usage statistics",
+      "preferences": "Your preferences and settings",
+      "history": "Travel history"
+    },
+    "howWeUse": {
+      "title": "How We Use Data",
+      "functionality": "Providing app functionality",
+      "recommendations": "Offering personalized recommendations",
+      "experience": "Improving user experience",
+      "support": "Providing customer support"
+    },
+    "dataSecurity": {
+      "title": "Data Security",
+      "encrypted": "All data is stored encrypted on the Supabase platform",
+      "tls": "Secure transmission with SSL/TLS protocols",
+      "audits": "Regular security audits",
+      "measures": "Industry-standard security measures"
+    },
+    "thirdParty": {
+      "title": "Third-Party Services",
+      "intro": "Journeo uses the following third-party services:",
+      "supabase": "Authentication and data storage",
+      "maps": "Map and location services",
+      "openai": "AI-powered recommendations",
+      "note": "These services are subject to their own privacy policies."
+    },
+    "dataRetention": {
+      "title": "Data Retention",
+      "active": "Your data is retained while your account is active",
+      "deletion": "When you request account deletion, your data is permanently deleted within 30 days",
+      "legal": "Data required for legal obligations may be retained"
+    },
+    "yourRights": {
+      "title": "Your Rights",
+      "intro": "Under GDPR and CCPA, you have the following rights:",
+      "access": "Right to access your data",
+      "rectification": "Right to rectification",
+      "erasure": "Right to erasure (right to be forgotten)",
+      "object": "Right to object to processing",
+      "portability": "Right to data portability"
+    },
+    "children": {
+      "title": "Children's Privacy",
+      "body": "Journeo is not intended for children under 13 and we do not knowingly collect data from this age group."
+    },
+    "changes": {
+      "title": "Changes",
+      "body": "This privacy policy may be updated from time to time. We will notify you of significant changes."
+    },
+    "contact": {
+      "title": "Contact",
+      "body": "For privacy-related questions:",
+      "email": "Email: privacy@journeo.ai",
+      "web": "Web: https://journeo.ai/contact"
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "January 10, 2025",
+    "intro": "Welcome to Journeo. By using our app and services, you agree to the following terms.",
+    "acceptance": {
+      "title": "Acceptance of Terms",
+      "body": "By downloading, installing, or using Journeo, you agree to be bound by these Terms of Service. If you do not agree, do not use the app."
+    },
+    "license": {
+      "title": "License",
+      "body": "We grant you a personal, non-exclusive, non-transferable license to use Journeo for your personal travel planning purposes."
+    },
+    "use": {
+      "title": "Use of the Service",
+      "body": "You agree to use Journeo only for lawful purposes. You are responsible for:",
+      "legal": "Complying with all applicable laws",
+      "account": "Maintaining the confidentiality of your account",
+      "responsibility": "All activities that occur under your account"
+    },
+    "payments": {
+      "title": "Payments and Subscriptions",
+      "body": "Premium features are available through in-app subscriptions. Subscription fees are billed through Apple App Store or Google Play Store according to their terms."
+    },
+    "termination": {
+      "title": "Termination",
+      "body": "We may terminate or suspend your access to Journeo at any time, with or without cause, and without notice."
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "body": "Journeo is provided \"as is\" without warranties of any kind. We do not guarantee that travel recommendations will be accurate or suitable for your needs."
+    },
+    "liability": {
+      "title": "Limitation of Liability",
+      "body": "To the maximum extent permitted by law, Journeo shall not be liable for any indirect, incidental, or consequential damages arising from your use of the app."
+    },
+    "changes": {
+      "title": "Changes to Terms",
+      "body": "We may update these Terms of Service from time to time. Continued use of the app constitutes acceptance of the updated terms."
+    },
+    "contact": {
+      "title": "Contact",
+      "body": "For questions about these Terms, contact us at legal@journeo.ai."
+    }
+  },
+  "eula": {
+    "title": "End User License Agreement",
+    "lastUpdated": "January 10, 2025",
+    "intro": "This End User License Agreement (\"EULA\") is a legal agreement between you and Journeo regarding the use of the Journeo mobile application.",
+    "license": {
+      "title": "License Grant",
+      "body": "Subject to your compliance with this EULA, we grant you a limited, personal, non-exclusive, non-transferable license to install and use one copy of the app on a single device."
+    },
+    "permitted": {
+      "title": "Permitted Uses",
+      "body": "You may use the app for personal, non-commercial travel planning purposes."
+    },
+    "restrictions": {
+      "title": "Restrictions",
+      "modify": "You may not modify, adapt, or translate the app",
+      "distribute": "You may not distribute, sublicense, or rent the app",
+      "reverse": "You may not reverse engineer, decompile, or disassemble the app",
+      "transfer": "You may not transfer your rights under this EULA without our written consent"
+    },
+    "ownership": {
+      "title": "Ownership",
+      "body": "The app and all intellectual property rights therein remain the property of Journeo. This EULA does not grant you any rights to our trademarks or other intellectual property."
+    },
+    "termination": {
+      "title": "Termination",
+      "body": "This EULA terminates automatically if you fail to comply with any term. Upon termination, you must cease using the app and delete it from your device."
+    },
+    "warranty": {
+      "title": "No Warranty",
+      "body": "The app is provided \"as is\" without warranty of any kind. We do not warrant that the app will be error-free or uninterrupted."
+    },
+    "liability": {
+      "title": "Limitation of Liability",
+      "body": "In no event shall Journeo be liable for any damages arising out of the use or inability to use the app."
+    },
+    "governing": {
+      "title": "Governing Law",
+      "body": "This EULA shall be governed by the laws of Turkey, without regard to its conflict of law provisions."
+    },
+    "contact": {
+      "title": "Contact",
+      "body": "For questions about this EULA, contact us at legal@journeo.ai."
     }
   }
 }

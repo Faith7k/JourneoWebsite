@@ -1,105 +1,94 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { isAdmin } from '@/lib/supabase/admin';
 
-// Bu veriler admin panelinden gelecek, şimdilik static olarak tanımlıyoruz
-// Gerçek uygulamada bu veriler bir veritabanından gelecek
-let screenshots = [
-  {
-    id: 1,
-    title: 'Welcome Dashboard',
-    description: 'Your personal travel hub with AI-powered insights',
-    alt: 'Main Screen',
-    src: '/images/screenshot-1.png',
-    icon: 'Smartphone',
-    color: 'from-blue-500 to-cyan-500'
-  },
-  {
-    id: 2,
-    title: 'Interactive Map',
-    description: 'Real-time navigation with smart route suggestions',
-    alt: 'Map View',
-    src: '/images/screenshot-2.png',
-    icon: 'MapPin',
-    color: 'from-green-500 to-emerald-500'
-  },
-  {
-    id: 3,
-    title: 'AI Route Planning',
-    description: 'Intelligent route optimization for your journey',
-    alt: 'Route Planning',
-    src: '/images/screenshot-3.png',
-    icon: 'Route',
-    color: 'from-purple-500 to-pink-500'
-  },
-  {
-    id: 4,
-    title: 'Trip Management',
-    description: 'Organize and track your travel experiences',
-    alt: 'Travel Details',
-    src: '/images/screenshot-4.png',
-    icon: 'Calendar',
-    color: 'from-orange-500 to-red-500'
-  },
-  {
-    id: 5,
-    title: 'Smart Packing',
-    description: 'AI-powered packing suggestions for your trip',
-    alt: 'Smart Suitcase',
-    src: '/images/screenshot-5.png',
-    icon: 'Briefcase',
-    color: 'from-indigo-500 to-blue-500'
-  },
-  {
-    id: 6,
-    title: 'Expense Tracking',
-    description: 'Keep track of your travel budget effortlessly',
-    alt: 'Expenses',
-    src: '/images/screenshot-6.png',
-    icon: 'Wallet',
-    color: 'from-teal-500 to-green-500'
-  }
-];
-
+// Public: list published screenshots
 export async function GET() {
-  return NextResponse.json(screenshots);
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('screenshots')
+    .select('id, title, description, alt_text, image_url, icon, color_theme, sort_order')
+    .eq('is_published', true)
+    .order('sort_order', { ascending: true });
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+  return NextResponse.json({ screenshots: data ?? [] });
 }
 
-export async function POST(request: Request) {
-  try {
-    const newScreenshot = await request.json();
-    const id = Math.max(...screenshots.map(s => s.id)) + 1;
-    const screenshot = { ...newScreenshot, id };
-    screenshots.push(screenshot);
-    return NextResponse.json(screenshot, { status: 201 });
-  } catch (error) {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+// Admin only: create
+export async function POST(request: NextRequest) {
+  if (!(await isAdmin())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const supabase = await createClient();
+  const body = await request.json();
+
+  const { data, error } = await supabase
+    .from('screenshots')
+    .insert({
+      title: body.title,
+      description: body.description ?? null,
+      alt_text: body.alt_text ?? null,
+      image_url: body.image_url,
+      storage_path: body.storage_path ?? null,
+      icon: body.icon ?? null,
+      color_theme: body.color_theme ?? null,
+      sort_order: body.sort_order ?? 0,
+      is_published: body.is_published ?? true,
+    })
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ screenshot: data }, { status: 201 });
 }
 
-export async function PUT(request: Request) {
-  try {
-    const updatedScreenshot = await request.json();
-    const index = screenshots.findIndex(s => s.id === updatedScreenshot.id);
-    if (index === -1) {
-      return NextResponse.json({ error: 'Screenshot not found' }, { status: 404 });
-    }
-    screenshots[index] = updatedScreenshot;
-    return NextResponse.json(updatedScreenshot);
-  } catch (error) {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+// Admin only: update
+export async function PUT(request: NextRequest) {
+  if (!(await isAdmin())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const supabase = await createClient();
+  const body = await request.json();
+  const { id, ...patch } = body;
+  if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
+
+  const { data, error } = await supabase
+    .from('screenshots')
+    .update(patch)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ screenshot: data });
 }
 
-export async function DELETE(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const id = parseInt(searchParams.get('id') || '0');
-    const index = screenshots.findIndex(s => s.id === id);
-    if (index === -1) {
-      return NextResponse.json({ error: 'Screenshot not found' }, { status: 404 });
-    }
-    screenshots.splice(index, 1);
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+// Admin only: delete
+export async function DELETE(request: NextRequest) {
+  if (!(await isAdmin())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const supabase = await createClient();
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+  if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
+
+  // Fetch storage_path before delete so we can remove the file too
+  const { data: row } = await supabase
+    .from('screenshots')
+    .select('storage_path')
+    .eq('id', id)
+    .single();
+
+  const { error } = await supabase.from('screenshots').delete().eq('id', id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  if (row?.storage_path) {
+    await supabase.storage.from('screenshots').remove([row.storage_path]);
+  }
+
+  return NextResponse.json({ success: true });
 }
