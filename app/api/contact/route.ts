@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rate-limit';
 import { createClient } from '@/lib/supabase/server';
+import { sendContactEmail } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -58,6 +59,18 @@ export async function POST(request: NextRequest) {
         { error: 'Could not store your message. Please try again.' },
         { status: 500 }
       );
+    }
+
+    // Send email to hello@journeo.ai asynchronously / await
+    const emailResult = await sendContactEmail({
+      name: String(name),
+      email: String(email),
+      message: String(message),
+      locale: locale ?? 'tr',
+    });
+
+    if (!emailResult.success) {
+      console.warn('Contact email status:', emailResult.error);
     }
 
     return NextResponse.json(
