@@ -1,5 +1,45 @@
 # Deployment Rehberi
 
+## Docker & VPS Deployment (Önerilen)
+
+Projeyi VPS üzerinde Docker container olarak çalıştırmak için aşağıdaki adımları uygulayabilirsiniz.
+
+### 1. VPS Gereksinimleri
+- Ubuntu / Debian (veya herhangi bir Linux dağıtımı)
+- Docker & Docker Compose kurulmuş olmalı:
+  ```bash
+  sudo apt update
+  sudo apt install -y docker.io docker-compose-v2
+  ```
+
+### 2. Projeyi VPS'e Gönderme
+Projeyi VPS'e klonlayın veya SCP/Rsync ile aktarın:
+```bash
+git clone <REPOSITO_URL> /var/www/journeo-web
+cd /var/www/journeo-web
+```
+
+### 3. Ortam Değişkenlerini Tanımlama (`.env` veya `.env.local`)
+VPS üzerindeki proje dizininde `.env` veya `.env.local` dosyasını oluşturun:
+```bash
+cp .env.example .env.local
+nano .env.local
+```
+İçerisine Supabase URL, anon key ve diğer değişkenleri ekleyin.
+
+### 4. Docker Container'ı Başlatma
+```bash
+# Container'ı derleyin ve arka planda çalıştırın
+docker compose up -d --build
+
+# Logları kontrol edin
+docker compose logs -f
+```
+
+Uygulama `http://localhost:3000` portunda çalışacaktır. Nginx / Caddy ters proxy (reverse proxy) kullanarak SSL (Certbot) ve domain yönlendirmesini tamamlayabilirsiniz.
+
+---
+
 ## Vercel Deployment
 
 ### 1. Vercel Projesini Oluştur
