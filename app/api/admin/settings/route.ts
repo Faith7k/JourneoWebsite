@@ -25,8 +25,20 @@ export async function POST(request: NextRequest) {
       terms_of_service_url: body.terms_of_service_url || null,
       privacy_policy_text_tr: body.privacy_policy_text_tr || null,
       privacy_policy_text_en: body.privacy_policy_text_en || null,
+      privacy_policy_text_es: body.privacy_policy_text_es || null,
+      privacy_policy_text_fr: body.privacy_policy_text_fr || null,
+      privacy_policy_text_de: body.privacy_policy_text_de || null,
+      privacy_policy_text_ja: body.privacy_policy_text_ja || null,
+      privacy_policy_text_ar: body.privacy_policy_text_ar || null,
+      privacy_policy_text_zh: body.privacy_policy_text_zh || null,
       terms_of_service_text_tr: body.terms_of_service_text_tr || null,
       terms_of_service_text_en: body.terms_of_service_text_en || null,
+      terms_of_service_text_es: body.terms_of_service_text_es || null,
+      terms_of_service_text_fr: body.terms_of_service_text_fr || null,
+      terms_of_service_text_de: body.terms_of_service_text_de || null,
+      terms_of_service_text_ja: body.terms_of_service_text_ja || null,
+      terms_of_service_text_ar: body.terms_of_service_text_ar || null,
+      terms_of_service_text_zh: body.terms_of_service_text_zh || null,
     };
 
     // Check if a site_settings row already exists

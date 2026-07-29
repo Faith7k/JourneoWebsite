@@ -44,15 +44,15 @@ export default async function TermsPage({
     const supabase = await createClient();
     const { data: settings } = await supabase
       .from('site_settings')
-      .select('terms_of_service_text_tr, terms_of_service_text_en')
+      .select('*')
       .limit(1)
       .single();
 
     if (settings) {
       dbContent =
-        locale === 'tr'
-          ? settings.terms_of_service_text_tr?.trim() || null
-          : settings.terms_of_service_text_en?.trim() || null;
+        (settings[`terms_of_service_text_${locale}` as keyof typeof settings] as string | undefined)?.trim() ||
+        settings.terms_of_service_text_en?.trim() ||
+        null;
     }
   } catch (err) {
     console.error('Failed to fetch terms of service from DB:', err);

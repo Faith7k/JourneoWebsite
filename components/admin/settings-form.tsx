@@ -18,7 +18,19 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { SiteSettings } from '@/lib/supabase/types';
+
+const LANGUAGES = [
+  { code: 'en', label: 'English' },
+  { code: 'tr', label: 'Türkçe' },
+  { code: 'es', label: 'Español' },
+  { code: 'fr', label: 'Français' },
+  { code: 'de', label: 'Deutsch' },
+  { code: 'ja', label: '日本語' },
+  { code: 'ar', label: 'العربية' },
+  { code: 'zh', label: '中文' },
+] as const;
 
 type Props = { initial: SiteSettings | null };
 
@@ -37,8 +49,20 @@ export function SettingsForm({ initial }: Props) {
     terms_of_service_url: initial?.terms_of_service_url ?? '',
     privacy_policy_text_tr: initial?.privacy_policy_text_tr ?? '',
     privacy_policy_text_en: initial?.privacy_policy_text_en ?? '',
+    privacy_policy_text_es: initial?.privacy_policy_text_es ?? '',
+    privacy_policy_text_fr: initial?.privacy_policy_text_fr ?? '',
+    privacy_policy_text_de: initial?.privacy_policy_text_de ?? '',
+    privacy_policy_text_ja: initial?.privacy_policy_text_ja ?? '',
+    privacy_policy_text_ar: initial?.privacy_policy_text_ar ?? '',
+    privacy_policy_text_zh: initial?.privacy_policy_text_zh ?? '',
     terms_of_service_text_tr: initial?.terms_of_service_text_tr ?? '',
     terms_of_service_text_en: initial?.terms_of_service_text_en ?? '',
+    terms_of_service_text_es: initial?.terms_of_service_text_es ?? '',
+    terms_of_service_text_fr: initial?.terms_of_service_text_fr ?? '',
+    terms_of_service_text_de: initial?.terms_of_service_text_de ?? '',
+    terms_of_service_text_ja: initial?.terms_of_service_text_ja ?? '',
+    terms_of_service_text_ar: initial?.terms_of_service_text_ar ?? '',
+    terms_of_service_text_zh: initial?.terms_of_service_text_zh ?? '',
   });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -167,19 +191,26 @@ export function SettingsForm({ initial }: Props) {
             Enter the actual text content of your Privacy Policy. If empty, the website will use default system translations.
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-6 md:grid-cols-2">
-          <TextareaField
-            label="Gizlilik Politikası (TR)"
-            value={form.privacy_policy_text_tr}
-            onChange={updateTextarea('privacy_policy_text_tr')}
-            placeholder="Gizlilik politikası metnini buraya yazın..."
-          />
-          <TextareaField
-            label="Privacy Policy (EN)"
-            value={form.privacy_policy_text_en}
-            onChange={updateTextarea('privacy_policy_text_en')}
-            placeholder="Enter privacy policy text here..."
-          />
+        <CardContent>
+          <Tabs defaultValue="en" className="w-full">
+            <TabsList className="mb-4 flex flex-wrap h-auto gap-2 p-1 bg-transparent justify-start">
+              {LANGUAGES.map((lang) => (
+                <TabsTrigger key={lang.code} value={lang.code} className="bg-slate-800/50 data-[state=active]:bg-slate-700">
+                  {lang.label} ({lang.code.toUpperCase()})
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            {LANGUAGES.map((lang) => (
+              <TabsContent key={lang.code} value={lang.code}>
+                <TextareaField
+                  label={`Privacy Policy (${lang.code.toUpperCase()})`}
+                  value={form[`privacy_policy_text_${lang.code}` as keyof typeof form]}
+                  onChange={updateTextarea(`privacy_policy_text_${lang.code}` as keyof typeof form)}
+                  placeholder={`Enter privacy policy text in ${lang.label}...`}
+                />
+              </TabsContent>
+            ))}
+          </Tabs>
         </CardContent>
       </Card>
 
@@ -195,19 +226,26 @@ export function SettingsForm({ initial }: Props) {
             Enter the actual text content of your Terms of Service. If empty, the website will use default system translations.
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-6 md:grid-cols-2">
-          <TextareaField
-            label="Kullanım Şartları (TR)"
-            value={form.terms_of_service_text_tr}
-            onChange={updateTextarea('terms_of_service_text_tr')}
-            placeholder="Kullanım şartları metnini buraya yazın..."
-          />
-          <TextareaField
-            label="Terms of Service (EN)"
-            value={form.terms_of_service_text_en}
-            onChange={updateTextarea('terms_of_service_text_en')}
-            placeholder="Enter terms of service text here..."
-          />
+        <CardContent>
+          <Tabs defaultValue="en" className="w-full">
+            <TabsList className="mb-4 flex flex-wrap h-auto gap-2 p-1 bg-transparent justify-start">
+              {LANGUAGES.map((lang) => (
+                <TabsTrigger key={lang.code} value={lang.code} className="bg-slate-800/50 data-[state=active]:bg-slate-700">
+                  {lang.label} ({lang.code.toUpperCase()})
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            {LANGUAGES.map((lang) => (
+              <TabsContent key={lang.code} value={lang.code}>
+                <TextareaField
+                  label={`Terms of Service (${lang.code.toUpperCase()})`}
+                  value={form[`terms_of_service_text_${lang.code}` as keyof typeof form]}
+                  onChange={updateTextarea(`terms_of_service_text_${lang.code}` as keyof typeof form)}
+                  placeholder={`Enter terms of service text in ${lang.label}...`}
+                />
+              </TabsContent>
+            ))}
+          </Tabs>
         </CardContent>
       </Card>
 

@@ -146,6 +146,18 @@ export type Database = {
           privacy_policy_text_en: string | null;
           terms_of_service_text_tr: string | null;
           terms_of_service_text_en: string | null;
+          privacy_policy_text_es: string | null;
+          privacy_policy_text_fr: string | null;
+          privacy_policy_text_de: string | null;
+          privacy_policy_text_ja: string | null;
+          privacy_policy_text_ar: string | null;
+          privacy_policy_text_zh: string | null;
+          terms_of_service_text_es: string | null;
+          terms_of_service_text_fr: string | null;
+          terms_of_service_text_de: string | null;
+          terms_of_service_text_ja: string | null;
+          terms_of_service_text_ar: string | null;
+          terms_of_service_text_zh: string | null;
           updated_at: string;
         };
         Insert: {
@@ -165,6 +177,18 @@ export type Database = {
           privacy_policy_text_en?: string | null;
           terms_of_service_text_tr?: string | null;
           terms_of_service_text_en?: string | null;
+          privacy_policy_text_es?: string | null;
+          privacy_policy_text_fr?: string | null;
+          privacy_policy_text_de?: string | null;
+          privacy_policy_text_ja?: string | null;
+          privacy_policy_text_ar?: string | null;
+          privacy_policy_text_zh?: string | null;
+          terms_of_service_text_es?: string | null;
+          terms_of_service_text_fr?: string | null;
+          terms_of_service_text_de?: string | null;
+          terms_of_service_text_ja?: string | null;
+          terms_of_service_text_ar?: string | null;
+          terms_of_service_text_zh?: string | null;
           updated_at?: string;
         };
         Update: Partial<SiteSettingsInsert>;

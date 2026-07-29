@@ -51,15 +51,15 @@ export default async function PrivacyPage({
     const supabase = await createClient();
     const { data: settings } = await supabase
       .from('site_settings')
-      .select('privacy_policy_text_tr, privacy_policy_text_en')
+      .select('*')
       .limit(1)
       .single();
 
     if (settings) {
       dbContent =
-        locale === 'tr'
-          ? settings.privacy_policy_text_tr?.trim() || null
-          : settings.privacy_policy_text_en?.trim() || null;
+        (settings[`privacy_policy_text_${locale}` as keyof typeof settings] as string | undefined)?.trim() ||
+        settings.privacy_policy_text_en?.trim() ||
+        null;
     }
   } catch (err) {
     console.error('Failed to fetch privacy policy from DB:', err);
