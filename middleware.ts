@@ -15,8 +15,13 @@ export async function middleware(request: NextRequest) {
   // 1) Refresh Supabase session on every request (sets auth cookies).
   const supabaseResponse = await updateSession(request);
 
+  // If updateSession returned a redirect (e.g. stripping locale or auth redirect), return it directly
+  if (supabaseResponse.status >= 300 && supabaseResponse.status < 400) {
+    return supabaseResponse;
+  }
+
   // 2) Admin routes are not localized — return after auth check.
-  if (pathname.startsWith('/admin')) {
+  if (pathname.startsWith('/admingate') || pathname.startsWith('/admin')) {
     return supabaseResponse;
   }
 

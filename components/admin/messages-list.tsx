@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Mail, MailOpen, Trash2 } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -18,23 +17,40 @@ import type { ContactMessages } from '@/lib/supabase/types';
 type Props = { initialMessages: ContactMessages[] };
 
 export function MessagesList({ initialMessages }: Props) {
-  const supabase = createClient();
   const [items, setItems] = useState(initialMessages);
   const [selected, setSelected] = useState<ContactMessages | null>(null);
 
   const markRead = async (id: string, read: boolean) => {
-    await supabase.from('contact_messages').update({ is_read: read }).eq('id', id);
-    setItems((prev) =>
-      prev.map((m) => (m.id === id ? { ...m, is_read: read } : m))
-    );
-    setSelected((prev) => (prev && prev.id === id ? { ...prev, is_read: read } : prev));
+    try {
+      const res = await fetch('/api/admin/messages', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, is_read: read }),
+      });
+      if (res.ok) {
+        setItems((prev) =>
+          prev.map((m) => (m.id === id ? { ...m, is_read: read } : m))
+        );
+        setSelected((prev) => (prev && prev.id === id ? { ...prev, is_read: read } : prev));
+      }
+    } catch (err) {
+      console.error('Failed to update message status:', err);
+    }
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this message?')) return;
-    await supabase.from('contact_messages').delete().eq('id', id);
-    setItems((prev) => prev.filter((m) => m.id !== id));
-    setSelected(null);
+    try {
+      const res = await fetch(`/api/admin/messages?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        setItems((prev) => prev.filter((m) => m.id !== id));
+        setSelected(null);
+      }
+    } catch (err) {
+      console.error('Failed to delete message:', err);
+    }
   };
 
   const fmtDate = (d: string) =>

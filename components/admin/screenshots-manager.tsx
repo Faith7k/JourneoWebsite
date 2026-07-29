@@ -158,28 +158,39 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
     };
 
     if (editing) {
-      const { data, error: err } = await supabase
-        .from('screenshots')
-        .update(payload)
-        .eq('id', editing.id)
-        .select()
-        .single();
-      if (err) {
-        setError(err.message);
+      try {
+        const res = await fetch('/api/screenshots', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: editing.id, ...payload }),
+        });
+        const json = await res.json();
+        if (!res.ok || json.error) {
+          setError(json.error || 'Failed to update screenshot');
+          return;
+        }
+        setItems((prev) => prev.map((s) => (s.id === editing.id ? json.screenshot : s)));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Update failed');
         return;
       }
-      setItems((prev) => prev.map((s) => (s.id === editing.id ? data : s)));
     } else {
-      const { data, error: err } = await supabase
-        .from('screenshots')
-        .insert(payload)
-        .select()
-        .single();
-      if (err) {
-        setError(err.message);
+      try {
+        const res = await fetch('/api/screenshots', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const json = await res.json();
+        if (!res.ok || json.error) {
+          setError(json.error || 'Failed to create screenshot');
+          return;
+        }
+        setItems((prev) => [...prev, json.screenshot]);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Creation failed');
         return;
       }
-      setItems((prev) => [...prev, data]);
     }
 
     setDialogOpen(false);
@@ -187,15 +198,19 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
 
   const handleDelete = async (s: Screenshots) => {
     if (!confirm(`Delete "${s.title}"? This cannot be undone.`)) return;
-    const { error: err } = await supabase.from('screenshots').delete().eq('id', s.id);
-    if (err) {
-      alert(err.message);
-      return;
+    try {
+      const res = await fetch(`/api/screenshots?id=${encodeURIComponent(s.id)}`, {
+        method: 'DELETE',
+      });
+      const json = await res.json();
+      if (!res.ok || json.error) {
+        alert(json.error || 'Failed to delete screenshot');
+        return;
+      }
+      setItems((prev) => prev.filter((x) => x.id !== s.id));
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Delete failed');
     }
-    if (s.storage_path) {
-      await supabase.storage.from('screenshots').remove([s.storage_path]);
-    }
-    setItems((prev) => prev.filter((x) => x.id !== s.id));
   };
 
   return (

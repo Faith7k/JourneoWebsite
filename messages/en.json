@@ -177,7 +177,7 @@
   },
   "privacy": {
     "title": "Privacy Policy",
-    "lastUpdated": "January 10, 2025",
+    "lastUpdated": "July 29, 2026",
     "intro": "At Journeo, we take your privacy seriously. This privacy policy explains how we collect, use, and protect your personal data.",
     "informationWeCollect": "Information We Collect",
     "locationInfo": {
@@ -214,9 +214,10 @@
       "title": "Third-Party Services",
       "intro": "Journeo uses the following third-party services:",
       "supabase": "Authentication and data storage",
-      "maps": "Map and location services",
-      "openai": "AI-powered recommendations",
-      "note": "These services are subject to their own privacy policies."
+      "maps": "Mapbox — maps and geocoding",
+      "openai": "Google Gemini — AI itinerary generation",
+      "note": "These services are subject to their own privacy policies.",
+      "places": "Google Places (server-side) — place verification"
     },
     "dataRetention": {
       "title": "Data Retention",
@@ -250,7 +251,7 @@
   },
   "terms": {
     "title": "Terms of Service",
-    "lastUpdated": "January 10, 2025",
+    "lastUpdated": "July 29, 2026",
     "intro": "Welcome to Journeo. By using our app and services, you agree to the following terms.",
     "acceptance": {
       "title": "Acceptance of Terms",
@@ -269,7 +270,7 @@
     },
     "payments": {
       "title": "Payments and Subscriptions",
-      "body": "Premium features are available through in-app subscriptions. Subscription fees are billed through Apple App Store or Google Play Store according to their terms."
+      "body": "Optional premium features, when offered, are sold through Apple App Store or Google Play in-app purchase. This build may not include paid subscriptions; travel booking partner links are separate from digital unlocks."
     },
     "termination": {
       "title": "Termination",
@@ -337,4 +338,3 @@
     }
   }
 }
-

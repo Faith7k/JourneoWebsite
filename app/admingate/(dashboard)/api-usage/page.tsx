@@ -4,6 +4,9 @@ import { getAdminStats } from '@/lib/supabase/stats';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { AdminApiChart } from '@/components/admin/api-chart';
 import { AdminStatCard } from '@/components/admin/stat-card';
+import { AdminAIUsageCard } from '@/components/admin/ai-usage-card';
+import { AdminUnitEconomicsCard } from '@/components/admin/unit-economics-card';
+import { AdminTopCreatorsCard } from '@/components/admin/top-creators-card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Activity, AlertCircle, Clock, Smartphone } from 'lucide-react';
@@ -99,6 +102,35 @@ export default async function AdminApiUsagePage() {
           accent="from-amber-500 to-orange-500"
         />
       </div>
+
+      {/* Akıllı Analiz & Unit Economics */}
+      <AdminUnitEconomicsCard
+        premiumUsers={stats.premiumUsers}
+        freeUsers={stats.freeUsers}
+        mapboxCallsMonth={stats.mapboxCallsMonth}
+        affiliateClicksTotal={stats.affiliateClicksTotal}
+        affiliateConvertedTotal={stats.affiliateConvertedTotal}
+        affiliateCommissionTotal={stats.affiliateCommissionTotal}
+        estimatedTotalApiCost={stats.estimatedTotalApiCost}
+        costPerTrip={stats.costPerTrip}
+        breakevenTripsPerUser={stats.breakevenTripsPerUser}
+        estimatedMonthlyRevenue={stats.estimatedMonthlyRevenue}
+        estimatedNetProfit={stats.estimatedNetProfit}
+      />
+
+      {/* AI & Places API Engine Stats */}
+      <AdminAIUsageCard
+        aiCallsToday={stats.aiCallsToday}
+        aiCalls7d={stats.aiCalls7d}
+        aiCalls30d={stats.aiCalls30d}
+        aiByKind={stats.aiByKind}
+        googlePlacesCallsMonth={stats.googlePlacesCallsMonth}
+        cachedPlacesCount={stats.cachedPlacesCount}
+        cachedAiPlansCount={stats.cachedAiPlansCount}
+      />
+
+      {/* Top Power Users Leaderboard */}
+      <AdminTopCreatorsCard topTripCreators={stats.topTripCreators} />
 
       {/* Chart */}
       <Card className="border-slate-800 bg-slate-900/50">

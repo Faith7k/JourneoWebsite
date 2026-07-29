@@ -3,13 +3,13 @@ module.exports = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://journeo.ai',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
-  exclude: ['/admin', '/admin/*', '/api/*'],
+  exclude: ['/admingate', '/admingate/*', '/admin', '/admin/*', '/api/*'],
   robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin', '/api'],
+        disallow: ['/admingate', '/admin', '/api'],
       },
     ],
   },

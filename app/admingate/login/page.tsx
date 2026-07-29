@@ -15,7 +15,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirect') ?? '/admin';
+  const redirect = searchParams.get('redirect') ?? '/admingate';
   const errorCode = searchParams.get('error');
 
   const [email, setEmail] = useState('');

@@ -35,14 +35,22 @@ export async function updateSession(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
+  // Strip locale prefix from admin routes if user navigated to /tr/admingate etc.
+  const localeAdminMatch = pathname.match(/^\/(tr|en)(\/admingate.*)$/);
+  if (localeAdminMatch) {
+    const url = request.nextUrl.clone();
+    url.pathname = localeAdminMatch[2];
+    return NextResponse.redirect(url);
+  }
+
   // Admin route protection
-  const isAdminRoute = pathname.startsWith('/admin');
-  const isLoginRoute = pathname === '/admin/login';
+  const isAdminRoute = pathname.startsWith('/admingate') || pathname.startsWith('/admin');
+  const isLoginRoute = pathname === '/admingate/login' || pathname === '/admin/login';
 
   if (isAdminRoute && !isLoginRoute) {
     if (!user) {
       const url = request.nextUrl.clone();
-      url.pathname = '/admin/login';
+      url.pathname = '/admingate/login';
       url.searchParams.set('redirect', pathname);
       return NextResponse.redirect(url);
     }
@@ -54,7 +62,7 @@ export async function updateSession(request: NextRequest) {
 
     if (user.email && !adminEmails.includes(user.email.toLowerCase())) {
       const url = request.nextUrl.clone();
-      url.pathname = '/admin/login';
+      url.pathname = '/admingate/login';
       url.searchParams.set('error', 'unauthorized');
       return NextResponse.redirect(url);
     }
@@ -69,7 +77,7 @@ export async function updateSession(request: NextRequest) {
 
     if (user.email && adminEmails.includes(user.email.toLowerCase())) {
       const url = request.nextUrl.clone();
-      url.pathname = '/admin';
+      url.pathname = '/admingate';
       url.search = '';
       return NextResponse.redirect(url);
     }

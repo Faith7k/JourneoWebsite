@@ -13,7 +13,6 @@ import {
   MapPin,
   Phone,
 } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -24,7 +23,6 @@ import type { SiteSettings } from '@/lib/supabase/types';
 type Props = { initial: SiteSettings | null };
 
 export function SettingsForm({ initial }: Props) {
-  const supabase = createClient();
   const [form, setForm] = useState({
     app_store_url: initial?.app_store_url ?? '',
     play_store_url: initial?.play_store_url ?? '',
@@ -57,38 +55,26 @@ export function SettingsForm({ initial }: Props) {
     setError(null);
     setSaved(false);
 
-    const payload = {
-      app_store_url: form.app_store_url || null,
-      play_store_url: form.play_store_url || null,
-      support_email: form.support_email || null,
-      press_email: form.press_email || null,
-      phone: form.phone || null,
-      address: form.address || null,
-      twitter_url: form.twitter_url || null,
-      instagram_url: form.instagram_url || null,
-      linkedin_url: form.linkedin_url || null,
-      privacy_policy_url: form.privacy_policy_url || null,
-      terms_of_service_url: form.terms_of_service_url || null,
-      privacy_policy_text_tr: form.privacy_policy_text_tr || null,
-      privacy_policy_text_en: form.privacy_policy_text_en || null,
-      terms_of_service_text_tr: form.terms_of_service_text_tr || null,
-      terms_of_service_text_en: form.terms_of_service_text_en || null,
-    };
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
 
-    let res;
-    if (initial?.id) {
-      res = await supabase.from('site_settings').update(payload).eq('id', initial.id);
-    } else {
-      res = await supabase.from('site_settings').insert(payload);
-    }
+      const data = await res.json();
 
-    if (res.error) {
-      setError(res.error.message);
-    } else {
-      setSaved(true);
-      setTimeout(() => setSaved(false), 2500);
+      if (!res.ok || data.error) {
+        setError(data.error || 'Failed to save settings.');
+      } else {
+        setSaved(true);
+        setTimeout(() => setSaved(false), 2500);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred while saving.');
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
   };
 
   return (

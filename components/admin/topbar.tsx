@@ -23,7 +23,7 @@ export function AdminTopbar({ email }: { email: string }) {
   const handleSignOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.replace('/admin/login');
+    router.replace('/admingate/login');
     router.refresh();
   };
 

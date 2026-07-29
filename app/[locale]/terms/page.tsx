@@ -1,5 +1,9 @@
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { LegalLayout } from '@/components/legal-layout';
+import { LegalMarkdown } from '@/components/legal-markdown';
 import { getTranslations } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 
@@ -11,6 +15,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     locale: locale === 'tr' ? 'tr_TR' : 'en_US',
     path: '/terms',
   });
+}
+
+async function loadMarkdown(locale: string): Promise<string | null> {
+  const candidates =
+    locale === 'tr' ? ['terms.tr.md', 'terms.en.md'] : ['terms.en.md'];
+  for (const name of candidates) {
+    try {
+      const file = path.join(process.cwd(), 'content', 'legal', name);
+      return await readFile(file, 'utf8');
+    } catch {
+      /* try next */
+    }
+  }
+  return null;
 }
 
 export default async function TermsPage({
@@ -31,7 +49,10 @@ export default async function TermsPage({
       .single();
 
     if (settings) {
-      dbContent = locale === 'tr' ? settings.terms_of_service_text_tr : settings.terms_of_service_text_en;
+      dbContent =
+        locale === 'tr'
+          ? settings.terms_of_service_text_tr?.trim() || null
+          : settings.terms_of_service_text_en?.trim() || null;
     }
   } catch (err) {
     console.error('Failed to fetch terms of service from DB:', err);
@@ -40,9 +61,22 @@ export default async function TermsPage({
   if (dbContent) {
     return (
       <LegalLayout title={t('title')} lastUpdated={t('lastUpdated')}>
-        <div className="whitespace-pre-line text-slate-200 leading-relaxed font-sans">
-          {dbContent}
-        </div>
+        <LegalMarkdown source={dbContent} />
+      </LegalLayout>
+    );
+  }
+
+  const md = await loadMarkdown(locale);
+  if (md) {
+    return (
+      <LegalLayout title={t('title')} lastUpdated={t('lastUpdated')}>
+        {locale === 'tr' && !md.includes('Kullanım Koşulları') ? (
+          <p className="text-sm text-slate-400 mb-4">
+            Bu sayfanın yasal metni şu an İngilizce sunulmaktadır. Türkçe çeviri
+            yakında eklenecektir.
+          </p>
+        ) : null}
+        <LegalMarkdown source={md} />
       </LegalLayout>
     );
   }
@@ -50,38 +84,6 @@ export default async function TermsPage({
   return (
     <LegalLayout title={t('title')} lastUpdated={t('lastUpdated')}>
       <p>{t('intro')}</p>
-
-      <h2>{t('acceptance.title')}</h2>
-      <p>{t('acceptance.body')}</p>
-
-      <h2>{t('license.title')}</h2>
-      <p>{t('license.body')}</p>
-
-      <h2>{t('use.title')}</h2>
-      <p>{t('use.body')}</p>
-      <ul>
-        <li>{t('use.legal')}</li>
-        <li>{t('use.account')}</li>
-        <li>{t('use.responsibility')}</li>
-      </ul>
-
-      <h2>{t('payments.title')}</h2>
-      <p>{t('payments.body')}</p>
-
-      <h2>{t('termination.title')}</h2>
-      <p>{t('termination.body')}</p>
-
-      <h2>{t('disclaimer.title')}</h2>
-      <p>{t('disclaimer.body')}</p>
-
-      <h2>{t('liability.title')}</h2>
-      <p>{t('liability.body')}</p>
-
-      <h2>{t('changes.title')}</h2>
-      <p>{t('changes.body')}</p>
-
-      <h2>{t('contact.title')}</h2>
-      <p>{t('contact.body')}</p>
     </LegalLayout>
   );
 }

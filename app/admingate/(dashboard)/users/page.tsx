@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AdminStatCard } from '@/components/admin/stat-card';
 import { UserGrowthChart } from '@/components/admin/user-growth-chart';
+import { AdminTopCreatorsCard } from '@/components/admin/top-creators-card';
+import { Admin3DGlobeCard } from '@/components/admin/globe-3d';
 import { Users, UserCheck, Smartphone, Crown, Globe, Layers } from 'lucide-react';
 
 export default async function AdminUsersPage() {
@@ -64,6 +66,9 @@ export default async function AdminUsersPage() {
           accent="from-purple-500 to-pink-500"
         />
       </div>
+
+      {/* 3D Interactive World Globe */}
+      <Admin3DGlobeCard stats={stats.countrySubscriberStats} />
 
       {/* Growth Chart */}
       <Card className="border-slate-800 bg-slate-900/50">
@@ -211,6 +216,9 @@ export default async function AdminUsersPage() {
           </CardContent>
         </Card>
       )}
+
+      {/* Power Users Leaderboard */}
+      <AdminTopCreatorsCard topTripCreators={stats.topTripCreators} />
 
       {/* Raw User Table */}
       <Card className="border-slate-800 bg-slate-900/50">

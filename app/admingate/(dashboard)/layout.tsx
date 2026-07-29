@@ -13,7 +13,7 @@ export default async function AdminLayout({
   // requireAdmin returns null for non-admins. Middleware also guards this,
   // but this is the defense-in-depth check for direct renders.
   if (!user) {
-    redirect('/admin/login');
+    redirect('/admingate/login');
   }
 
   return (

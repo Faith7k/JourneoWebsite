@@ -177,7 +177,7 @@
   },
   "privacy": {
     "title": "Gizlilik Politikası",
-    "lastUpdated": "10 Ocak 2025",
+    "lastUpdated": "29 Temmuz 2026",
     "intro": "Journeo olarak gizliliğinize önem veriyoruz. Bu gizlilik politikası, kişisel verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklar.",
     "informationWeCollect": "Topladığımız Bilgiler",
     "locationInfo": {
@@ -214,9 +214,10 @@
       "title": "Üçüncü Taraf Hizmetleri",
       "intro": "Journeo aşağıdaki üçüncü taraf hizmetlerini kullanır:",
       "supabase": "Kimlik doğrulama ve veri depolama",
-      "maps": "Harita ve konum hizmetleri",
-      "openai": "Yapay zeka destekli öneriler",
-      "note": "Bu hizmetler kendi gizlilik politikalarına tabidir."
+      "maps": "Mapbox — harita ve geocoding",
+      "openai": "Google Gemini — yapay zeka gezi planı",
+      "note": "Bu hizmetler kendi gizlilik politikalarına tabidir.",
+      "places": "Google Places (sunucu tarafı) — mekan doğrulama"
     },
     "dataRetention": {
       "title": "Veri Saklama",
@@ -250,7 +251,7 @@
   },
   "terms": {
     "title": "Kullanım Koşulları",
-    "lastUpdated": "10 Ocak 2025",
+    "lastUpdated": "29 Temmuz 2026",
     "intro": "Journeo'ya hoş geldiniz. Uygulamamızı ve hizmetlerimizi kullanarak aşağıdaki koşulları kabul etmiş olursunuz.",
     "acceptance": {
       "title": "Koşulların Kabulü",
@@ -269,7 +270,7 @@
     },
     "payments": {
       "title": "Ödemeler ve Abonelikler",
-      "body": "Premium özellikler uygulama içi abonelikler ile kullanılabilir. Abonelik ücretleri, Apple App Store veya Google Play Store üzerinden kendi koşullarına göre faturalandırılır."
+      "body": "İsteğe bağlı premium özellikler sunulduğunda Apple App Store veya Google Play uygulama içi satın alma ile satılır. Bu sürümde abonelik olmayabilir; seyahat ortak bağlantıları dijital kilit açmadan ayrıdır."
     },
     "termination": {
       "title": "Sonlandırma",
@@ -337,4 +338,3 @@
     }
   }
 }
-

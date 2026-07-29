@@ -15,12 +15,12 @@ import {
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
-  { href: '/admin/screenshots', label: 'Screenshots', icon: ImageIcon },
-  { href: '/admin/messages', label: 'Messages', icon: Mail },
-  { href: '/admin/api-usage', label: 'API Usage', icon: Activity },
-  { href: '/admin/users', label: 'App Users', icon: Users },
-  { href: '/admin/settings', label: 'Settings', icon: Settings },
+  { href: '/admingate', label: 'Overview', icon: LayoutDashboard, exact: true },
+  { href: '/admingate/screenshots', label: 'Screenshots', icon: ImageIcon },
+  { href: '/admingate/messages', label: 'Messages', icon: Mail },
+  { href: '/admingate/api-usage', label: 'API Usage', icon: Activity },
+  { href: '/admingate/users', label: 'App Users', icon: Users },
+  { href: '/admingate/settings', label: 'Settings', icon: Settings },
 ];
 
 export function AdminSidebar() {
