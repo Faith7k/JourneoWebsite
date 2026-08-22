@@ -3,6 +3,7 @@
 import { Hero } from '@/components/hero';
 import { FeatureCard } from '@/components/feature-card';
 import { ScrollStory, type StoryScreen } from '@/components/scroll-story';
+import { StoreButtons } from '@/components/store-buttons';
 import {
   MapPin,
   Brain,
@@ -12,8 +13,6 @@ import {
   Share2,
   Wallet,
   Calendar,
-  Apple,
-  Smartphone,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -170,34 +169,8 @@ export function HomePageClient({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center"
             >
-              {appStoreUrl ? (
-                <a href={appStoreUrl} target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" className="bg-white/10 hover:bg-white/20 text-white border border-white/20 text-lg px-10 py-6 backdrop-blur-md shadow-xl transition-all hover:scale-105">
-                    <Apple className="h-6 w-6 mr-3" />
-                    {t('hero.cta.appStore')}
-                  </Button>
-                </a>
-              ) : (
-                <Button size="lg" disabled className="bg-white/10 text-white border border-white/20 text-lg px-10 py-6 opacity-50 cursor-not-allowed">
-                  <Apple className="h-6 w-6 mr-3" />
-                  {t('hero.cta.appStore')}
-                </Button>
-              )}
-              {playStoreUrl ? (
-                <a href={playStoreUrl} target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" className="bg-white/10 hover:bg-white/20 text-white border border-white/20 text-lg px-10 py-6 backdrop-blur-md shadow-xl transition-all hover:scale-105">
-                    <Smartphone className="h-6 w-6 mr-3" />
-                    {t('hero.cta.playStore')}
-                  </Button>
-                </a>
-              ) : (
-                <Button size="lg" disabled className="bg-white/10 text-white border border-white/20 text-lg px-10 py-6 opacity-50 cursor-not-allowed">
-                  <Smartphone className="h-6 w-6 mr-3" />
-                  {t('hero.cta.playStore')}
-                </Button>
-              )}
+              <StoreButtons appStoreUrl={appStoreUrl} playStoreUrl={playStoreUrl} />
             </motion.div>
             
             {/* Trust Indicators */}
@@ -210,15 +183,15 @@ export function HomePageClient({
             >
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-medium">100K+ Downloads</span>
+                <span className="font-medium">{t('hero.trust.downloads')}</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-amber-400 animate-pulse" />
-                <span className="font-medium">4.9/5 Rating</span>
+                <span className="font-medium">{t('hero.trust.rating')}</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-orange-400 animate-pulse" />
-                <span className="font-medium">AI-Powered</span>
+                <span className="font-medium">{t('hero.trust.aiPowered')}</span>
               </div>
             </motion.div>
           </div>

@@ -20,7 +20,13 @@ export function Header() {
   
   const languages = [
     { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
-    { code: 'en', name: 'English', flag: '🇺🇸' }
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'ja', name: '日本語', flag: '🇯🇵' },
+    { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+    { code: 'zh', name: '简体中文', flag: '🇨🇳' },
   ];
   
   const handleLanguageChange = (locale: string) => {
@@ -32,7 +38,8 @@ export function Header() {
   // Dil menüsünü dışına tıklandığında kapat
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (languageMenuOpen) {
+      const target = event.target as HTMLElement;
+      if (!target.closest('[data-lang-container]')) {
         setLanguageMenuOpen(false);
       }
     };
@@ -84,31 +91,31 @@ export function Header() {
           ))}
           
           {/* Language Switcher */}
-          <div className="relative">
+          <div className="relative" data-lang-container>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setLanguageMenuOpen(!languageMenuOpen)}
-              className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors border border-amber-900/10 hover:border-amber-900/20"
             >
-              <Globe className="h-4 w-4" />
-              <span className="uppercase">{currentLocale}</span>
+              <Globe className="h-4 w-4 text-amber-700" />
+              <span className="uppercase font-semibold">{currentLocale}</span>
             </Button>
             
             {languageMenuOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-background border border-border rounded-lg shadow-lg z-50">
+              <div className="absolute right-0 top-full mt-2 w-52 max-h-80 overflow-y-auto bg-background/95 backdrop-blur-md border border-border rounded-xl shadow-xl z-50 py-1.5 scrollbar-thin">
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 text-sm hover:bg-muted transition-colors first:rounded-t-lg last:rounded-b-lg ${
-                      currentLocale === lang.code ? 'bg-muted font-medium' : ''
+                    className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-sm hover:bg-muted/80 transition-colors ${
+                      currentLocale === lang.code ? 'bg-muted font-semibold text-primary' : 'text-stone-700'
                     }`}
                   >
-                    <span className="text-lg">{lang.flag}</span>
+                    <span className="text-lg leading-none">{lang.flag}</span>
                     <span>{lang.name}</span>
                     {currentLocale === lang.code && (
-                      <span className="ml-auto text-primary">✓</span>
+                      <span className="ml-auto text-primary font-bold">✓</span>
                     )}
                   </button>
                 ))}
@@ -118,33 +125,33 @@ export function Header() {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
           {/* Mobile Language Switcher */}
-          <div className="relative">
+          <div className="relative" data-lang-container>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setLanguageMenuOpen(!languageMenuOpen)}
-              className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2.5"
             >
-              <Globe className="h-4 w-4" />
-              <span className="uppercase">{currentLocale}</span>
+              <Globe className="h-4 w-4 text-amber-700" />
+              <span className="uppercase font-semibold">{currentLocale}</span>
             </Button>
             
             {languageMenuOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-background border border-border rounded-lg shadow-lg z-50">
+              <div className="absolute right-0 top-full mt-2 w-52 max-h-72 overflow-y-auto bg-background/95 backdrop-blur-md border border-border rounded-xl shadow-xl z-50 py-1.5 scrollbar-thin">
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 text-sm hover:bg-muted transition-colors first:rounded-t-lg last:rounded-b-lg ${
-                      currentLocale === lang.code ? 'bg-muted font-medium' : ''
+                    className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-sm hover:bg-muted transition-colors ${
+                      currentLocale === lang.code ? 'bg-muted font-semibold text-primary' : 'text-stone-700'
                     }`}
                   >
-                    <span className="text-lg">{lang.flag}</span>
+                    <span className="text-lg leading-none">{lang.flag}</span>
                     <span>{lang.name}</span>
                     {currentLocale === lang.code && (
-                      <span className="ml-auto text-primary">✓</span>
+                      <span className="ml-auto text-primary font-bold">✓</span>
                     )}
                   </button>
                 ))}
@@ -181,7 +188,7 @@ export function Header() {
             {/* Mobile Language Options */}
             <div className="pt-4 border-t">
               <div className="text-sm font-medium text-muted-foreground mb-3">{t('language')}</div>
-              <div className="flex gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
@@ -189,14 +196,14 @@ export function Header() {
                       handleLanguageChange(lang.code);
                       setMobileMenuOpen(false);
                     }}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       currentLocale === lang.code 
                         ? 'bg-primary text-primary-foreground' 
                         : 'bg-muted text-muted-foreground hover:bg-muted/80'
                     }`}
                   >
                     <span className="text-lg">{lang.flag}</span>
-                    <span>{lang.name}</span>
+                    <span className="truncate">{lang.name}</span>
                   </button>
                 ))}
               </div>

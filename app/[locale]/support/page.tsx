@@ -19,20 +19,20 @@ export default function SupportPage() {
 
   const faqs = [
     {
-      question: 'How do I reset my password?',
-      answer: 'You can reset your password by clicking "Forgot Password" on the login screen.',
+      question: t('faqs.password.question'),
+      answer: t('faqs.password.answer'),
     },
     {
-      question: 'How can I delete my account?',
-      answer: 'Please visit the Data Deletion page for step-by-step instructions on how to delete your account and all associated data.',
+      question: t('faqs.dataDeletion.question'),
+      answer: t('faqs.dataDeletion.answer'),
     },
     {
-      question: 'Is offline mode available?',
-      answer: 'Yes, you can download maps for offline use in the app settings.',
+      question: t('faqs.offline.question'),
+      answer: t('faqs.offline.answer'),
     },
     {
-      question: 'How do I cancel my subscription?',
-      answer: 'You can cancel your subscription through your App Store or Google Play account settings.',
+      question: t('faqs.subscription.question'),
+      answer: t('faqs.subscription.answer'),
     },
   ];
 
@@ -126,14 +126,14 @@ export default function SupportPage() {
                 >
                   <MessageCircle className="h-8 w-8 text-white" />
                 </motion.div>
-                <CardTitle className="text-xl font-bold text-stone-900">{t('faq')}</CardTitle>
+                <CardTitle className="text-xl font-bold text-stone-900">{t('cards.faq.title')}</CardTitle>
                 <CardDescription className="text-stone-600">
-                  Find answers to common questions
+                  {t('cards.faq.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Button className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-300" asChild>
-                  <a href="#faq">🔍 Browse FAQ</a>
+                  <a href="#faq">{t('cards.faq.button')}</a>
                 </Button>
               </CardContent>
             </Card>
@@ -153,14 +153,14 @@ export default function SupportPage() {
                 >
                   <Mail className="h-8 w-8 text-white" />
                 </motion.div>
-                <CardTitle className="text-xl font-bold text-stone-900">{t('contactUs')}</CardTitle>
+                <CardTitle className="text-xl font-bold text-stone-900">{t('cards.contact.title')}</CardTitle>
                 <CardDescription className="text-stone-600">
-                  Send us a message
+                  {t('cards.contact.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Button className="w-full bg-gradient-to-r from-orange-600 to-amber-700 hover:from-orange-700 hover:to-amber-800 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-300" asChild>
-                  <Link href="/contact">📧 Contact Form</Link>
+                  <Link href="/contact">{t('cards.contact.button')}</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -180,14 +180,14 @@ export default function SupportPage() {
                 >
                   <Trash2 className="h-8 w-8 text-white" />
                 </motion.div>
-                <CardTitle className="text-xl font-bold text-stone-900">{t('dataDeletion.title')}</CardTitle>
+                <CardTitle className="text-xl font-bold text-stone-900">{t('cards.dataDeletion.title')}</CardTitle>
                 <CardDescription className="text-stone-600">
-                  {t('dataDeletion.description')}
+                  {t('cards.dataDeletion.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Button className="w-full bg-gradient-to-r from-rose-600 to-amber-700 hover:from-rose-700 hover:to-amber-800 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-300" asChild>
-                  <Link href="/support/data-deletion">🗂️ Delete Data</Link>
+                  <Link href="/support/data-deletion">{t('cards.dataDeletion.button')}</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -207,14 +207,14 @@ export default function SupportPage() {
                 >
                   <HelpCircle className="h-8 w-8 text-white" />
                 </motion.div>
-                <CardTitle className="text-xl font-bold text-stone-900">Documentation</CardTitle>
+                <CardTitle className="text-xl font-bold text-stone-900">{t('cards.docs.title')}</CardTitle>
                 <CardDescription className="text-stone-600">
-                  Read our guides
+                  {t('cards.docs.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Button className="w-full bg-gradient-to-r from-amber-700 to-stone-800 hover:from-amber-800 hover:to-stone-900 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-300" asChild>
-                  <Link href="/features">📖 View Features</Link>
+                  <Link href="/features">{t('cards.docs.button')}</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -241,7 +241,7 @@ export default function SupportPage() {
               {t('faq')}
             </h2>
             <p className="text-lg text-stone-600 font-medium">
-              Your travel questions answered!
+              {t('faqSubtitle')}
             </p>
           </motion.div>
           
@@ -293,17 +293,17 @@ export default function SupportPage() {
             <div className="space-y-6">
               <div className="text-5xl">🧭</div>
               <h3 className="text-2xl font-bold text-stone-900">
-                Still need help? Let's explore together!
+                {t('cta.title')}
               </h3>
               <p className="text-stone-600 text-lg">
-                Our support team is ready to guide you on your journey!
+                {t('cta.description')}
               </p>
               <Link href="/contact">
                 <Button 
                   size="lg" 
                   className="btn-modern text-lg px-8 py-4"
                 >
-                  Contact Support →
+                  {t('cta.button')}
                 </Button>
               </Link>
             </div>
@@ -313,4 +313,3 @@ export default function SupportPage() {
     </div>
   );
 }
-

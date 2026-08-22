@@ -1,393 +1,565 @@
 {
   "navigation": {
-    "home": "Home",
-    "features": "Features",
-    "pricing": "Pricing",
-    "screenshots": "Screenshots",
-    "support": "Support",
-    "contact": "Contact",
-    "language": "Language"
+    "home": "首页",
+    "features": "功能",
+    "pricing": "价格方案",
+    "screenshots": "应用截图",
+    "support": "帮助支持",
+    "contact": "联系我们",
+    "language": "语言"
   },
   "hero": {
     "title": "JOURNEO",
-    "subtitle": "Your AI-Powered Personal Travel Guide",
-    "description": "From planning your trips to exploring, your intelligent travel assistant designed with the power of artificial intelligence to make every moment unforgettable.",
+    "subtitle": "您的 AI 个人专属旅行指南",
+    "description": "从行程规划到实地探索，搭载强大人工智能的智能旅行助手，让您的每一次旅行都难以忘怀。",
     "cta": {
-      "appStore": "Download on the App Store",
-      "playStore": "Get it on Google Play"
+      "appStore": "App Store 下载",
+      "playStore": "Google Play 获取"
     },
     "features": {
       "ai": {
-        "title": "AI-Powered",
-        "description": "AI-powered smart recommendations"
+        "title": "AI 智能驱动",
+        "description": "AI 赋能的个性化旅行建议"
       },
       "voice": {
-        "title": "Voice Guide",
-        "description": "AI-powered voice narration"
+        "title": "语音导览",
+        "description": "AI 语音沉浸式导览解说"
       },
       "language": {
-        "title": "Multi-Language",
-        "description": "Travel guidance in 100+ languages"
+        "title": "多语言支持",
+        "description": "支持 8 种语言的无缝旅行指南"
       }
+    },
+    "trust": {
+      "downloads": "10万+ 次下载",
+      "rating": "4.9/5 评分",
+      "aiPowered": "AI 驱动"
     }
   },
   "features": {
-    "title": "Powerful Features",
-    "subtitle": "Smart tools to make your travel easier",
-    "allFeatures": "All Features",
+    "title": "强大功能",
+    "subtitle": "让您的每一次旅程更加轻松惬意的智能工具",
+    "allFeatures": "查看全部功能",
+    "pageDescription": "借助 Journeo 强大的智能功能，开启全新的旅行探索体验。",
     "aiRoute": {
-      "title": "AI Route Planning",
-      "description": "Use your time most efficiently with AI-powered smart route suggestions."
+      "title": "AI 智能路线规划",
+      "description": "借助人工智能算法智能规划最合理的路线，充分利用旅行中的每一刻。"
     },
     "interactiveMap": {
-      "title": "Interactive Map",
-      "description": "Discover places to visit on a real-time map and plan your route."
+      "title": "交互式地图",
+      "description": "在实时地图上探索周围的热门景点，随时随地自定义个性化路线。"
     },
     "ttsGuide": {
-      "title": "Voice Guide (TTS)",
-      "description": "Find your way with voice guidance while keeping your hands free."
+      "title": "语音导游 (TTS)",
+      "description": "解放您的双手，跟随生动的语音解说漫步城市与历史景点。"
     },
     "smartSuitcase": {
-      "title": "Smart Suitcase",
-      "description": "Organize what you need for your trip with artificial intelligence."
+      "title": "智能行李打包",
+      "description": "AI 会根据您的旅行目的地、天气和活动行程，生成最实用的行李清单。"
     },
     "weather": {
-      "title": "Weather Forecast",
-      "description": "Learn the current weather at your destination and be prepared."
+      "title": "实时天气预报",
+      "description": "随时掌握旅行目的地的实时天气情况，从容应对每一种气候变化。"
     },
     "sharing": {
-      "title": "Sharing",
-      "description": "Share your travel experiences with friends and family."
+      "title": "行程分享",
+      "description": "与家人和好友一键分享您的旅行计划与精彩旅途经历。"
     },
     "expenses": {
-      "title": "Expense Tracking",
-      "description": "Easily track and report your travel budget."
+      "title": "记账与费用分摊",
+      "description": "轻松记录旅行开支，多人同行自动计算分摊账单，省心又明了。"
     },
     "trips": {
-      "title": "Trip Management",
-      "description": "Manage your past and future trips from one place."
+      "title": "行程管理",
+      "description": "在一处井井有条地管理您过去的美好回忆与未来的出行计划。"
+    },
+    "offlineMode": {
+      "title": "离线模式",
+      "description": "即使没有网络连接，也能随时查看预先下载的地图和旅行计划。"
+    },
+    "securePrivate": {
+      "title": "安全与隐私",
+      "description": "严格按照业界最高安全标准对您的个人数据进行加密保护。"
+    },
+    "fastReliable": {
+      "title": "快速可靠",
+      "description": "极速加载的地图体验与稳定流畅的智能导航指引。"
+    },
+    "userFriendly": {
+      "title": "用户友好",
+      "description": "为各类旅行者量身打造的直观、现代且极简的操作界面。"
+    }
+  },
+  "screenshots": {
+    "title": "应用截图",
+    "subtitle": "近距离探索 Journeo 应用界面，发现令人惊叹的各项功能！",
+    "loading": "正在加载应用截图...",
+    "zoom": "放大",
+    "footerNote": "📱 截图展示的是真实的应用界面。实际界面可能随版本更新而有所优化。",
+    "items": {
+      "dashboard": {
+        "title": "主页仪表盘",
+        "description": "汇聚 AI 智能洞察与出行建议的个人旅行中枢",
+        "alt": "主屏幕"
+      },
+      "map": {
+        "title": "交互式地图",
+        "description": "提供智能路线建议的实时导航与地点探索",
+        "alt": "地图视图"
+      },
+      "route": {
+        "title": "AI 路线规划",
+        "description": "优化景点先后游览顺序，精准计算所需时间与路程",
+        "alt": "路线规划"
+      },
+      "trips": {
+        "title": "行程管理",
+        "description": "一目了然地归档和查看您所有的旅行经历",
+        "alt": "行程详情"
+      },
+      "packing": {
+        "title": "智能行李箱",
+        "description": "根据天气和行程量身定制的 AI 智能打包建议",
+        "alt": "行李清单"
+      },
+      "expenses": {
+        "title": "记账分账",
+        "description": "旅途中随时随地记账，智能分摊团队开支",
+        "alt": "费用管理"
+      }
     }
   },
   "howItWorks": {
-    "title": "How It Works?",
-    "subtitle": "Plan your trips with AI support in just 3 steps",
+    "title": "工作原理",
+    "subtitle": "只需 3 个简单步骤，即可在 AI 协助下规划完美行程",
     "plan": {
-      "title": "Plan",
-      "desc": "Set your destination and get AI-powered recommendations"
+      "title": "规划",
+      "desc": "设定您的旅行目的地并获取 AI 个性化推荐"
     },
     "explore": {
-      "title": "Explore",
-      "desc": "Discover the best routes with interactive maps"
+      "title": "探索",
+      "desc": "在交互式地图上发现最棒的观光路线"
     },
     "travel": {
-      "title": "Travel",
-      "desc": "Travel safely with voice guidance"
+      "title": "启程",
+      "desc": "在语音向导的陪伴下安心享受愉快的旅途"
     }
   },
   "pricing": {
-    "title": "Simple and Transparent Pricing",
-    "subtitle": "Choose the plan that suits you",
+    "title": "简单透明的价格方案",
+    "subtitle": "选择最适合您旅行方式的方案",
+    "popularBadge": "最受欢迎",
     "free": {
-      "title": "Free",
+      "title": "免费版",
       "price": "$0",
-      "period": "Forever",
+      "period": "永久",
       "features": [
-        "Basic map features",
-        "Limited AI suggestions",
-        "Weather information",
-        "Basic packing list"
+        "基础地图功能",
+        "基础 AI 推荐",
+        "实时天气信息",
+        "基础行李清单"
       ],
-      "cta": "Get Started"
+      "cta": "免费开始"
     },
     "monthly": {
-      "title": "Monthly Premium",
+      "title": "月度高级版",
       "price": "$9.99",
-      "period": "Month",
+      "period": "月",
       "features": [
-        "All free features",
-        "Unlimited AI route planning",
-        "Voice guidance (TTS)",
-        "Expense tracking",
-        "Travel sharing",
-        "Priority support"
+        "包含全部免费功能",
+        "无限次 AI 智能路线规划",
+        "语音导游 (TTS)",
+        "旅行记账与分账",
+        "行程实时分享",
+        "优先客服支持"
       ],
-      "cta": "Subscribe Now",
+      "cta": "立即订阅",
       "popular": true
     },
     "yearly": {
-      "title": "Yearly Premium",
+      "title": "年度高级版",
       "price": "$35.00",
-      "period": "Year",
-      "save": "Save 70%",
+      "period": "年",
+      "save": "立省 70%",
       "features": [
-        "All monthly features",
-        "Best value",
-        "Annual billing",
-        "Cancel anytime"
+        "包含全部月度版特权",
+        "最具性价比的选择",
+        "按年统一计费",
+        "随时支持取消"
       ],
-      "cta": "Subscribe Yearly"
+      "cta": "订阅年度方案"
     },
     "faq": {
-      "title": "Frequently Asked Questions",
+      "title": "常见问题解答",
       "cancel": {
-        "question": "How can I cancel my subscription?",
-        "answer": "You can cancel your subscription anytime from App Store settings for iOS or Google Play settings for Android. After cancellation, you will continue to enjoy premium features until the end of the current period."
+        "question": "如何取消订阅？",
+        "answer": "您可以随时通过 iOS 的 App Store 设置或 Android 的 Google Play 设置取消订阅。取消后，您仍可在当前账单周期结束前继续使用高级功能。"
       },
       "refund": {
-        "question": "What is your refund policy?",
-        "answer": "Apple and Google's refund policies apply. You can request a refund through the platform within the first 14 days after purchase."
+        "question": "退款政策是怎样的？",
+        "answer": "遵循 Apple 和 Google 官方退款政策。购买后 14 天内，您可以通过相应应用商店平台提交退款申请。"
+      },
+      "change": {
+        "question": "我可以更改我的方案吗？",
+        "answer": "可以，您可以随时升级或更改您的方案，更改将在下一个计费周期正式生效。"
       }
     }
   },
   "footer": {
-    "product": "Product",
-    "legal": "Legal",
-    "support": "Support",
-    "features": "Features",
-    "pricing": "Pricing",
-    "screenshots": "Screenshots",
-    "contact": "Contact",
-    "terms": "Terms of Service",
-    "privacy": "Privacy Policy",
-    "eula": "End User License Agreement",
-    "dataDeletion": "Data Deletion",
-    "supportCenter": "Support Center",
-    "rights": "© 2025 Journeo. All rights reserved."
+    "product": "产品",
+    "legal": "法律信息",
+    "support": "客户支持",
+    "features": "功能特性",
+    "pricing": "价格方案",
+    "screenshots": "应用截图",
+    "contact": "联系我们",
+    "terms": "使用条款",
+    "privacy": "隐私政策",
+    "eula": "最终用户许可协议",
+    "dataDeletion": "数据删除",
+    "supportCenter": "帮助中心",
+    "rights": "© 2025 Journeo. 保留所有权利。"
   },
   "contact": {
-    "title": "Contact",
-    "subtitle": "How can we help you?",
-    "name": "Your Name",
-    "email": "Your Email",
-    "message": "Your Message",
-    "send": "Send",
-    "sending": "Sending...",
-    "success": "Your message has been sent successfully!",
-    "error": "An error occurred. Please try again."
-  },
-  "support": {
-    "title": "Support Center",
-    "subtitle": "We're here to help you",
-    "faq": "Frequently Asked Questions",
-    "contactUs": "Contact Us",
-    "dataDeletion": {
-      "title": "Account and Data Deletion",
-      "description": "You can follow the steps below to permanently delete your account and data."
+    "title": "联系我们",
+    "subtitle": "有什么我们可以帮您的吗？",
+    "name": "您的姓名",
+    "email": "电子邮箱",
+    "message": "留言内容",
+    "send": "发送信息",
+    "sending": "正在发送...",
+    "success": "您的信息已成功发送！",
+    "error": "发送失败，请稍后重试。",
+    "info": {
+      "emailTitle": "邮箱",
+      "emailValue": "support@journeo.ai",
+      "addressTitle": "地址",
+      "addressValue": "土耳其 伊斯坦布尔",
+      "responseTimeTitle": "回复时间",
+      "responseTimeDesc": "我们通常会在 24 至 48 小时内给予答复",
+      "formTitle": "给我们留言",
+      "formSubtitle": "请填写以下表格，我们的团队会尽快与您联系。"
+    },
+    "placeholders": {
+      "name": "张伟",
+      "email": "zhang@example.com",
+      "message": "请在此输入您的详细留言..."
     }
   },
+  "support": {
+    "title": "帮助支持中心",
+    "subtitle": "随时为您提供旅途中的各项帮助",
+    "faq": "常见问题解答",
+    "faqSubtitle": "快速解答您在旅途中的各类疑问！",
+    "contactUs": "联系我们",
+    "dataDeletion": {
+      "title": "账号与数据删除",
+      "description": "按照以下指引操作，即可永久删除您的账号及所有个人数据。"
+    },
+    "cards": {
+      "faq": {
+        "title": "常见问题",
+        "description": "查找旅行者最常咨询的解答",
+        "button": "🔍 浏览常见问题"
+      },
+      "contact": {
+        "title": "联系团队",
+        "description": "直接向我们的客服支持团队发送信息",
+        "button": "📧 联系表单"
+      },
+      "dataDeletion": {
+        "title": "数据删除",
+        "description": "了解如何永久清除您的账号及数据",
+        "button": "🗂️ 删除数据"
+      },
+      "docs": {
+        "title": "功能与指南",
+        "description": "全面探索 Journeo 的各项实用功能",
+        "button": "📖 查看功能指南"
+      }
+    },
+    "faqs": {
+      "password": {
+        "question": "如何重置我的登录密码？",
+        "answer": "在登录界面点击“忘记密码”，按照发送至您注册邮箱的重置链接进行操作即可。"
+      },
+      "dataDeletion": {
+        "question": "如何注销账号并删除所有数据？",
+        "answer": "您可以直接在应用内点击 个人资料 > 设置 > 注销账号，或按照数据删除页面上的指引提交申请。"
+      },
+      "offline": {
+        "question": "应用是否支持离线模式？",
+        "answer": "支持。您可以在应用设置中提前下载地图和旅行计划，以便在无网络时离线使用。"
+      },
+      "subscription": {
+        "question": "如何取消我的订阅？",
+        "answer": "您可以随时在 Apple App Store 或 Google Play 的订阅管理设置中进行取消。"
+      }
+    },
+    "cta": {
+      "title": "仍有疑问？让我们一起探索解决！",
+      "description": "我们的专业支持团队已准备就绪，随时为您的旅程保驾护航！",
+      "button": "联系客服支持 →"
+    }
+  },
+  "dataDeletionPage": {
+    "title": "账号与数据删除",
+    "subtitle": "您可以永久注销账号并清除与您相关的所有数据",
+    "alert": "此操作不可逆！您的所有数据将被永久删除且无法恢复。",
+    "appMethod": {
+      "title": "1. 通过移动应用内删除",
+      "badge": "最快捷的方式（推荐）",
+      "step1": "打开 Journeo 移动应用",
+      "step2": "前往“个人资料”页面",
+      "step3": "选择“设置” → “账号设置”",
+      "step4": "点击“注销账号”按钮",
+      "step5": "输入验证码并确认完成删除"
+    },
+    "emailMethod": {
+      "title": "2. 通过电子邮件申请",
+      "badge": "若您无法登录应用",
+      "instruction": "请发送包含以下信息的电子邮件：",
+      "to": "收件人：",
+      "subject": "主题：",
+      "subjectValue": "账号及数据删除申请",
+      "contentLabel": "内容：",
+      "item1": "您的注册电子邮箱地址",
+      "item2": "您的用户名（如有）",
+      "item3": "明确的账号注销申请说明",
+      "note": "您的申请将在 30 个自然日内处理完毕。"
+    },
+    "deletedData": {
+      "title": "将被永久删除的数据",
+      "item1": "您的账号信息与登录凭证",
+      "item2": "个人资料信息及头像照片",
+      "item3": "完整的历史行程与路线记录",
+      "item4": "保存的收藏地点与自定义路线",
+      "item5": "记账记录与预算分配数据",
+      "item6": "社区共享与发布的内容",
+      "item7": "个人偏好与应用环境设置"
+    },
+    "importantNotes": {
+      "title": "重要提示",
+      "note1": "如果您当前有生效中的订阅，请务必先前往应用商店取消自动续费。",
+      "note2": "数据一旦被删除，在任何情况下均无法恢复。",
+      "note3": "部分交易与财务记录可能会根据法律合规要求保留 90 天。",
+      "note4": "未来您仍可使用相同的邮箱地址重新注册新账号。"
+    },
+    "footerContact": "如有任何疑问，请联系: privacy@journeo.ai"
+  },
   "privacy": {
-    "title": "Privacy Policy",
-    "lastUpdated": "July 29, 2026",
-    "intro": "At Journeo, we take your privacy seriously. This privacy policy explains how we collect, use, and protect your personal data.",
-    "informationWeCollect": "Information We Collect",
+    "title": "隐私政策",
+    "lastUpdated": "2026年7月29日",
+    "intro": "Journeo 极其重视您的个人隐私。本隐私政策详细说明了我们如何收集、使用和保护您的个人数据。",
+    "informationWeCollect": "我们收集的信息",
     "locationInfo": {
-      "title": "Location Information",
-      "body": "Journeo uses your location data to provide you with the best travel experience: GPS location for real-time navigation, to show nearby points of interest, and to generate AI-powered route suggestions. Location data is only collected while using the app and is not shared without your permission."
+      "title": "位置信息",
+      "body": "Journeo 会在您使用应用时收集您的地理位置信息，用于提供实时导航、周边景点展示和 AI 智能路线生成。位置数据仅在获得您明确授权且在前台使用时收集。"
     },
     "accountInfo": {
-      "title": "Account Information",
-      "email": "Email address",
-      "name": "Name and surname",
-      "photo": "Profile photo (optional)"
+      "title": "账号信息",
+      "email": "电子邮箱地址",
+      "name": "姓名",
+      "photo": "个人头像（可选）"
     },
     "usageData": {
-      "title": "Usage Data",
-      "statistics": "App usage statistics",
-      "preferences": "Your preferences and settings",
-      "history": "Travel history"
+      "title": "使用数据",
+      "statistics": "应用使用情况统计",
+      "preferences": "个人偏好与设置",
+      "history": "旅行历史记录"
     },
     "howWeUse": {
-      "title": "How We Use Data",
-      "functionality": "Providing app functionality",
-      "recommendations": "Offering personalized recommendations",
-      "experience": "Improving user experience",
-      "support": "Providing customer support"
+      "title": "数据的使用方式",
+      "functionality": "提供和维护应用各项核心功能",
+      "recommendations": "提供高度个性化的旅行与路线推荐",
+      "experience": "持续优化和提升用户体验",
+      "support": "提供优质的客户服务与技术支持"
     },
     "dataSecurity": {
-      "title": "Data Security",
-      "encrypted": "All data is stored encrypted on the Supabase platform",
-      "tls": "Secure transmission with SSL/TLS protocols",
-      "audits": "Regular security audits",
-      "measures": "Industry-standard security measures"
+      "title": "数据安全保障",
+      "encrypted": "所有数据均在 Supabase 平台上进行严格加密存储",
+      "tls": "全站采用 SSL/TLS 协议进行高强度传输加密",
+      "audits": "定期开展安全审计与漏洞排查",
+      "measures": "符合行业顶级标准的安全防护措施"
     },
     "thirdParty": {
-      "title": "Third-Party Services",
-      "intro": "Journeo uses the following third-party services:",
-      "supabase": "Authentication and data storage",
-      "maps": "Mapbox — maps and geocoding",
-      "openai": "Google Gemini — AI itinerary generation",
-      "note": "These services are subject to their own privacy policies.",
-      "places": "Google Places (server-side) — place verification"
+      "title": "第三方服务整合",
+      "intro": "Journeo 仅与值得信赖的行业领先服务商合作：",
+      "supabase": "用户身份认证与高可用数据库存储",
+      "maps": "Mapbox — 地图渲染与地理编码服务",
+      "openai": "Google Gemini — AI 智能旅行规划生成",
+      "note": "上述第三方服务均受其各自隐私政策的约束。",
+      "places": "Google Places — 地点信息核实与丰富"
     },
     "dataRetention": {
-      "title": "Data Retention",
-      "active": "Your data is retained while your account is active",
-      "deletion": "When you request account deletion, your data is permanently deleted within 30 days",
-      "legal": "Data required for legal obligations may be retained"
+      "title": "数据保留期限",
+      "active": "在您的账号处于激活状态期间持续保留数据",
+      "deletion": "收到删除申请后，数据将在 30 天内被永久彻底销毁",
+      "legal": "如法律法规有明确规定，部分合规数据将依法保留相应期限"
     },
     "yourRights": {
-      "title": "Your Rights",
-      "intro": "Under GDPR and CCPA, you have the following rights:",
-      "access": "Right to access your data",
-      "rectification": "Right to rectification",
-      "erasure": "Right to erasure (right to be forgotten)",
-      "object": "Right to object to processing",
-      "portability": "Right to data portability"
+      "title": "您的权利",
+      "intro": "根据适用的个人数据保护法规，您享有以下权利：",
+      "access": "访问与查阅您的个人数据",
+      "rectification": "更正不准确或不完整的数据",
+      "erasure": "请求删除数据（被遗忘权）",
+      "object": "反对特定数据处理行为",
+      "portability": "数据便携权"
     },
     "children": {
-      "title": "Children's Privacy",
-      "body": "Journeo is not intended for children under 13 and we do not knowingly collect data from this age group."
+      "title": "未成年人隐私保护",
+      "body": "Journeo 不面向 13 周岁以下的儿童，我们不会有意收集未成年人的个人数据。"
     },
     "changes": {
-      "title": "Changes",
-      "body": "This privacy policy may be updated from time to time. We will notify you of significant changes."
+      "title": "政策更新",
+      "body": "我们可能会适时更新本隐私政策。重大更新将通过应用内或邮件及时告知。"
     },
     "contact": {
-      "title": "Contact",
-      "body": "For privacy-related questions:",
-      "email": "Email: privacy@journeo.ai",
-      "web": "Web: https://journeo.ai/contact"
+      "title": "联系我们",
+      "body": "如果您对隐私保护有任何疑问，请随时联系：",
+      "email": "邮箱: privacy@journeo.ai",
+      "web": "网址: https://journeo.ai/contact"
     }
   },
   "terms": {
-    "title": "Terms of Service",
-    "lastUpdated": "July 29, 2026",
-    "intro": "Welcome to Journeo. By using our app and services, you agree to the following terms.",
+    "title": "使用条款",
+    "lastUpdated": "2026年7月29日",
+    "intro": "欢迎使用 Journeo。使用我们的应用及相关服务，即表示您同意遵守以下条款。",
     "acceptance": {
-      "title": "Acceptance of Terms",
-      "body": "By downloading, installing, or using Journeo, you agree to be bound by these Terms of Service. If you do not agree, do not use the app."
+      "title": "接受条款",
+      "body": "下载、安装或使用 Journeo，即代表您完全理解并同意受本使用条款的约束。"
     },
     "license": {
-      "title": "License",
-      "body": "We grant you a personal, non-exclusive, non-transferable license to use Journeo for your personal travel planning purposes."
+      "title": "使用许可",
+      "body": "我们授予您一项个人的、非独占的、不可转让的许可，仅供个人非商业旅行规划之用。"
     },
     "use": {
-      "title": "Use of the Service",
-      "body": "You agree to use Journeo only for lawful purposes. You are responsible for:",
-      "legal": "Complying with all applicable laws",
-      "account": "Maintaining the confidentiality of your account",
-      "responsibility": "All activities that occur under your account"
+      "title": "服务使用规范",
+      "body": "您承诺仅将 Journeo 用于合法合规的目的。",
+      "legal": "遵守所有适用的法律法规与规章",
+      "account": "妥善保管您的账号密码与凭据安全",
+      "responsibility": "对您账号下发生的所有操作与活动承担全部责任"
     },
     "payments": {
-      "title": "Payments and Subscriptions",
-      "body": "Optional premium features, when offered, are sold through Apple App Store or Google Play in-app purchase. This build may not include paid subscriptions; travel booking partner links are separate from digital unlocks."
+      "title": "支付与订阅",
+      "body": "可选的高级订阅功能通过 Apple App Store 或 Google Play 官方应用内购买渠道安全结算。"
     },
     "termination": {
-      "title": "Termination",
-      "body": "We may terminate or suspend your access to Journeo at any time, with or without cause, and without notice."
+      "title": "终止服务",
+      "body": "若您违反本条款，我们有权在未经事先通知的情况下暂停或终止您的服务访问权。"
     },
     "disclaimer": {
-      "title": "Disclaimer",
-      "body": "Journeo is provided \"as is\" without warranties of any kind. We do not guarantee that travel recommendations will be accurate or suitable for your needs."
+      "title": "免责声明",
+      "body": "Journeo 按“现状”提供，我们不保证旅行建议或路线信息完全无误或绝对适合特定需求。"
     },
     "liability": {
-      "title": "Limitation of Liability",
-      "body": "To the maximum extent permitted by law, Journeo shall not be liable for any indirect, incidental, or consequential damages arising from your use of the app."
+      "title": "责任限制",
+      "body": "在法律允许的最大范围内，Journeo 不对因使用本服务引起的任何间接、附带或衍生损失承担责任。"
     },
     "changes": {
-      "title": "Changes to Terms",
-      "body": "We may update these Terms of Service from time to time. Continued use of the app constitutes acceptance of the updated terms."
+      "title": "条款修改",
+      "body": "我们有权适时修订本条款。您继续使用本应用即视为接受更新后的条款内容。"
     },
     "contact": {
-      "title": "Contact",
-      "body": "For questions about these Terms, contact us at legal@journeo.ai."
+      "title": "联系我们",
+      "body": "如对本条款有任何疑问，请发送邮件至 legal@journeo.ai。"
     }
   },
   "eula": {
-    "title": "End User License Agreement",
-    "lastUpdated": "January 10, 2025",
-    "intro": "This End User License Agreement (\"EULA\") is a legal agreement between you and Journeo regarding the use of the Journeo mobile application.",
+    "title": "最终用户许可协议",
+    "lastUpdated": "2025年1月10日",
+    "intro": "本最终用户许可协议（“EULA”）是您与 Journeo 之间就移动应用使用事宜达成的具有法律约束力的协议。",
     "license": {
-      "title": "License Grant",
-      "body": "Subject to your compliance with this EULA, we grant you a limited, personal, non-exclusive, non-transferable license to install and use one copy of the app on a single device."
+      "title": "授予许可",
+      "body": "在您遵守本协议的前提下，我们授予您在受支持设备上安装和使用本应用的有限许可。"
     },
     "permitted": {
-      "title": "Permitted Uses",
-      "body": "You may use the app for personal, non-commercial travel planning purposes."
+      "title": "允许的使用方式",
+      "body": "您仅可出于个人、非商业性的旅行计划与导航目的使用本应用。"
     },
     "restrictions": {
-      "title": "Restrictions",
-      "modify": "You may not modify, adapt, or translate the app",
-      "distribute": "You may not distribute, sublicense, or rent the app",
-      "reverse": "You may not reverse engineer, decompile, or disassemble the app",
-      "transfer": "You may not transfer your rights under this EULA without our written consent"
+      "title": "使用限制",
+      "modify": "不得修改、改编或翻译本应用",
+      "distribute": "不得分发、转让、出租或转授权本应用",
+      "reverse": "不得对本应用进行反向工程、反编译或拆解",
+      "transfer": "未经书面许可，不得转让本协议项下的任何权利"
     },
     "ownership": {
-      "title": "Ownership",
-      "body": "The app and all intellectual property rights therein remain the property of Journeo. This EULA does not grant you any rights to our trademarks or other intellectual property."
+      "title": "知识产权归属",
+      "body": "本应用及其所有知识产权均为 Journeo 的专属财产。本协议未明示授予您的任何权利均由我们保留。"
     },
     "termination": {
-      "title": "Termination",
-      "body": "This EULA terminates automatically if you fail to comply with any term. Upon termination, you must cease using the app and delete it from your device."
+      "title": "协议终止",
+      "body": "如您违反本协议任何条款，本许可将自动终止。终止后您必须立即停止使用并卸载本应用。"
     },
     "warranty": {
-      "title": "No Warranty",
-      "body": "The app is provided \"as is\" without warranty of any kind. We do not warrant that the app will be error-free or uninterrupted."
+      "title": "无担保声明",
+      "body": "本应用按“现状”提供，我们不保证应用运行绝对无错误或不发生中断。"
     },
     "liability": {
-      "title": "Limitation of Liability",
-      "body": "In no event shall Journeo be liable for any damages arising out of the use or inability to use the app."
+      "title": "有限责任",
+      "body": "在任何情况下，Journeo 均不对因使用或无法使用本应用造成的任何损失承担法律责任。"
     },
     "governing": {
-      "title": "Governing Law",
-      "body": "This EULA shall be governed by the laws of Turkey, without regard to its conflict of law provisions."
+      "title": "适用法律",
+      "body": "本协议受土耳其共和国法律管辖，排除冲突法原则的适用。"
     },
     "contact": {
-      "title": "Contact",
-      "body": "For questions about this EULA, contact us at legal@journeo.ai."
+      "title": "联系方式",
+      "body": "有关本协议的任何疑问，请联系 legal@journeo.ai。"
     }
   },
   "scrollStory": {
-    "eyebrow": "实时演示",
-    "title": "滚动查看 Journeo 的实际使用",
-    "subtitle": "从登录到规划行程、生成路线、分摊费用，逐步了解完整流程。",
-    "hint": "开始滚动",
+    "eyebrow": "动态演示",
+    "title": "向下滚动，亲身体验 Journeo 的强大魅力",
+    "subtitle": "逐步跟随完整的出行流程：从便捷登录、AI 智能规划、路线自动优化到旅途智能分账。",
+    "hint": "开始向下滚动",
     "stepLabel": "步骤",
-    "cta": "查看全部界面",
+    "cta": "浏览所有界面",
     "steps": {
       "login": {
-        "title": "登录",
-        "description": "使用邮箱或社交账号，几秒即可进入。"
+        "title": "快捷登录",
+        "description": "使用邮箱或社交账号，几秒钟内即可轻松登录开启体验。"
       },
       "home": {
-        "title": "首页",
-        "description": "即将出发的行程、推荐内容和快捷操作，一屏尽览。"
+        "title": "主页中枢",
+        "description": "即将出行的旅程、AI 个性化推荐与快捷入口一览无余。"
       },
       "createTrip": {
         "title": "创建行程",
-        "description": "选择城市、日期和出行风格，其余交给 Journeo。"
+        "description": "选定目标城市、出行日期与旅行偏好，其余交给 Journeo 智能处理。"
       },
       "aiPlanner": {
         "title": "AI 智能规划",
-        "description": "AI 会根据你的兴趣，逐日安排行程。"
+        "description": "AI 会根据您的兴趣爱好，量身定制井井有条的每日游玩行程。"
       },
       "route": {
-        "title": "路线就绪",
-        "description": "站点按最优顺序排列，自动计算时间与距离。"
+        "title": "路线已就绪",
+        "description": "各个游览停靠点按最优顺序列出，精准计算游玩与通勤时间。"
       },
       "maps": {
-        "title": "地图视图",
-        "description": "在交互地图上查看每个站点，立即获取导航。"
+        "title": "地图全景呈现",
+        "description": "在交互式地图上查看全部游玩点，一键开启实时导航。"
       },
       "meetingPoint": {
         "title": "集合地点",
-        "description": "与朋友设定共同的集合地点，谁都不会走散。"
+        "description": "为同行好友设立清晰的集合点，再也不用担心有人迷路走散。"
       },
       "tripDetail": {
-        "title": "行程详情",
-        "description": "每个站点的介绍、照片与语音导览，随时可看。"
+        "title": "景点详情",
+        "description": "精美图片、生动解说与智能语音导览随时随地随心查看。"
       },
       "expenses": {
         "title": "费用分摊",
-        "description": "记录开销，自动算出谁该付给谁多少钱。"
+        "description": "轻松记录开销，Journeo 会自动计算每个人应付与应收的金额。"
       },
       "trips": {
-        "title": "我的行程",
-        "description": "过去与未来的所有行程，统一归档管理。"
+        "title": "我的旅程",
+        "description": "过去探索的美好回忆与未来的精彩计划都在这里整齐归档。"
       },
       "profile": {
-        "title": "个人中心",
-        "description": "管理偏好、语言和你的旅行数据。"
+        "title": "个人资料",
+        "description": "随心管理您的旅行偏好、显示语言，并探索您的旅行足迹数据。"
       }
     }
   }

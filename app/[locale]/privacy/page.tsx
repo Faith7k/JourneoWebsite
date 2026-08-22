@@ -9,12 +9,11 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'privacy' });
   return genMeta({
-    title: locale === 'tr' ? 'Gizlilik Politikası' : 'Privacy Policy',
-    description: locale === 'tr'
-      ? 'Journeo gizlilik politikası ve veri koruması'
-      : 'Journeo privacy policy and data protection',
-    locale: locale === 'tr' ? 'tr_TR' : 'en_US',
+    title: t('title'),
+    description: t('intro'),
+    locale: locale === 'tr' ? 'tr_TR' : `${locale}_${locale.toUpperCase()}`,
     path: '/privacy',
   });
 }

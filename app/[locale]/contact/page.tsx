@@ -80,8 +80,8 @@ export default function ContactPage() {
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-2">
                   <Mail className="h-6 w-6 text-amber-700" />
                 </div>
-                <CardTitle className="text-stone-900">Email</CardTitle>
-                <CardDescription className="text-stone-600">support@journeo.ai</CardDescription>
+                <CardTitle className="text-stone-900">{t('info.emailTitle')}</CardTitle>
+                <CardDescription className="text-stone-600">{t('info.emailValue')}</CardDescription>
               </CardHeader>
             </Card>
 
@@ -90,9 +90,9 @@ export default function ContactPage() {
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-2">
                   <MapPin className="h-6 w-6 text-amber-700" />
                 </div>
-                <CardTitle className="text-stone-900">Address</CardTitle>
+                <CardTitle className="text-stone-900">{t('info.addressTitle')}</CardTitle>
                 <CardDescription className="text-stone-600">
-                  Istanbul, Turkey
+                  {t('info.addressValue')}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -102,9 +102,9 @@ export default function ContactPage() {
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-2">
                   <Send className="h-6 w-6 text-amber-700" />
                 </div>
-                <CardTitle className="text-stone-900">Response Time</CardTitle>
+                <CardTitle className="text-stone-900">{t('info.responseTimeTitle')}</CardTitle>
                 <CardDescription className="text-stone-600">
-                  We typically respond within 24-48 hours
+                  {t('info.responseTimeDesc')}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -114,9 +114,9 @@ export default function ContactPage() {
           <div className="lg:col-span-2">
             <Card className="bg-white/85 backdrop-blur-sm border border-amber-900/10 shadow-lg">
               <CardHeader>
-                <CardTitle className="text-2xl text-stone-900">{t('title')}</CardTitle>
+                <CardTitle className="text-2xl text-stone-900">{t('info.formTitle')}</CardTitle>
                 <CardDescription className="text-stone-600">
-                  Fill out the form below and we'll get back to you soon.
+                  {t('info.formSubtitle')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -127,7 +127,7 @@ export default function ContactPage() {
                       id="name"
                       name="name"
                       required
-                      placeholder="John Doe"
+                      placeholder={t('placeholders.name')}
                       className="bg-white/80 border-amber-900/15 focus:border-amber-600 focus:ring-amber-500/20"
                     />
                   </div>
@@ -139,7 +139,7 @@ export default function ContactPage() {
                       name="email"
                       type="email"
                       required
-                      placeholder="john@example.com"
+                      placeholder={t('placeholders.email')}
                       className="bg-white/80 border-amber-900/15 focus:border-amber-600 focus:ring-amber-500/20"
                     />
                   </div>
@@ -151,7 +151,7 @@ export default function ContactPage() {
                       name="message"
                       required
                       rows={6}
-                      placeholder="Your message..."
+                      placeholder={t('placeholders.message')}
                       className="bg-white/80 border-amber-900/15 focus:border-amber-600 focus:ring-amber-500/20"
                     />
                   </div>
@@ -174,4 +174,3 @@ export default function ContactPage() {
     </div>
   );
 }
-

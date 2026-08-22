@@ -1,393 +1,565 @@
 {
   "navigation": {
-    "home": "Home",
-    "features": "Features",
-    "pricing": "Pricing",
-    "screenshots": "Screenshots",
-    "support": "Support",
-    "contact": "Contact",
-    "language": "Language"
+    "home": "Inicio",
+    "features": "Características",
+    "pricing": "Precios",
+    "screenshots": "Capturas",
+    "support": "Soporte",
+    "contact": "Contacto",
+    "language": "Idioma"
   },
   "hero": {
     "title": "JOURNEO",
-    "subtitle": "Your AI-Powered Personal Travel Guide",
-    "description": "From planning your trips to exploring, your intelligent travel assistant designed with the power of artificial intelligence to make every moment unforgettable.",
+    "subtitle": "Tu guía de viaje personal impulsada por IA",
+    "description": "Desde planificar tus viajes hasta explorar nuevos destinos: tu asistente inteligente diseñado con el poder de la IA para hacer cada momento inolvidable.",
     "cta": {
-      "appStore": "Download on the App Store",
-      "playStore": "Get it on Google Play"
+      "appStore": "Descargar en App Store",
+      "playStore": "Disponible en Google Play"
     },
     "features": {
       "ai": {
-        "title": "AI-Powered",
-        "description": "AI-powered smart recommendations"
+        "title": "Impulsado por IA",
+        "description": "Recomendaciones inteligentes de IA"
       },
       "voice": {
-        "title": "Voice Guide",
-        "description": "AI-powered voice narration"
+        "title": "Audioguía",
+        "description": "Narración de voz asistida por IA"
       },
       "language": {
-        "title": "Multi-Language",
-        "description": "Travel guidance in 100+ languages"
+        "title": "Multilingüe",
+        "description": "Guía de viajes en 8 idiomas"
       }
+    },
+    "trust": {
+      "downloads": "100K+ Descargas",
+      "rating": "4.9/5 Valoración",
+      "aiPowered": "Impulsado por IA"
     }
   },
   "features": {
-    "title": "Powerful Features",
-    "subtitle": "Smart tools to make your travel easier",
-    "allFeatures": "All Features",
+    "title": "Características Potentes",
+    "subtitle": "Herramientas inteligentes para viajar sin complicaciones",
+    "allFeatures": "Todas las características",
+    "pageDescription": "Eleva tus aventuras con las potentes funciones inteligentes de Journeo.",
     "aiRoute": {
-      "title": "AI Route Planning",
-      "description": "Use your time most efficiently with AI-powered smart route suggestions."
+      "title": "Planificación de rutas con IA",
+      "description": "Aprovecha al máximo tu tiempo con sugerencias de rutas optimizadas por inteligencia artificial."
     },
     "interactiveMap": {
-      "title": "Interactive Map",
-      "description": "Discover places to visit on a real-time map and plan your route."
+      "title": "Mapa Interactivo",
+      "description": "Descubre lugares emblemáticos en tiempo real y traza tu itinerario en el mapa."
     },
     "ttsGuide": {
-      "title": "Voice Guide (TTS)",
-      "description": "Find your way with voice guidance while keeping your hands free."
+      "title": "Audioguía (TTS)",
+      "description": "Explora la ciudad con las manos libres gracias a la guía de voz envolvente."
     },
     "smartSuitcase": {
-      "title": "Smart Suitcase",
-      "description": "Organize what you need for your trip with artificial intelligence."
+      "title": "Maleta Inteligente",
+      "description": "Organiza tu equipaje de forma personalizada según el clima y tu destino con IA."
     },
     "weather": {
-      "title": "Weather Forecast",
-      "description": "Learn the current weather at your destination and be prepared."
+      "title": "Pronóstico del Tiempo",
+      "description": "Conoce el clima actual en tu destino y viaja siempre preparado."
     },
     "sharing": {
-      "title": "Sharing",
-      "description": "Share your travel experiences with friends and family."
+      "title": "Compartir Viajes",
+      "description": "Comparte fácilmente tus experiencias e itinerarios con amigos y familia."
     },
     "expenses": {
-      "title": "Expense Tracking",
-      "description": "Easily track and report your travel budget."
+      "title": "Control de Gastos",
+      "description": "Lleva el control de tu presupuesto y divide los gastos grupales sin complicaciones."
     },
     "trips": {
-      "title": "Trip Management",
-      "description": "Manage your past and future trips from one place."
+      "title": "Gestión de Viajes",
+      "description": "Administra todos tus viajes pasados y futuros en un solo lugar."
+    },
+    "offlineMode": {
+      "title": "Modo sin conexión",
+      "description": "Accede a tus mapas e información de viaje incluso sin conexión a internet."
+    },
+    "securePrivate": {
+      "title": "Seguro y Privado",
+      "description": "Tus datos están protegidos y cifrados con los más altos estándares de seguridad."
+    },
+    "fastReliable": {
+      "title": "Rápido y Confiable",
+      "description": "Mapas de alta velocidad y navegación inteligente fluida en todo momento."
+    },
+    "userFriendly": {
+      "title": "Fácil de Usar",
+      "description": "Interfaz intuitiva y moderna diseñada para todo tipo de viajeros."
+    }
+  },
+  "screenshots": {
+    "title": "Capturas de Pantalla",
+    "subtitle": "¡Explora la app Journeo de cerca y descubre todas sus funciones!",
+    "loading": "Cargando capturas de pantalla...",
+    "zoom": "Ampliar",
+    "footerNote": "📱 Las capturas de pantalla reflejan la aplicación real. La interfaz puede variar con las actualizaciones.",
+    "items": {
+      "dashboard": {
+        "title": "Panel Principal",
+        "description": "Tu centro de viajes personalizado con información inteligente",
+        "alt": "Pantalla principal"
+      },
+      "map": {
+        "title": "Mapa Interactivo",
+        "description": "Navegación en tiempo real con sugerencias de ruta inteligentes",
+        "alt": "Vista del mapa"
+      },
+      "route": {
+        "title": "Ruta con IA",
+        "description": "Secuencia óptima de paradas y cálculo exacto de tiempos y distancias",
+        "alt": "Planificación de rutas"
+      },
+      "trips": {
+        "title": "Gestión de Viajes",
+        "description": "Todos tus viajes y aventuras organizados de forma ordenada",
+        "alt": "Detalles del viaje"
+      },
+      "packing": {
+        "title": "Maleta Inteligente",
+        "description": "Lista de equipaje adaptada al clima y a las paradas de tu ruta",
+        "alt": "Maleta inteligente"
+      },
+      "expenses": {
+        "title": "Control de Gastos",
+        "description": "Registra gastos sobre la marcha y equilibra las cuentas del grupo",
+        "alt": "Control de gastos"
+      }
     }
   },
   "howItWorks": {
-    "title": "How It Works?",
-    "subtitle": "Plan your trips with AI support in just 3 steps",
+    "title": "¿Cómo funciona?",
+    "subtitle": "Planifica tus viajes con IA en solo 3 sencillos pasos",
     "plan": {
-      "title": "Plan",
-      "desc": "Set your destination and get AI-powered recommendations"
+      "title": "Planifica",
+      "desc": "Define tu destino y recibe sugerencias personalizadas con IA"
     },
     "explore": {
-      "title": "Explore",
-      "desc": "Discover the best routes with interactive maps"
+      "title": "Explora",
+      "desc": "Descubre las mejores rutas en mapas interactivos en vivo"
     },
     "travel": {
-      "title": "Travel",
-      "desc": "Travel safely with voice guidance"
+      "title": "Viaja",
+      "desc": "Disfruta de tu viaje con la audioguía por voz"
     }
   },
   "pricing": {
-    "title": "Simple and Transparent Pricing",
-    "subtitle": "Choose the plan that suits you",
+    "title": "Precios Simples y Transparentes",
+    "subtitle": "Elige el plan ideal para tu estilo de viaje",
+    "popularBadge": "Más Popular",
     "free": {
-      "title": "Free",
+      "title": "Gratis",
       "price": "$0",
-      "period": "Forever",
+      "period": "Siempre",
       "features": [
-        "Basic map features",
-        "Limited AI suggestions",
-        "Weather information",
-        "Basic packing list"
+        "Funciones básicas de mapas",
+        "Sugerencias de IA limitadas",
+        "Información meteorológica",
+        "Lista básica de equipaje"
       ],
-      "cta": "Get Started"
+      "cta": "Comenzar Gratis"
     },
     "monthly": {
-      "title": "Monthly Premium",
+      "title": "Premium Mensual",
       "price": "$9.99",
-      "period": "Month",
+      "period": "Mes",
       "features": [
-        "All free features",
-        "Unlimited AI route planning",
-        "Voice guidance (TTS)",
-        "Expense tracking",
-        "Travel sharing",
-        "Priority support"
+        "Todas las funciones gratuitas",
+        "Rutas ilimitadas con IA",
+        "Audioguía por voz (TTS)",
+        "Control de gastos",
+        "Compartir viajes",
+        "Soporte prioritario"
       ],
-      "cta": "Subscribe Now",
+      "cta": "Suscribirse Ahora",
       "popular": true
     },
     "yearly": {
-      "title": "Yearly Premium",
+      "title": "Premium Anual",
       "price": "$35.00",
-      "period": "Year",
-      "save": "Save 70%",
+      "period": "Año",
+      "save": "Ahorra 70%",
       "features": [
-        "All monthly features",
-        "Best value",
-        "Annual billing",
-        "Cancel anytime"
+        "Todas las funciones mensuales",
+        "Mejor precio por valor",
+        "Facturación anual",
+        "Cancela en cualquier momento"
       ],
-      "cta": "Subscribe Yearly"
+      "cta": "Suscripción Anual"
     },
     "faq": {
-      "title": "Frequently Asked Questions",
+      "title": "Preguntas Frecuentes",
       "cancel": {
-        "question": "How can I cancel my subscription?",
-        "answer": "You can cancel your subscription anytime from App Store settings for iOS or Google Play settings for Android. After cancellation, you will continue to enjoy premium features until the end of the current period."
+        "question": "¿Cómo cancelo mi suscripción?",
+        "answer": "Puedes cancelar tu suscripción en cualquier momento desde los ajustes de App Store (iOS) o Google Play (Android). Mantendrás el acceso premium hasta el fin del ciclo de facturación."
       },
       "refund": {
-        "question": "What is your refund policy?",
-        "answer": "Apple and Google's refund policies apply. You can request a refund through the platform within the first 14 days after purchase."
+        "question": "¿Cuál es la política de reembolsos?",
+        "answer": "Se aplican las políticas de Apple y Google. Puedes solicitar un reembolso a través de la tienda correspondiente dentro de los primeros 14 días tras la compra."
+      },
+      "change": {
+        "question": "¿Puedo cambiar de plan?",
+        "answer": "Sí, puedes actualizar o cambiar tu plan en cualquier momento. Los cambios se aplicarán en el siguiente periodo de facturación."
       }
     }
   },
   "footer": {
-    "product": "Product",
+    "product": "Producto",
     "legal": "Legal",
-    "support": "Support",
-    "features": "Features",
-    "pricing": "Pricing",
-    "screenshots": "Screenshots",
-    "contact": "Contact",
-    "terms": "Terms of Service",
-    "privacy": "Privacy Policy",
-    "eula": "End User License Agreement",
-    "dataDeletion": "Data Deletion",
-    "supportCenter": "Support Center",
-    "rights": "© 2025 Journeo. All rights reserved."
+    "support": "Soporte",
+    "features": "Características",
+    "pricing": "Precios",
+    "screenshots": "Capturas",
+    "contact": "Contacto",
+    "terms": "Términos de Servicio",
+    "privacy": "Política de Privacidad",
+    "eula": "Acuerdo de Licencia de Usuario Final",
+    "dataDeletion": "Eliminación de Datos",
+    "supportCenter": "Centro de Ayuda",
+    "rights": "© 2025 Journeo. Todos los derechos reservados."
   },
   "contact": {
-    "title": "Contact",
-    "subtitle": "How can we help you?",
-    "name": "Your Name",
-    "email": "Your Email",
-    "message": "Your Message",
-    "send": "Send",
-    "sending": "Sending...",
-    "success": "Your message has been sent successfully!",
-    "error": "An error occurred. Please try again."
-  },
-  "support": {
-    "title": "Support Center",
-    "subtitle": "We're here to help you",
-    "faq": "Frequently Asked Questions",
-    "contactUs": "Contact Us",
-    "dataDeletion": {
-      "title": "Account and Data Deletion",
-      "description": "You can follow the steps below to permanently delete your account and data."
+    "title": "Contacto",
+    "subtitle": "¿Cómo podemos ayudarte?",
+    "name": "Tu Nombre",
+    "email": "Tu Correo Electrónico",
+    "message": "Tu Mensaje",
+    "send": "Enviar Mensaje",
+    "sending": "Enviando...",
+    "success": "¡Tu mensaje ha sido enviado exitosamente!",
+    "error": "Ha ocurrido un error. Por favor, inténtalo de nuevo.",
+    "info": {
+      "emailTitle": "Correo Electrónico",
+      "emailValue": "support@journeo.ai",
+      "addressTitle": "Ubicación",
+      "addressValue": "Estambul, Turquía",
+      "responseTimeTitle": "Tiempo de Respuesta",
+      "responseTimeDesc": "Generalmente respondemos en 24-48 horas",
+      "formTitle": "Envíanos un Mensaje",
+      "formSubtitle": "Completa el formulario y te responderemos a la brevedad."
+    },
+    "placeholders": {
+      "name": "Juan Pérez",
+      "email": "juan@example.com",
+      "message": "Escribe tu mensaje aquí..."
     }
   },
+  "support": {
+    "title": "Centro de Soporte",
+    "subtitle": "Estamos aquí para acompañarte en tu viaje",
+    "faq": "Preguntas Frecuentes",
+    "faqSubtitle": "¡Encuentra respuestas a todas tus dudas de viaje!",
+    "contactUs": "Contáctanos",
+    "dataDeletion": {
+      "title": "Eliminación de Cuenta y Datos",
+      "description": "Sigue los pasos a continuación para eliminar permanentemente tu cuenta y tus datos personales."
+    },
+    "cards": {
+      "faq": {
+        "title": "Preguntas Frecuentes",
+        "description": "Encuentra respuestas rápidas a dudas comunes",
+        "button": "🔍 Ver FAQ"
+      },
+      "contact": {
+        "title": "Contáctanos",
+        "description": "Envía un mensaje directo a nuestro equipo",
+        "button": "📧 Formulario de Contacto"
+      },
+      "dataDeletion": {
+        "title": "Eliminación de Datos",
+        "description": "Aprende cómo borrar tu cuenta y datos",
+        "button": "🗂️ Borrar Datos"
+      },
+      "docs": {
+        "title": "Guías y Características",
+        "description": "Explora todas las funciones de Journeo",
+        "button": "📖 Ver Características"
+      }
+    },
+    "faqs": {
+      "password": {
+        "question": "¿Cómo restablezco mi contraseña?",
+        "answer": "Haz clic en '¿Olvidaste tu contraseña?' en la pantalla de inicio de sesión y sigue las instrucciones enviadas a tu correo."
+      },
+      "dataDeletion": {
+        "question": "¿Cómo elimino mi cuenta y mis datos?",
+        "answer": "Puedes eliminar tu cuenta desde la app en Perfil > Ajustes > Eliminar cuenta o siguiendo las instrucciones de nuestra página de Eliminación de Datos."
+      },
+      "offline": {
+        "question": "¿Hay modo sin conexión?",
+        "answer": "Sí, puedes descargar mapas y rutas con antelación desde los ajustes de la app para usarlos sin conexión."
+      },
+      "subscription": {
+        "question": "¿Cómo cancelo mi suscripción?",
+        "answer": "Cancela en cualquier momento desde los ajustes de suscripción de tu cuenta de Apple App Store o Google Play."
+      }
+    },
+    "cta": {
+      "title": "¿Aún necesitas ayuda? ¡Exploremos juntos!",
+      "description": "¡Nuestro equipo de soporte está listo para guiarte en tu viaje!",
+      "button": "Contactar a Soporte →"
+    }
+  },
+  "dataDeletionPage": {
+    "title": "Eliminación de Cuenta y Datos",
+    "subtitle": "Puedes eliminar permanentemente tu cuenta y todos tus datos",
+    "alert": "¡Esta acción no se puede deshacer! Todos tus datos se eliminarán de forma permanente.",
+    "appMethod": {
+      "title": "1. Desde la App Móvil",
+      "badge": "Método más rápido (Recomendado)",
+      "step1": "Abre la aplicación Journeo",
+      "step2": "Ve a la pestaña de Perfil",
+      "step3": "Selecciona Ajustes → Configuración de la cuenta",
+      "step4": "Pulsa en 'Eliminar cuenta'",
+      "step5": "Introduce el código de confirmación y confirma"
+    },
+    "emailMethod": {
+      "title": "2. Solicitud por Correo Electrónico",
+      "badge": "Si no tienes acceso a la app",
+      "instruction": "Envía un correo con la siguiente información:",
+      "to": "Para:",
+      "subject": "Asunto:",
+      "subjectValue": "Solicitud de Eliminación de Cuenta",
+      "contentLabel": "Contenido:",
+      "item1": "Tu correo electrónico registrado",
+      "item2": "Tu nombre de usuario (si aplica)",
+      "item3": "Tu solicitud explícita de eliminación de cuenta",
+      "note": "Tu solicitud será procesada en un plazo de 30 días."
+    },
+    "deletedData": {
+      "title": "Datos que se eliminarán",
+      "item1": "Información de tu cuenta y credenciales",
+      "item2": "Datos de perfil y fotos",
+      "item3": "Historial completo de viajes y rutas",
+      "item4": "Lugares favoritos e itinerarios guardados",
+      "item5": "Registros de gastos y presupuestos",
+      "item6": "Contenido compartido con la comunidad",
+      "item7": "Preferencias y ajustes de la app"
+    },
+    "importantNotes": {
+      "title": "Notas Importantes",
+      "note1": "Si tienes una suscripción activa, cancélala primero en la tienda de aplicaciones.",
+      "note2": "Los datos eliminados no se pueden recuperar bajo ninguna circunstancia.",
+      "note3": "Algunos registros pueden conservarse durante 90 días por obligaciones legales.",
+      "note4": "Podrás usar el mismo correo electrónico en el futuro para crear una nueva cuenta."
+    },
+    "footerContact": "Para dudas: privacy@journeo.ai"
+  },
   "privacy": {
-    "title": "Privacy Policy",
-    "lastUpdated": "July 29, 2026",
-    "intro": "At Journeo, we take your privacy seriously. This privacy policy explains how we collect, use, and protect your personal data.",
-    "informationWeCollect": "Information We Collect",
+    "title": "Política de Privacidad",
+    "lastUpdated": "29 de julio de 2026",
+    "intro": "En Journeo valoramos tu privacidad. Esta política explica cómo recopilamos, usamos y protegemos tus datos personales.",
+    "informationWeCollect": "Información que recopilamos",
     "locationInfo": {
-      "title": "Location Information",
-      "body": "Journeo uses your location data to provide you with the best travel experience: GPS location for real-time navigation, to show nearby points of interest, and to generate AI-powered route suggestions. Location data is only collected while using the app and is not shared without your permission."
+      "title": "Información de Ubicación",
+      "body": "Journeo utiliza tus datos de ubicación para ofrecerte la mejor experiencia: navegación GPS en tiempo real, lugares de interés cercanos y rutas optimizadas con IA. La ubicación solo se recopila mientras usas la app con tu permiso."
     },
     "accountInfo": {
-      "title": "Account Information",
-      "email": "Email address",
-      "name": "Name and surname",
-      "photo": "Profile photo (optional)"
+      "title": "Información de la Cuenta",
+      "email": "Correo electrónico",
+      "name": "Nombre y apellido",
+      "photo": "Foto de perfil (opcional)"
     },
     "usageData": {
-      "title": "Usage Data",
-      "statistics": "App usage statistics",
-      "preferences": "Your preferences and settings",
-      "history": "Travel history"
+      "title": "Datos de Uso",
+      "statistics": "Estadísticas de uso de la app",
+      "preferences": "Preferencias y ajustes",
+      "history": "Historial de viajes"
     },
     "howWeUse": {
-      "title": "How We Use Data",
-      "functionality": "Providing app functionality",
-      "recommendations": "Offering personalized recommendations",
-      "experience": "Improving user experience",
-      "support": "Providing customer support"
+      "title": "Cómo usamos los datos",
+      "functionality": "Proporcionar las funciones de la app",
+      "recommendations": "Ofrecer recomendaciones personalizadas",
+      "experience": "Mejorar la experiencia de usuario",
+      "support": "Brindar soporte y atención al cliente"
     },
     "dataSecurity": {
-      "title": "Data Security",
-      "encrypted": "All data is stored encrypted on the Supabase platform",
-      "tls": "Secure transmission with SSL/TLS protocols",
-      "audits": "Regular security audits",
-      "measures": "Industry-standard security measures"
+      "title": "Seguridad de Datos",
+      "encrypted": "Datos almacenados de forma segura y cifrada en Supabase",
+      "tls": "Transmisiones cifradas mediante protocolos SSL/TLS",
+      "audits": "Auditorías de seguridad periódicas",
+      "measures": "Medidas de seguridad según los estándares del sector"
     },
     "thirdParty": {
-      "title": "Third-Party Services",
-      "intro": "Journeo uses the following third-party services:",
-      "supabase": "Authentication and data storage",
-      "maps": "Mapbox — maps and geocoding",
-      "openai": "Google Gemini — AI itinerary generation",
-      "note": "These services are subject to their own privacy policies.",
-      "places": "Google Places (server-side) — place verification"
+      "title": "Servicios de Terceros",
+      "intro": "Journeo se integra con proveedores de confianza:",
+      "supabase": "Autenticación y almacenamiento seguro",
+      "maps": "Mapbox — mapas y geocodificación",
+      "openai": "Google Gemini — itinerarios con IA",
+      "note": "Estos servicios se rigen por sus respectivas políticas de privacidad.",
+      "places": "Google Places — verificación de lugares"
     },
     "dataRetention": {
-      "title": "Data Retention",
-      "active": "Your data is retained while your account is active",
-      "deletion": "When you request account deletion, your data is permanently deleted within 30 days",
-      "legal": "Data required for legal obligations may be retained"
+      "title": "Conservación de Datos",
+      "active": "Los datos se conservan mientras la cuenta esté activa",
+      "deletion": "Tras solicitar la eliminación, los datos se borran en 30 días",
+      "legal": "Ciertos datos pueden conservarse si lo exige la ley"
     },
     "yourRights": {
-      "title": "Your Rights",
-      "intro": "Under GDPR and CCPA, you have the following rights:",
-      "access": "Right to access your data",
-      "rectification": "Right to rectification",
-      "erasure": "Right to erasure (right to be forgotten)",
-      "object": "Right to object to processing",
-      "portability": "Right to data portability"
+      "title": "Tus Derechos",
+      "intro": "Conforme a las normativas de protección de datos, tienes derecho a:",
+      "access": "Acceder a tus datos personales",
+      "rectification": "Rectificar datos inexactos",
+      "erasure": "Solicitar la eliminación (derecho al olvido)",
+      "object": "Oponerte al tratamiento de datos",
+      "portability": "Portabilidad de datos"
     },
     "children": {
-      "title": "Children's Privacy",
-      "body": "Journeo is not intended for children under 13 and we do not knowingly collect data from this age group."
+      "title": "Privacidad Infantil",
+      "body": "Journeo no está dirigido a menores de 13 años y no recopila datos de niños intencionadamente."
     },
     "changes": {
-      "title": "Changes",
-      "body": "This privacy policy may be updated from time to time. We will notify you of significant changes."
+      "title": "Cambios en la Política",
+      "body": "Podemos actualizar esta política periódicamente. Te notificaremos los cambios significativos."
     },
     "contact": {
-      "title": "Contact",
-      "body": "For privacy-related questions:",
-      "email": "Email: privacy@journeo.ai",
+      "title": "Contacto",
+      "body": "Para dudas sobre privacidad, contáctanos en:",
+      "email": "Correo: privacy@journeo.ai",
       "web": "Web: https://journeo.ai/contact"
     }
   },
   "terms": {
-    "title": "Terms of Service",
-    "lastUpdated": "July 29, 2026",
-    "intro": "Welcome to Journeo. By using our app and services, you agree to the following terms.",
+    "title": "Términos de Servicio",
+    "lastUpdated": "29 de julio de 2026",
+    "intro": "Bienvenido a Journeo. Al usar nuestra aplicación y servicios, aceptas estos términos y condiciones.",
     "acceptance": {
-      "title": "Acceptance of Terms",
-      "body": "By downloading, installing, or using Journeo, you agree to be bound by these Terms of Service. If you do not agree, do not use the app."
+      "title": "Aceptación de Términos",
+      "body": "Al descargar o utilizar Journeo, aceptas quedar vinculado por estos Términos de Servicio."
     },
     "license": {
-      "title": "License",
-      "body": "We grant you a personal, non-exclusive, non-transferable license to use Journeo for your personal travel planning purposes."
+      "title": "Licencia",
+      "body": "Te otorgamos una licencia personal, no exclusiva e intransferible para usar Journeo con fines privados de viaje."
     },
     "use": {
-      "title": "Use of the Service",
-      "body": "You agree to use Journeo only for lawful purposes. You are responsible for:",
-      "legal": "Complying with all applicable laws",
-      "account": "Maintaining the confidentiality of your account",
-      "responsibility": "All activities that occur under your account"
+      "title": "Uso del Servicio",
+      "body": "Aceptas utilizar Journeo exclusivamente para fines legales.",
+      "legal": "Cumplimiento de todas las leyes aplicables",
+      "account": "Protección de las credenciales de tu cuenta",
+      "responsibility": "Responsabilidad de las actividades realizadas en tu cuenta"
     },
     "payments": {
-      "title": "Payments and Subscriptions",
-      "body": "Optional premium features, when offered, are sold through Apple App Store or Google Play in-app purchase. This build may not include paid subscriptions; travel booking partner links are separate from digital unlocks."
+      "title": "Pagos y Suscripciones",
+      "body": "Las funciones premium opcionales se procesan de forma segura a través de Apple App Store o Google Play."
     },
     "termination": {
-      "title": "Termination",
-      "body": "We may terminate or suspend your access to Journeo at any time, with or without cause, and without notice."
+      "title": "Terminación",
+      "body": "Podemos suspender o cancelar tu acceso a Journeo en cualquier momento por incumplimiento."
     },
     "disclaimer": {
-      "title": "Disclaimer",
-      "body": "Journeo is provided \"as is\" without warranties of any kind. We do not guarantee that travel recommendations will be accurate or suitable for your needs."
+      "title": "Exención de Responsabilidad",
+      "body": "Journeo se proporciona \"tal cual\" sin garantías de ningún tipo."
     },
     "liability": {
-      "title": "Limitation of Liability",
-      "body": "To the maximum extent permitted by law, Journeo shall not be liable for any indirect, incidental, or consequential damages arising from your use of the app."
+      "title": "Limitación de Responsabilidad",
+      "body": "En la medida permitida por la ley, Journeo no será responsable de daños indirectos derivados del uso de la app."
     },
     "changes": {
-      "title": "Changes to Terms",
-      "body": "We may update these Terms of Service from time to time. Continued use of the app constitutes acceptance of the updated terms."
+      "title": "Modificaciones de Términos",
+      "body": "Podemos revisar estos términos. El uso continuo de la aplicación implica la aceptación de los términos actualizados."
     },
     "contact": {
-      "title": "Contact",
-      "body": "For questions about these Terms, contact us at legal@journeo.ai."
+      "title": "Contacto",
+      "body": "Si tienes preguntas sobre estos Términos, escríbenos a legal@journeo.ai."
     }
   },
   "eula": {
-    "title": "End User License Agreement",
-    "lastUpdated": "January 10, 2025",
-    "intro": "This End User License Agreement (\"EULA\") is a legal agreement between you and Journeo regarding the use of the Journeo mobile application.",
+    "title": "Acuerdo de Licencia de Usuario Final",
+    "lastUpdated": "10 de enero de 2025",
+    "intro": "Este Acuerdo de Licencia de Usuario Final (\"EULA\") es un contrato legal entre tú y Journeo.",
     "license": {
-      "title": "License Grant",
-      "body": "Subject to your compliance with this EULA, we grant you a limited, personal, non-exclusive, non-transferable license to install and use one copy of the app on a single device."
+      "title": "Concesión de Licencia",
+      "body": "Te concedemos una licencia limitada, personal y no transferible para instalar y usar la aplicación."
     },
     "permitted": {
-      "title": "Permitted Uses",
-      "body": "You may use the app for personal, non-commercial travel planning purposes."
+      "title": "Usos Permitidos",
+      "body": "Puedes usar la aplicación únicamente para fines personales y no comerciales de planificación de viajes."
     },
     "restrictions": {
-      "title": "Restrictions",
-      "modify": "You may not modify, adapt, or translate the app",
-      "distribute": "You may not distribute, sublicense, or rent the app",
-      "reverse": "You may not reverse engineer, decompile, or disassemble the app",
-      "transfer": "You may not transfer your rights under this EULA without our written consent"
+      "title": "Restricciones",
+      "modify": "No puedes modificar, adaptar o traducir la aplicación",
+      "distribute": "Queda prohibida la redistribución, alquiler o sublicencia",
+      "reverse": "No puedes aplicar ingeniería inversa ni descompilar el software",
+      "transfer": "No puedes ceder tus derechos bajo este EULA sin consentimiento por escrito"
     },
     "ownership": {
-      "title": "Ownership",
-      "body": "The app and all intellectual property rights therein remain the property of Journeo. This EULA does not grant you any rights to our trademarks or other intellectual property."
+      "title": "Propiedad",
+      "body": "Todos los derechos de propiedad intelectual pertenecen exclusivamente a Journeo."
     },
     "termination": {
-      "title": "Termination",
-      "body": "This EULA terminates automatically if you fail to comply with any term. Upon termination, you must cease using the app and delete it from your device."
+      "title": "Rescisión",
+      "body": "Este acuerdo termina automáticamente si incumples cualquiera de sus disposiciones."
     },
     "warranty": {
-      "title": "No Warranty",
-      "body": "The app is provided \"as is\" without warranty of any kind. We do not warrant that the app will be error-free or uninterrupted."
+      "title": "Sin Garantía",
+      "body": "La aplicación se proporciona \"tal cual\" sin garantías de funcionamiento ininterrumpido."
     },
     "liability": {
-      "title": "Limitation of Liability",
-      "body": "In no event shall Journeo be liable for any damages arising out of the use or inability to use the app."
+      "title": "Limitación de Responsabilidad",
+      "body": "En ningún caso Journeo será responsable de daños resultantes del uso o imposibilidad de uso de la app."
     },
     "governing": {
-      "title": "Governing Law",
-      "body": "This EULA shall be governed by the laws of Turkey, without regard to its conflict of law provisions."
+      "title": "Ley Aplicable",
+      "body": "Este EULA se rige por las leyes de la República de Turquía, sin considerar conflictos de leyes."
     },
     "contact": {
-      "title": "Contact",
-      "body": "For questions about this EULA, contact us at legal@journeo.ai."
+      "title": "Contacto",
+      "body": "Para preguntas sobre este EULA, contáctanos en legal@journeo.ai."
     }
   },
   "scrollStory": {
-    "eyebrow": "Demo en vivo",
-    "title": "Desplázate y mira Journeo en acción",
-    "subtitle": "Sigue todo el flujo paso a paso: desde iniciar sesión hasta planificar, trazar la ruta y dividir gastos.",
-    "hint": "Empieza a desplazarte",
+    "eyebrow": "Demo en Vivo",
+    "title": "Haz scroll y mira a Journeo en acción",
+    "subtitle": "Sigue todo el recorrido paso a paso: desde el inicio de sesión hasta el plan de viaje inteligente, optimización de rutas y división de gastos.",
+    "hint": "Empieza a hacer scroll",
     "stepLabel": "Paso",
     "cta": "Ver todas las pantallas",
     "steps": {
       "login": {
-        "title": "Inicia sesión",
-        "description": "Entra en segundos con tu correo o una cuenta social."
+        "title": "Iniciar Sesión",
+        "description": "Accede en segundos con tu correo o cuentas sociales."
       },
       "home": {
         "title": "Inicio",
-        "description": "Próximos viajes, recomendaciones y accesos rápidos en un solo lugar."
+        "description": "Tus próximos viajes, sugerencias y accesos rápidos en una sola pantalla."
       },
       "createTrip": {
-        "title": "Crea un viaje",
-        "description": "Elige ciudad, fechas y estilo de viaje; Journeo se encarga del resto."
+        "title": "Crear Viaje",
+        "description": "Elige ciudad, fechas y tu estilo de viaje; Journeo se encarga del resto."
       },
       "aiPlanner": {
-        "title": "La IA lo planifica",
-        "description": "La IA crea un itinerario día a día según tus intereses."
+        "title": "La IA Planifica",
+        "description": "La IA diseña un itinerario a medida día por día según tus intereses."
       },
       "route": {
-        "title": "Tu ruta",
-        "description": "Las paradas se ordenan de forma eficiente, con tiempos y distancias."
+        "title": "Ruta Lista",
+        "description": "Las paradas se ordenan de forma óptima con tiempos y distancias calculados."
       },
       "maps": {
-        "title": "En el mapa",
-        "description": "Ve cada parada en un mapa interactivo y obtén indicaciones al instante."
+        "title": "En el Mapa",
+        "description": "Visualiza todas las paradas en un mapa interactivo y comienza la navegación."
       },
       "meetingPoint": {
-        "title": "Punto de encuentro",
-        "description": "Define un punto de encuentro común con tus amigos."
+        "title": "Punto de Encuentro",
+        "description": "Establece un punto de reunión claro con tu grupo para que nadie se pierda."
       },
       "tripDetail": {
-        "title": "Detalle del viaje",
-        "description": "Descripciones, fotos y guía de audio para cada parada."
+        "title": "Detalles del Viaje",
+        "description": "Fotos, explicaciones interesantes y audioguía para cada parada."
       },
       "expenses": {
-        "title": "Divide los gastos",
-        "description": "Registra los gastos y Journeo calcula quién le debe a quién."
+        "title": "Dividir Gastos",
+        "description": "Registra gastos y Journeo calcula automáticamente las cuentas de cada persona."
       },
       "trips": {
-        "title": "Mis viajes",
-        "description": "Todos tus viajes pasados y futuros en un archivo ordenado."
+        "title": "Mis Viajes",
+        "description": "Todas tus aventuras pasadas y futuras organizadas en un archivo limpio."
       },
       "profile": {
-        "title": "Tu perfil",
-        "description": "Gestiona preferencias, idioma y tus estadísticas de viaje."
+        "title": "Tu Perfil",
+        "description": "Gestiona tus preferencias, idioma y descubre tus estadísticas de viaje."
       }
     }
   }

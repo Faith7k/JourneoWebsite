@@ -1,393 +1,565 @@
 {
   "navigation": {
-    "home": "Home",
-    "features": "Features",
-    "pricing": "Pricing",
-    "screenshots": "Screenshots",
-    "support": "Support",
-    "contact": "Contact",
-    "language": "Language"
+    "home": "ホーム",
+    "features": "機能",
+    "pricing": "料金プラン",
+    "screenshots": "スクリーンショット",
+    "support": "サポート",
+    "contact": "お問い合わせ",
+    "language": "言語"
   },
   "hero": {
     "title": "JOURNEO",
-    "subtitle": "Your AI-Powered Personal Travel Guide",
-    "description": "From planning your trips to exploring, your intelligent travel assistant designed with the power of artificial intelligence to make every moment unforgettable.",
+    "subtitle": "AIが導くあなただけのパーソナル旅行ガイド",
+    "description": "旅行の計画から現地での探索まで。人工知能の力ですべての瞬間を忘れられない体験にするスマート旅行アシスタント。",
     "cta": {
-      "appStore": "Download on the App Store",
-      "playStore": "Get it on Google Play"
+      "appStore": "App Storeでダウンロード",
+      "playStore": "Google Playで手に入れる"
     },
     "features": {
       "ai": {
-        "title": "AI-Powered",
-        "description": "AI-powered smart recommendations"
+        "title": "AI搭載",
+        "description": "AIによるスマートなおすすめ"
       },
       "voice": {
-        "title": "Voice Guide",
-        "description": "AI-powered voice narration"
+        "title": "音声ガイド",
+        "description": "AI音声による臨場感あふれる解説"
       },
       "language": {
-        "title": "Multi-Language",
-        "description": "Travel guidance in 100+ languages"
+        "title": "多言語対応",
+        "description": "8言語に対応した旅行ナビゲーション"
       }
+    },
+    "trust": {
+      "downloads": "10万+ ダウンロード",
+      "rating": "4.9/5 評価",
+      "aiPowered": "AI搭載"
     }
   },
   "features": {
-    "title": "Powerful Features",
-    "subtitle": "Smart tools to make your travel easier",
-    "allFeatures": "All Features",
+    "title": "充実した機能",
+    "subtitle": "旅行をより便利で快適にするスマートツール",
+    "allFeatures": "すべての機能を見る",
+    "pageDescription": "Journeoの先進的な機能で、ワンランク上の旅を体験しましょう。",
     "aiRoute": {
-      "title": "AI Route Planning",
-      "description": "Use your time most efficiently with AI-powered smart route suggestions."
+      "title": "AIルート作成",
+      "description": "AIによる最適なルート提案で、旅行中の時間を最も効率的に活用できます。"
     },
     "interactiveMap": {
-      "title": "Interactive Map",
-      "description": "Discover places to visit on a real-time map and plan your route."
+      "title": "インタラクティブマップ",
+      "description": "リアルタイムマップ上で観光スポットを発見し、自由にルートを計画。"
     },
     "ttsGuide": {
-      "title": "Voice Guide (TTS)",
-      "description": "Find your way with voice guidance while keeping your hands free."
+      "title": "音声ガイド (TTS)",
+      "description": "手ぶらで街歩きを楽しみながら、音声案内でスムーズに観光できます。"
     },
     "smartSuitcase": {
-      "title": "Smart Suitcase",
-      "description": "Organize what you need for your trip with artificial intelligence."
+      "title": "スマートパッキング",
+      "description": "目的地や天候に合わせて、必要な持ち物をAIが自動で整理・提案します。"
     },
     "weather": {
-      "title": "Weather Forecast",
-      "description": "Learn the current weather at your destination and be prepared."
+      "title": "リアルタイム天気",
+      "description": "目的地の最新の天気を把握し、万全の準備で出発しましょう。"
     },
     "sharing": {
-      "title": "Sharing",
-      "description": "Share your travel experiences with friends and family."
+      "title": "旅の共有",
+      "description": "旅行のプランや思い出を友達や家族と簡単にシェアできます。"
     },
     "expenses": {
-      "title": "Expense Tracking",
-      "description": "Easily track and report your travel budget."
+      "title": "支出管理・割り勘",
+      "description": "旅行中の予算やグループでの支出を簡単に記録・管理できます。"
     },
     "trips": {
-      "title": "Trip Management",
-      "description": "Manage your past and future trips from one place."
+      "title": "トリップ管理",
+      "description": "過去の思い出とこれからの旅行プランを一箇所で管理。"
+    },
+    "offlineMode": {
+      "title": "オフラインモード",
+      "description": "電波のない場所でも、事前にダウンロードした地図やプランにアクセス。"
+    },
+    "securePrivate": {
+      "title": "安全とプライバシー",
+      "description": "最高水準のセキュリティ基準でお客様の個人情報を安全に保護します。"
+    },
+    "fastReliable": {
+      "title": "高速で信頼性が高い",
+      "description": "素早いマップ読み込みと安定したナビゲーションを提供。"
+    },
+    "userFriendly": {
+      "title": "直感的で使いやすい",
+      "description": "すべての旅行者のために設計されたシンプルで洗練されたUI。"
+    }
+  },
+  "screenshots": {
+    "title": "スクリーンショット",
+    "subtitle": "Journeoアプリの実際の画面と多彩な機能をご覧ください！",
+    "loading": "スクリーンショットを読み込み中...",
+    "zoom": "拡大",
+    "footerNote": "📱 スクリーンショットは実際のアプリ画面です。アップデートにより変更される場合があります。",
+    "items": {
+      "dashboard": {
+        "title": "ダッシュボード",
+        "description": "AIのおすすめが詰まったパーソナル旅行ハブ",
+        "alt": "ホーム画面"
+      },
+      "map": {
+        "title": "インタラクティブマップ",
+        "description": "スマートなルート提案を備えたリアルタイムナビ",
+        "alt": "マップ画面"
+      },
+      "route": {
+        "title": "AIルート作成",
+        "description": "立ち寄り先の最適化と所要時間・距離の自動計算",
+        "alt": "ルート計画"
+      },
+      "trips": {
+        "title": "トリップ管理",
+        "description": "すべての旅行体験を分かりやすくアーカイブ",
+        "alt": "旅行詳細"
+      },
+      "packing": {
+        "title": "スマートパッキング",
+        "description": "天候や旅程に合わせたAI持ち物リスト",
+        "alt": "荷物リスト"
+      },
+      "expenses": {
+        "title": "支出管理・割り勘",
+        "description": "旅行の支出記録とグループ間の割り勘計算を自動化",
+        "alt": "支出管理"
+      }
     }
   },
   "howItWorks": {
-    "title": "How It Works?",
-    "subtitle": "Plan your trips with AI support in just 3 steps",
+    "title": "ご利用の流れ",
+    "subtitle": "AIのサポートで、わずか3ステップで旅行プランが完成",
     "plan": {
-      "title": "Plan",
-      "desc": "Set your destination and get AI-powered recommendations"
+      "title": "プラン作成",
+      "desc": "目的地を設定してAIからパーソナライズされた提案を受ける"
     },
     "explore": {
-      "title": "Explore",
-      "desc": "Discover the best routes with interactive maps"
+      "title": "探索",
+      "desc": "インタラクティブマップで最適なルートを発見"
     },
     "travel": {
-      "title": "Travel",
-      "desc": "Travel safely with voice guidance"
+      "title": "出発",
+      "desc": "音声ガイドとともに安心して快適な旅を楽しむ"
     }
   },
   "pricing": {
-    "title": "Simple and Transparent Pricing",
-    "subtitle": "Choose the plan that suits you",
+    "title": "シンプルでわかりやすい料金プラン",
+    "subtitle": "旅行スタイルに合わせた最適なプランをお選びください",
+    "popularBadge": "一番人気",
     "free": {
-      "title": "Free",
+      "title": "無料プラン",
       "price": "$0",
-      "period": "Forever",
+      "period": "無期限",
       "features": [
-        "Basic map features",
-        "Limited AI suggestions",
-        "Weather information",
-        "Basic packing list"
+        "基本マップ機能",
+        "限定的なAIおすすめ機能",
+        "天気予報機能",
+        "基本持ち物リスト"
       ],
-      "cta": "Get Started"
+      "cta": "無料で始める"
     },
     "monthly": {
-      "title": "Monthly Premium",
+      "title": "月額プレミアム",
       "price": "$9.99",
-      "period": "Month",
+      "period": "月",
       "features": [
-        "All free features",
-        "Unlimited AI route planning",
-        "Voice guidance (TTS)",
-        "Expense tracking",
-        "Travel sharing",
-        "Priority support"
+        "すべての無料機能",
+        "無制限のAIルート作成",
+        "音声ガイド (TTS)",
+        "支出管理と割り勘",
+        "旅行プランの共有",
+        "優先カスタマーサポート"
       ],
-      "cta": "Subscribe Now",
+      "cta": "今すぐ登録",
       "popular": true
     },
     "yearly": {
-      "title": "Yearly Premium",
+      "title": "年額プレミアム",
       "price": "$35.00",
-      "period": "Year",
-      "save": "Save 70%",
+      "period": "年",
+      "save": "70% お得",
       "features": [
-        "All monthly features",
-        "Best value",
-        "Annual billing",
-        "Cancel anytime"
+        "月額プランの全機能",
+        "最もお得な料金設定",
+        "年額一括払い",
+        "いつでも解約可能"
       ],
-      "cta": "Subscribe Yearly"
+      "cta": "年額プランに登録"
     },
     "faq": {
-      "title": "Frequently Asked Questions",
+      "title": "よくあるご質問",
       "cancel": {
-        "question": "How can I cancel my subscription?",
-        "answer": "You can cancel your subscription anytime from App Store settings for iOS or Google Play settings for Android. After cancellation, you will continue to enjoy premium features until the end of the current period."
+        "question": "サブスクリプションの解約方法を教えてください。",
+        "answer": "iOSの場合はApp Storeの設定から、Androidの場合はGoogle Playの設定からいつでも簡単に解約できます。解約後も現在の請求期間終了までプレミアム機能をご利用いただけます。"
       },
       "refund": {
-        "question": "What is your refund policy?",
-        "answer": "Apple and Google's refund policies apply. You can request a refund through the platform within the first 14 days after purchase."
+        "question": "返金ポリシーはどうなっていますか？",
+        "answer": "AppleおよびGoogleの返金ポリシーが適用されます。ご購入後14日以内であれば、各プラットフォームを通じて返金申請を行っていただけます。"
+      },
+      "change": {
+        "question": "プランの変更はできますか？",
+        "answer": "はい、いつでもプランのアップグレードや変更が可能です。変更は次の請求期間から適用されます。"
       }
     }
   },
   "footer": {
-    "product": "Product",
-    "legal": "Legal",
-    "support": "Support",
-    "features": "Features",
-    "pricing": "Pricing",
-    "screenshots": "Screenshots",
-    "contact": "Contact",
-    "terms": "Terms of Service",
-    "privacy": "Privacy Policy",
-    "eula": "End User License Agreement",
-    "dataDeletion": "Data Deletion",
-    "supportCenter": "Support Center",
+    "product": "プロダクト",
+    "legal": "法的情報",
+    "support": "サポート",
+    "features": "機能",
+    "pricing": "料金プラン",
+    "screenshots": "スクリーンショット",
+    "contact": "お問い合わせ",
+    "terms": "利用規約",
+    "privacy": "プライバシーポリシー",
+    "eula": "エンドユーザーライセンス契約",
+    "dataDeletion": "データ削除",
+    "supportCenter": "ヘルプセンター",
     "rights": "© 2025 Journeo. All rights reserved."
   },
   "contact": {
-    "title": "Contact",
-    "subtitle": "How can we help you?",
-    "name": "Your Name",
-    "email": "Your Email",
-    "message": "Your Message",
-    "send": "Send",
-    "sending": "Sending...",
-    "success": "Your message has been sent successfully!",
-    "error": "An error occurred. Please try again."
-  },
-  "support": {
-    "title": "Support Center",
-    "subtitle": "We're here to help you",
-    "faq": "Frequently Asked Questions",
-    "contactUs": "Contact Us",
-    "dataDeletion": {
-      "title": "Account and Data Deletion",
-      "description": "You can follow the steps below to permanently delete your account and data."
+    "title": "お問い合わせ",
+    "subtitle": "ご不明な点がございましたらお気軽にお問い合わせください",
+    "name": "お名前",
+    "email": "メールアドレス",
+    "message": "メッセージ内容",
+    "send": "送信する",
+    "sending": "送信中...",
+    "success": "メッセージが正常に送信されました！",
+    "error": "エラーが発生しました。もう一度お試しください。",
+    "info": {
+      "emailTitle": "メール",
+      "emailValue": "support@journeo.ai",
+      "addressTitle": "所在地",
+      "addressValue": "トルコ・イスタンブール",
+      "responseTimeTitle": "回答時間の目安",
+      "responseTimeDesc": "通常24〜48時間以内にご返答いたします",
+      "formTitle": "メッセージを送信",
+      "formSubtitle": "以下のフォームにご記入ください。担当者より折り返しご連絡いたします。"
+    },
+    "placeholders": {
+      "name": "山田 太郎",
+      "email": "yamada@example.com",
+      "message": "お問い合わせ内容をご記入ください..."
     }
   },
+  "support": {
+    "title": "サポートセンター",
+    "subtitle": "快適な旅をサポートいたします",
+    "faq": "よくあるご質問",
+    "faqSubtitle": "旅行に関する疑問をすぐに解決！",
+    "contactUs": "お問い合わせ",
+    "dataDeletion": {
+      "title": "アカウントおよびデータの削除",
+      "description": "アカウントと個人データを完全に削除する手順については、こちらをご確認ください。"
+    },
+    "cards": {
+      "faq": {
+        "title": "よくあるご質問",
+        "description": "よく寄せられる質問と回答を確認する",
+        "button": "🔍 FAQを見る"
+      },
+      "contact": {
+        "title": "お問い合わせ",
+        "description": "サポートチームに直接メッセージを送る",
+        "button": "📧 お問い合わせフォーム"
+      },
+      "dataDeletion": {
+        "title": "データ削除",
+        "description": "アカウントとデータを削除する方法を確認する",
+        "button": "🗂️ データを削除する"
+      },
+      "docs": {
+        "title": "機能とガイド",
+        "description": "Journeoの全機能と使い方を詳しく見る",
+        "button": "📖 機能一覧を見る"
+      }
+    },
+    "faqs": {
+      "password": {
+        "question": "パスワードをリセットするにはどうすればよいですか？",
+        "answer": "ログイン画面の「パスワードをお忘れの方」をタップし、登録メールアドレス宛に届くリンクから再設定してください。"
+      },
+      "dataDeletion": {
+        "question": "アカウントと全データを削除するにはどうすればよいですか？",
+        "answer": "アプリ内の プロフィール > 設定 > アカウント削除 から、またはデータ削除ページの手順に従って削除申請を行っていただけます。"
+      },
+      "offline": {
+        "question": "オフラインモードは利用できますか？",
+        "answer": "はい、アプリ設定から事前に地図や旅程をダウンロードしておくことで、オフラインでもご利用いただけます。"
+      },
+      "subscription": {
+        "question": "サブスクリプションを解約するには？",
+        "answer": "Apple App Store または Google Play の定期購入管理画面からいつでも解約できます。"
+      }
+    },
+    "cta": {
+      "title": "まだ解決しない場合はお気軽にご相談ください！",
+      "description": "専任のサポートチームがあなたの快適な旅をサポートします！",
+      "button": "サポートに問い合わせる →"
+    }
+  },
+  "dataDeletionPage": {
+    "title": "アカウントおよびデータの削除",
+    "subtitle": "アカウントとすべての関連データを完全に削除できます",
+    "alert": "この操作は取り消せません！すべてのデータが完全に消去されます。",
+    "appMethod": {
+      "title": "1. モバイルアプリからの削除",
+      "badge": "最も迅速な方法（推奨）",
+      "step1": "Journeoアプリを開きます",
+      "step2": "「プロフィール」タブに移動します",
+      "step3": "「設定」→「アカウント設定」を選択します",
+      "step4": "「アカウントを削除」をタップします",
+      "step5": "確認コードを入力して削除を完了します"
+    },
+    "emailMethod": {
+      "title": "2. メールでの削除申請",
+      "badge": "アプリにアクセスできない場合",
+      "instruction": "以下の情報を記載したメールをお送りください：",
+      "to": "宛先:",
+      "subject": "件名:",
+      "subjectValue": "アカウント削除申請",
+      "contentLabel": "記載内容:",
+      "item1": "ご登録のメールアドレス",
+      "item2": "ユーザー名（設定されている場合）",
+      "item3": "アカウント削除の旨の明記",
+      "note": "ご申請から30日以内に削除手続きが完了いたします。"
+    },
+    "deletedData": {
+      "title": "削除されるデータ",
+      "item1": "アカウント情報およびログイン認証データ",
+      "item2": "プロフィール情報および写真データ",
+      "item3": "旅行履歴および作成したルート",
+      "item4": "保存したお気に入りスポットやメモ",
+      "item5": "支出記録および予算データ",
+      "item6": "コミュニティで共有したコンテンツ",
+      "item7": "個人設定およびアプリ環境設定"
+    },
+    "importantNotes": {
+      "title": "重要な注意事項",
+      "note1": "有効なサブスクリプションがある場合は、事前にApp Store/Google Playで解約してください。",
+      "note2": "一度削除されたデータはいかなる場合も復元できません。",
+      "note3": "法令遵守のため、一部の取引履歴は90日間保管される場合があります。",
+      "note4": "将来的に同じメールアドレスで新規アカウントを作成することは可能です。"
+    },
+    "footerContact": "ご質問はこちら: privacy@journeo.ai"
+  },
   "privacy": {
-    "title": "Privacy Policy",
-    "lastUpdated": "July 29, 2026",
-    "intro": "At Journeo, we take your privacy seriously. This privacy policy explains how we collect, use, and protect your personal data.",
-    "informationWeCollect": "Information We Collect",
+    "title": "プライバシーポリシー",
+    "lastUpdated": "2026年7月29日",
+    "intro": "Journeoはお客様のプライバシーを最重要視しています。本ポリシーでは個人情報の収集、利用、保護について説明します。",
+    "informationWeCollect": "収集する情報",
     "locationInfo": {
-      "title": "Location Information",
-      "body": "Journeo uses your location data to provide you with the best travel experience: GPS location for real-time navigation, to show nearby points of interest, and to generate AI-powered route suggestions. Location data is only collected while using the app and is not shared without your permission."
+      "title": "位置情報",
+      "body": "Journeoは最適な旅行体験を提供するために位置情報を利用します（GPSによるリアルタイム案内、周辺スポット表示、AIルート生成）。位置情報はアプリ利用中にお客様の許可を得た場合のみ収集されます。"
     },
     "accountInfo": {
-      "title": "Account Information",
-      "email": "Email address",
-      "name": "Name and surname",
-      "photo": "Profile photo (optional)"
+      "title": "アカウント情報",
+      "email": "メールアドレス",
+      "name": "氏名",
+      "photo": "プロフィール写真（任意）"
     },
     "usageData": {
-      "title": "Usage Data",
-      "statistics": "App usage statistics",
-      "preferences": "Your preferences and settings",
-      "history": "Travel history"
+      "title": "利用状況データ",
+      "statistics": "アプリの利用統計",
+      "preferences": "設定およびお好み",
+      "history": "旅行履歴"
     },
     "howWeUse": {
-      "title": "How We Use Data",
-      "functionality": "Providing app functionality",
-      "recommendations": "Offering personalized recommendations",
-      "experience": "Improving user experience",
-      "support": "Providing customer support"
+      "title": "情報の利用目的",
+      "functionality": "アプリ機能の提供と維持",
+      "recommendations": "パーソナライズされた旅行提案の提供",
+      "experience": "ユーザー体験の継続的な向上",
+      "support": "カスタマーサポートの提供"
     },
     "dataSecurity": {
-      "title": "Data Security",
-      "encrypted": "All data is stored encrypted on the Supabase platform",
-      "tls": "Secure transmission with SSL/TLS protocols",
-      "audits": "Regular security audits",
-      "measures": "Industry-standard security measures"
+      "title": "データセキュリティ",
+      "encrypted": "Supabaseによる暗号化された安全なデータ保管",
+      "tls": "SSL/TLSによる通信の暗号化",
+      "audits": "定期的なセキュリティ監査の実施",
+      "measures": "業界標準のセキュリティ対策"
     },
     "thirdParty": {
-      "title": "Third-Party Services",
-      "intro": "Journeo uses the following third-party services:",
-      "supabase": "Authentication and data storage",
-      "maps": "Mapbox — maps and geocoding",
-      "openai": "Google Gemini — AI itinerary generation",
-      "note": "These services are subject to their own privacy policies.",
-      "places": "Google Places (server-side) — place verification"
+      "title": "第三者サービス連携",
+      "intro": "Journeoは信頼性の高いパートナーと連携しています：",
+      "supabase": "認証およびデータ保管",
+      "maps": "Mapbox — 地図およびジオコーディング",
+      "openai": "Google Gemini — AI旅行プラン作成",
+      "note": "各サービスはそれぞれのプライバシーポリシーに従います。",
+      "places": "Google Places — スポット情報の検証"
     },
     "dataRetention": {
-      "title": "Data Retention",
-      "active": "Your data is retained while your account is active",
-      "deletion": "When you request account deletion, your data is permanently deleted within 30 days",
-      "legal": "Data required for legal obligations may be retained"
+      "title": "データの保持期間",
+      "active": "アカウントが有効な期間中はデータを保持します",
+      "deletion": "削除申請後、30日以内に完全にデータを消去します",
+      "legal": "法令に基づく義務がある場合は一部データを一定期間保管します"
     },
     "yourRights": {
-      "title": "Your Rights",
-      "intro": "Under GDPR and CCPA, you have the following rights:",
-      "access": "Right to access your data",
-      "rectification": "Right to rectification",
-      "erasure": "Right to erasure (right to be forgotten)",
-      "object": "Right to object to processing",
-      "portability": "Right to data portability"
+      "title": "お客様の権利",
+      "intro": "各種法令に基づき、お客様には以下の権利が認められています：",
+      "access": "ご自身の個人情報へのアクセス権",
+      "rectification": "不正確な情報の訂正権",
+      "erasure": "消去（忘れられる権利）",
+      "object": "データ処理に対する異議申立権",
+      "portability": "データポータビリティ権"
     },
     "children": {
-      "title": "Children's Privacy",
-      "body": "Journeo is not intended for children under 13 and we do not knowingly collect data from this age group."
+      "title": "児童のプライバシー保護",
+      "body": "Journeoは13歳未満のお子様を対象としておらず、意図的に児童から個人情報を収集することはありません。"
     },
     "changes": {
-      "title": "Changes",
-      "body": "This privacy policy may be updated from time to time. We will notify you of significant changes."
+      "title": "ポリシーの変更",
+      "body": "本プライバシーポリシーは定期的に見直されます。重要な変更がある場合は適切に通知いたします。"
     },
     "contact": {
-      "title": "Contact",
-      "body": "For privacy-related questions:",
-      "email": "Email: privacy@journeo.ai",
+      "title": "お問い合わせ",
+      "body": "プライバシーに関するお問い合わせは以下までお願いいたします：",
+      "email": "メール: privacy@journeo.ai",
       "web": "Web: https://journeo.ai/contact"
     }
   },
   "terms": {
-    "title": "Terms of Service",
-    "lastUpdated": "July 29, 2026",
-    "intro": "Welcome to Journeo. By using our app and services, you agree to the following terms.",
+    "title": "利用規約",
+    "lastUpdated": "2026年7月29日",
+    "intro": "Journeoへようこそ。本アプリをご利用いただくことで、以下の規約に同意したものとみなされます。",
     "acceptance": {
-      "title": "Acceptance of Terms",
-      "body": "By downloading, installing, or using Journeo, you agree to be bound by these Terms of Service. If you do not agree, do not use the app."
+      "title": "規約への同意",
+      "body": "Journeoをダウンロードまたは利用することにより、本規約に拘束されることに同意します。"
     },
     "license": {
-      "title": "License",
-      "body": "We grant you a personal, non-exclusive, non-transferable license to use Journeo for your personal travel planning purposes."
+      "title": "利用許諾",
+      "body": "個人的な旅行計画およびナビゲーション用途に限定し、非独占的かつ譲渡不可のライセンスを付与します。"
     },
     "use": {
-      "title": "Use of the Service",
-      "body": "You agree to use Journeo only for lawful purposes. You are responsible for:",
-      "legal": "Complying with all applicable laws",
-      "account": "Maintaining the confidentiality of your account",
-      "responsibility": "All activities that occur under your account"
+      "title": "サービスの利用",
+      "body": "合法的かつ正当な目的でのみJourneoをご利用いただけます。",
+      "legal": "適用されるすべての法令の遵守",
+      "account": "アカウント情報の安全な管理",
+      "responsibility": "ご自身のアカウントで行われるすべての活動に対する責任"
     },
     "payments": {
-      "title": "Payments and Subscriptions",
-      "body": "Optional premium features, when offered, are sold through Apple App Store or Google Play in-app purchase. This build may not include paid subscriptions; travel booking partner links are separate from digital unlocks."
+      "title": "お支払いとサブスクリプション",
+      "body": "有料機能はApple App StoreまたはGoogle Playのアプリ内課金を通じて安全に決済されます。"
     },
     "termination": {
-      "title": "Termination",
-      "body": "We may terminate or suspend your access to Journeo at any time, with or without cause, and without notice."
+      "title": "利用停止・終了",
+      "body": "規約違反が認められた場合、予告なくアカウントの利用を停止または終了することがあります。"
     },
     "disclaimer": {
-      "title": "Disclaimer",
-      "body": "Journeo is provided \"as is\" without warranties of any kind. We do not guarantee that travel recommendations will be accurate or suitable for your needs."
+      "title": "免責事項",
+      "body": "Journeoは「現状有姿」で提供され、旅行提案の完全な正確性について保証するものではありません。"
     },
     "liability": {
-      "title": "Limitation of Liability",
-      "body": "To the maximum extent permitted by law, Journeo shall not be liable for any indirect, incidental, or consequential damages arising from your use of the app."
+      "title": "責任の制限",
+      "body": "法令で認められる最大限の範囲において、アプリ利用に伴う間接的損害について責任を負いません。"
     },
     "changes": {
-      "title": "Changes to Terms",
-      "body": "We may update these Terms of Service from time to time. Continued use of the app constitutes acceptance of the updated terms."
+      "title": "規約の変更",
+      "body": "本規約は随時改定されることがあります。改定後も利用を継続されることで同意とみなされます。"
     },
     "contact": {
-      "title": "Contact",
-      "body": "For questions about these Terms, contact us at legal@journeo.ai."
+      "title": "お問い合わせ",
+      "body": "規約に関するご質問は legal@journeo.ai までご連絡ください。"
     }
   },
   "eula": {
-    "title": "End User License Agreement",
-    "lastUpdated": "January 10, 2025",
-    "intro": "This End User License Agreement (\"EULA\") is a legal agreement between you and Journeo regarding the use of the Journeo mobile application.",
+    "title": "エンドユーザーライセンス契約",
+    "lastUpdated": "2025年1月10日",
+    "intro": "本エンドユーザーライセンス契約（以下「EULA」）は、お客様とJourneoとの間の法的な契約です。",
     "license": {
-      "title": "License Grant",
-      "body": "Subject to your compliance with this EULA, we grant you a limited, personal, non-exclusive, non-transferable license to install and use one copy of the app on a single device."
+      "title": "ライセンスの付与",
+      "body": "本規約を遵守することを条件に、本アプリを端末にインストールして使用する限定的な権利を付与します。"
     },
     "permitted": {
-      "title": "Permitted Uses",
-      "body": "You may use the app for personal, non-commercial travel planning purposes."
+      "title": "許可された使用",
+      "body": "個人的かつ非営利目的の旅行計画および探索のためにのみアプリをご使用いただけます。"
     },
     "restrictions": {
-      "title": "Restrictions",
-      "modify": "You may not modify, adapt, or translate the app",
-      "distribute": "You may not distribute, sublicense, or rent the app",
-      "reverse": "You may not reverse engineer, decompile, or disassemble the app",
-      "transfer": "You may not transfer your rights under this EULA without our written consent"
+      "title": "禁止事項",
+      "modify": "アプリの改変、翻案、翻訳を行うこと",
+      "distribute": "アプリの再配布、貸与、サブライセンスを行うこと",
+      "reverse": "リバースエンジニアリングや逆コンパイルを行うこと",
+      "transfer": "書面による承諾なしに本契約上の権利を譲渡すること"
     },
     "ownership": {
-      "title": "Ownership",
-      "body": "The app and all intellectual property rights therein remain the property of Journeo. This EULA does not grant you any rights to our trademarks or other intellectual property."
+      "title": "知的財産権の帰属",
+      "body": "本アプリおよび関連するすべての知的財産権はJourneoに帰属します。"
     },
     "termination": {
-      "title": "Termination",
-      "body": "This EULA terminates automatically if you fail to comply with any term. Upon termination, you must cease using the app and delete it from your device."
+      "title": "契約の終了",
+      "body": "条項に違反した場合、本契約は自動的に終了します。終了時はアプリをアンインストールしてください。"
     },
     "warranty": {
-      "title": "No Warranty",
-      "body": "The app is provided \"as is\" without warranty of any kind. We do not warrant that the app will be error-free or uninterrupted."
+      "title": "保証の否認",
+      "body": "本アプリは無保証で提供され、中断や不具合のない動作を保証するものではありません。"
     },
     "liability": {
-      "title": "Limitation of Liability",
-      "body": "In no event shall Journeo be liable for any damages arising out of the use or inability to use the app."
+      "title": "責任の制限",
+      "body": "いかなる場合もJourneoはアプリの利用によって生じた損害について責任を負いません。"
     },
     "governing": {
-      "title": "Governing Law",
-      "body": "This EULA shall be governed by the laws of Turkey, without regard to its conflict of law provisions."
+      "title": "準拠法",
+      "body": "本EULAは、抵触法の原則に関わらずトルコ共和国の法律に準拠します。"
     },
     "contact": {
-      "title": "Contact",
-      "body": "For questions about this EULA, contact us at legal@journeo.ai."
+      "title": "お問い合わせ",
+      "body": "本EULAに関するご質問は legal@journeo.ai までお願いいたします。"
     }
   },
   "scrollStory": {
     "eyebrow": "ライブデモ",
-    "title": "スクロールして Journeo の動きを見る",
-    "subtitle": "ログインからプラン作成、ルート、費用の割り勘まで、すべての流れをステップごとに。",
-    "hint": "スクロールしてみる",
+    "title": "スクロールしてJourneoの魅力を体験",
+    "subtitle": "ログインからAI旅行プランニング、ルート最適化、割り勘までの一連の流れをステップごとにご覧ください。",
+    "hint": "スクロールを開始",
     "stepLabel": "ステップ",
     "cta": "すべての画面を見る",
     "steps": {
       "login": {
         "title": "ログイン",
-        "description": "メールまたはソーシャルアカウントで数秒サインイン。"
+        "description": "メールアドレスやSNS連携で数秒でスタート。"
       },
       "home": {
-        "title": "ホーム",
-        "description": "予定の旅行、おすすめ、クイック操作をひと目で。"
+        "title": "ホーム画面",
+        "description": "これからの旅行予定、おすすめスポット、クイックアクションがひと目でわかる。"
       },
       "createTrip": {
         "title": "旅行を作成",
-        "description": "都市・日程・旅のスタイルを選ぶだけ。あとは Journeo におまかせ。"
+        "description": "目的地、日程、旅行スタイルを選ぶだけ。あとはJourneoにお任せ。"
       },
       "aiPlanner": {
-        "title": "AI がプランを作成",
-        "description": "興味に合わせて、AI が 1 日ごとの旅程を組み立てます。"
+        "title": "AIがプランニング",
+        "description": "あなたの好みに合わせて、AIが日ごとの最適な旅行スケジュールを作成。"
       },
       "route": {
         "title": "ルートが完成",
-        "description": "立ち寄り先を効率的に並べ替え、所要時間と距離も自動計算。"
+        "description": "立ち寄り先が最も効率的な順序に並べ替えられ、移動時間と距離も算出。"
       },
       "maps": {
-        "title": "地図で確認",
-        "description": "すべてのスポットをインタラクティブな地図で見て、すぐに経路案内。"
+        "title": "マップ上で確認",
+        "description": "すべてのスポットをインタラクティブマップで確認し、すぐにナビを開始。"
       },
       "meetingPoint": {
         "title": "集合場所",
-        "description": "友だちと共有の集合場所を決めて、全員で迷わず合流。"
+        "description": "仲間との明確な集合場所を設定して、はぐれる心配を解消。"
       },
       "tripDetail": {
-        "title": "旅行の詳細",
-        "description": "各スポットの解説・写真・音声ガイドをその場で。"
+        "title": "スポット詳細",
+        "description": "美しい写真、詳しい解説、音声ガイドがいつでも手の届くところに。"
       },
       "expenses": {
-        "title": "費用の割り勘",
-        "description": "支出を記録すれば、誰が誰にいくら払うかを自動で計算。"
+        "title": "割り勘・支出管理",
+        "description": "旅先での支出をサッと記録すれば、誰がいくら払うべきかを自動計算。"
       },
       "trips": {
         "title": "マイトリップ",
-        "description": "過去とこれからの旅行を、ひとつのアーカイブに整理。"
+        "description": "過去の思い出と未来の冒険がすべてすっきりと保管されます。"
       },
       "profile": {
-        "title": "プロフィール",
-        "description": "設定、言語、旅の統計を管理できます。"
+        "title": "マイプロフィール",
+        "description": "旅行の好み、言語設定、自分だけの旅行統計データを管理。"
       }
     }
   }

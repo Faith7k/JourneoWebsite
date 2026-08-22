@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 import { Smartphone, MapPin, Route, Calendar, Wallet, Briefcase, Compass, Map, Mic, Plane, Mountain, Globe, X } from 'lucide-react';
 
 interface Screenshot {
@@ -18,6 +18,7 @@ interface Screenshot {
 }
 
 export default function ScreenshotsPage() {
+  const t = useTranslations('screenshots');
   const [selectedScreenshot, setSelectedScreenshot] = useState<number | null>(null);
   const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,55 +68,55 @@ export default function ScreenshotsPage() {
         setScreenshots([
           { 
             id: 1, 
-            alt: 'Main Screen', 
+            alt: t('items.dashboard.alt'), 
             src: '/images/screenshot-1.png',
-            title: 'Welcome Dashboard',
-            description: 'Your personal travel hub with AI-powered insights',
+            title: t('items.dashboard.title'),
+            description: t('items.dashboard.description'),
             icon: 'smartphone',
             color: 'from-blue-500 to-cyan-500'
           },
           { 
             id: 2, 
-            alt: 'Map View', 
+            alt: t('items.map.alt'), 
             src: '/images/screenshot-2.png',
-            title: 'Interactive Map',
-            description: 'Real-time navigation with smart route suggestions',
+            title: t('items.map.title'),
+            description: t('items.map.description'),
             icon: 'mappin',
             color: 'from-green-500 to-emerald-500'
           },
           { 
             id: 3, 
-            alt: 'Route Planning', 
+            alt: t('items.route.alt'), 
             src: '/images/screenshot-3.png',
-            title: 'AI Route Planning',
-            description: 'Intelligent route optimization for your journey',
+            title: t('items.route.title'),
+            description: t('items.route.description'),
             icon: 'route',
             color: 'from-purple-500 to-pink-500'
           },
           { 
             id: 4, 
-            alt: 'Travel Details', 
+            alt: t('items.trips.alt'), 
             src: '/images/screenshot-4.png',
-            title: 'Trip Management',
-            description: 'Organize and track your travel experiences',
+            title: t('items.trips.title'),
+            description: t('items.trips.description'),
             icon: 'calendar',
             color: 'from-orange-500 to-red-500'
           },
           { 
             id: 5, 
-            alt: 'Smart Suitcase', 
+            alt: t('items.packing.alt'), 
             src: '/images/screenshot-5.png',
-            title: 'Smart Packing',
-            description: 'AI-powered packing suggestions for your trip',
+            title: t('items.packing.title'),
+            description: t('items.packing.description'),
             icon: 'briefcase',
             color: 'from-indigo-500 to-blue-500'
           },
           { 
             id: 6, 
-            alt: 'Expenses', 
+            alt: t('items.expenses.alt'), 
             src: '/images/screenshot-6.png',
-            title: 'Expense Tracking',
-            description: 'Keep track of your travel budget effortlessly',
+            title: t('items.expenses.title'),
+            description: t('items.expenses.description'),
             icon: 'wallet',
             color: 'from-teal-500 to-green-500'
           },
@@ -126,7 +127,7 @@ export default function ScreenshotsPage() {
     };
 
     fetchScreenshots();
-  }, []);
+  }, [t]);
 
 
   return (
@@ -185,10 +186,10 @@ export default function ScreenshotsPage() {
             className="space-y-4"
           >
             <h1 className="heading-modern text-gradient">
-              Screenshots
+              {t('title')}
             </h1>
             <p className="text-xl text-stone-600 max-w-3xl mx-auto leading-relaxed font-medium">
-              Explore the Journeo app up close and discover its amazing features!
+              {t('subtitle')}
             </p>
           </motion.div>
         </motion.div>
@@ -198,7 +199,7 @@ export default function ScreenshotsPage() {
         {loading && (
           <div className="text-center py-20">
             <div className="w-8 h-8 border-2 border-amber-600/30 border-t-amber-600 rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-stone-600">Loading screenshots...</p>
+            <p className="text-stone-600">{t('loading')}</p>
           </div>
         )}
 
@@ -292,12 +293,12 @@ export default function ScreenshotsPage() {
 
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 max-w-[270px] mx-auto rounded-[2.5rem] bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-40">
-                    <Button 
-                      size="sm" 
-                      className="bg-white text-black hover:bg-white/95 shadow-md font-semibold rounded-full"
+                    <button 
+                      type="button"
+                      className="px-4 py-2 text-xs bg-white text-black hover:bg-white/95 shadow-md font-semibold rounded-full"
                     >
-                      Büyüt
-                    </Button>
+                      {t('zoom')}
+                    </button>
                   </div>
                 </motion.div>
               );
@@ -393,7 +394,7 @@ export default function ScreenshotsPage() {
         >
           <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-amber-900/10 shadow-md max-w-2xl mx-auto">
             <p className="text-stone-700 text-base font-medium">
-              📱 Screenshots reflect the actual application. Interface may change with updates.
+              {t('footerNote')}
             </p>
           </div>
         </motion.div>

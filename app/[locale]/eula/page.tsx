@@ -4,10 +4,11 @@ import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'eula' });
   return genMeta({
-    title: locale === 'tr' ? 'Son Kullanıcı Lisans Sözleşmesi' : 'End User License Agreement',
-    description: locale === 'tr' ? 'Journeo EULA' : 'Journeo End User License Agreement',
-    locale: locale === 'tr' ? 'tr_TR' : 'en_US',
+    title: t('title'),
+    description: t('intro'),
+    locale: locale === 'tr' ? 'tr_TR' : `${locale}_${locale.toUpperCase()}`,
     path: '/eula',
   });
 }

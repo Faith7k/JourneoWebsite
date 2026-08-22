@@ -2,22 +2,22 @@ import { generateMetadata as genMeta } from '@/lib/seo';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertCircle, Trash2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'dataDeletionPage' });
   return genMeta({
-    title: locale === 'tr' ? 'Hesap ve Veri Silme' : 'Account and Data Deletion',
-    description: locale === 'tr'
-      ? 'Journeo hesabınızı ve verilerinizi nasıl silebilirsiniz'
-      : 'How to delete your Journeo account and data',
-    locale: locale === 'tr' ? 'tr_TR' : 'en_US',
+    title: t('title'),
+    description: t('subtitle'),
+    locale: locale === 'tr' ? 'tr_TR' : `${locale}_${locale.toUpperCase()}`,
     path: '/support/data-deletion',
   });
 }
 
 export default async function DataDeletionPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const isTurkish = locale === 'tr';
+  const t = await getTranslations({ locale, namespace: 'dataDeletionPage' });
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#FAF7F2] py-24">
@@ -41,21 +41,17 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
             <Trash2 className="h-8 w-8 text-rose-600" />
           </div>
           <h1 className="heading-modern text-gradient mb-4">
-            {isTurkish ? 'Hesap ve Veri Silme' : 'Account and Data Deletion'}
+            {t('title')}
           </h1>
           <p className="text-xl text-stone-600">
-            {isTurkish
-              ? 'Hesabınızı ve tüm verilerinizi kalıcı olarak silebilirsiniz'
-              : 'You can permanently delete your account and all your data'}
+            {t('subtitle')}
           </p>
         </div>
 
         <Alert className="mb-8 border-rose-300 bg-rose-50/80 text-rose-900">
           <AlertCircle className="h-4 w-4 text-rose-600" />
           <AlertDescription>
-            {isTurkish
-              ? 'Bu işlem geri alınamaz! Tüm verileriniz kalıcı olarak silinecektir.'
-              : 'This action cannot be undone! All your data will be permanently deleted.'}
+            {t('alert')}
           </AlertDescription>
         </Alert>
 
@@ -63,21 +59,19 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
           <Card className="bg-white/85 backdrop-blur-sm border border-amber-900/10 shadow-md">
             <CardHeader>
               <CardTitle>
-                {isTurkish ? '1. Mobil Uygulama Üzerinden' : '1. Through Mobile App'}
+                {t('appMethod.title')}
               </CardTitle>
               <CardDescription>
-                {isTurkish
-                  ? 'En hızlı yöntem (Önerilen)'
-                  : 'Fastest method (Recommended)'}
+                {t('appMethod.badge')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                <li>{isTurkish ? 'Journeo uygulamasını açın' : 'Open the Journeo app'}</li>
-                <li>{isTurkish ? 'Profil sekmesine gidin' : 'Go to Profile tab'}</li>
-                <li>{isTurkish ? 'Ayarlar → Hesap ayarlarını seçin' : 'Select Settings → Account settings'}</li>
-                <li>{isTurkish ? '"Hesabı Sil" butonuna tıklayın' : 'Click "Delete Account" button'}</li>
-                <li>{isTurkish ? 'Onay kodunuzu girin ve onaylayın' : 'Enter your confirmation code and confirm'}</li>
+                <li>{t('appMethod.step1')}</li>
+                <li>{t('appMethod.step2')}</li>
+                <li>{t('appMethod.step3')}</li>
+                <li>{t('appMethod.step4')}</li>
+                <li>{t('appMethod.step5')}</li>
               </ol>
             </CardContent>
           </Card>
@@ -85,34 +79,28 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
           <Card className="bg-white/85 backdrop-blur-sm border border-amber-900/10 shadow-md">
             <CardHeader>
               <CardTitle>
-                {isTurkish ? '2. E-posta ile Talep' : '2. Request via Email'}
+                {t('emailMethod.title')}
               </CardTitle>
               <CardDescription>
-                {isTurkish
-                  ? 'Uygulamaya erişiminiz yoksa'
-                  : 'If you don\'t have access to the app'}
+                {t('emailMethod.badge')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-muted-foreground">
-                {isTurkish
-                  ? 'Aşağıdaki bilgileri içeren bir e-posta gönderin:'
-                  : 'Send an email with the following information:'}
+                {t('emailMethod.instruction')}
               </p>
               <div className="bg-[#FAF7F2] border border-amber-900/10 p-4 rounded-lg space-y-2">
-                <p><strong>{isTurkish ? 'Kime:' : 'To:'}</strong> privacy@journeo.ai</p>
-                <p><strong>{isTurkish ? 'Konu:' : 'Subject:'}</strong> Account Deletion Request</p>
-                <p><strong>{isTurkish ? 'İçerik:' : 'Content:'}</strong></p>
+                <p><strong>{t('emailMethod.to')}</strong> privacy@journeo.ai</p>
+                <p><strong>{t('emailMethod.subject')}</strong> {t('emailMethod.subjectValue')}</p>
+                <p><strong>{t('emailMethod.contentLabel')}</strong></p>
                 <ul className="list-disc list-inside ml-4 text-sm space-y-1 text-muted-foreground">
-                  <li>{isTurkish ? 'Kayıtlı e-posta adresiniz' : 'Your registered email address'}</li>
-                  <li>{isTurkish ? 'Kullanıcı adınız (varsa)' : 'Your username (if applicable)'}</li>
-                  <li>{isTurkish ? 'Hesap silme talebiniz' : 'Your account deletion request'}</li>
+                  <li>{t('emailMethod.item1')}</li>
+                  <li>{t('emailMethod.item2')}</li>
+                  <li>{t('emailMethod.item3')}</li>
                 </ul>
               </div>
               <p className="text-sm text-muted-foreground">
-                {isTurkish
-                  ? 'Talebiniz 30 gün içinde işleme alınacaktır.'
-                  : 'Your request will be processed within 30 days.'}
+                {t('emailMethod.note')}
               </p>
             </CardContent>
           </Card>
@@ -120,18 +108,18 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
           <Card className="bg-white/85 backdrop-blur-sm border border-amber-900/10 shadow-md">
             <CardHeader>
               <CardTitle>
-                {isTurkish ? 'Silinecek Veriler' : 'Data That Will Be Deleted'}
+                {t('deletedData.title')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 text-muted-foreground">
-                <li>✓ {isTurkish ? 'Hesap bilgileriniz' : 'Your account information'}</li>
-                <li>✓ {isTurkish ? 'Profil bilgileriniz' : 'Your profile information'}</li>
-                <li>✓ {isTurkish ? 'Seyahat geçmişiniz' : 'Your travel history'}</li>
-                <li>✓ {isTurkish ? 'Kaydedilmiş rotalarınız' : 'Your saved routes'}</li>
-                <li>✓ {isTurkish ? 'Harcama kayıtlarınız' : 'Your expense records'}</li>
-                <li>✓ {isTurkish ? 'Paylaşımlarınız' : 'Your shared content'}</li>
-                <li>✓ {isTurkish ? 'Tercihleriniz ve ayarlarınız' : 'Your preferences and settings'}</li>
+                <li>✓ {t('deletedData.item1')}</li>
+                <li>✓ {t('deletedData.item2')}</li>
+                <li>✓ {t('deletedData.item3')}</li>
+                <li>✓ {t('deletedData.item4')}</li>
+                <li>✓ {t('deletedData.item5')}</li>
+                <li>✓ {t('deletedData.item6')}</li>
+                <li>✓ {t('deletedData.item7')}</li>
               </ul>
             </CardContent>
           </Card>
@@ -139,39 +127,24 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
           <Card className="bg-white/85 backdrop-blur-sm border border-amber-900/10 shadow-md">
             <CardHeader>
               <CardTitle>
-                {isTurkish ? 'Önemli Notlar' : 'Important Notes'}
+                {t('importantNotes.title')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-muted-foreground">
-              <p>• {isTurkish
-                ? 'Aktif aboneliğiniz varsa, önce iptal etmeniz önerilir'
-                : 'If you have an active subscription, we recommend canceling it first'
-              }</p>
-              <p>• {isTurkish
-                ? 'Silinen veriler geri getirilemez'
-                : 'Deleted data cannot be recovered'
-              }</p>
-              <p>• {isTurkish
-                ? 'Yasal yükümlülükler için bazı veriler 90 gün süreyle saklanabilir'
-                : 'Some data may be retained for 90 days for legal obligations'
-              }</p>
-              <p>• {isTurkish
-                ? 'Yeni hesap oluşturmak için aynı e-posta adresini kullanabilirsiniz'
-                : 'You can use the same email address to create a new account'
-              }</p>
+              <p>• {t('importantNotes.note1')}</p>
+              <p>• {t('importantNotes.note2')}</p>
+              <p>• {t('importantNotes.note3')}</p>
+              <p>• {t('importantNotes.note4')}</p>
             </CardContent>
           </Card>
         </div>
 
         <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground">
-            {isTurkish
-              ? 'Sorularınız için: privacy@journeo.ai'
-              : 'For questions: privacy@journeo.ai'}
+            {t('footerContact')}
           </p>
         </div>
       </div>
     </div>
   );
 }
-

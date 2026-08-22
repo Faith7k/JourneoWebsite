@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { StoreButtons } from './store-buttons';
 
 // Gezi ile alakalı emoji'ler
 const travelEmojis = ['✈️', '🗺️', '🧳', '📸', '🏖️', '⛰️', '🏛️', '🎒', '🚂', '🚢', '🏨', '🗼', '🎡', '🎢', '🎪', '🎭', '🎨', '🏰', '⛪', '🕌', '🗿', '🌋', '🏔️', '🏕️', '🏞️', '🌅', '🌄', '🌠', '🎆', '🎇', '🌃', '🌆', '🌉'];
@@ -361,47 +362,8 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 1 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            {/* App Store Button */}
-            {appStoreUrl ? (
-              <a
-                href={appStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto"
-              >
-                <Button size="lg" className="btn-modern w-full sm:w-auto gap-3 text-lg px-10 py-6">
-                  <Apple className="h-6 w-6" />
-                  {t('hero.cta.appStore')}
-                </Button>
-              </a>
-            ) : (
-              <Button size="lg" disabled className="btn-modern w-full sm:w-auto gap-3 text-lg px-10 py-6 opacity-50 cursor-not-allowed">
-                <Apple className="h-6 w-6" />
-                {t('hero.cta.appStore')}
-              </Button>
-            )}
-
-            {/* Play Store Button */}
-            {playStoreUrl ? (
-              <a
-                href={playStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto"
-              >
-                <Button size="lg" variant="outline" className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-amber-900/15 text-stone-800 hover:bg-white bg-white/80 backdrop-blur-sm shadow-md">
-                  <Smartphone className="h-6 w-6" />
-                  {t('hero.cta.playStore')}
-                </Button>
-              </a>
-            ) : (
-              <Button size="lg" variant="outline" disabled className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-amber-900/15 text-stone-800 bg-white/80 backdrop-blur-sm opacity-50 cursor-not-allowed shadow-md">
-                <Smartphone className="h-6 w-6" />
-                {t('hero.cta.playStore')}
-              </Button>
-            )}
+            <StoreButtons appStoreUrl={appStoreUrl} playStoreUrl={playStoreUrl} />
           </motion.div>
 
           {/* Modern Stats with Icons */}

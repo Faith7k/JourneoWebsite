@@ -5,53 +5,35 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export function PricingTable() {
+  const t = useTranslations('pricing');
+
   const plans = [
     {
-      name: 'Free',
-      price: '$0',
-      period: 'ay',
-      features: [
-        'Sene de 1 tane gezi kartı ekleme',
-        'Temel rota planlama',
-        'Sınırlı AI önerileri',
-        'Temel harita görünümü',
-        'Topluluk desteği',
-      ],
-      cta: 'Ücretsiz Başla',
+      name: t('free.title'),
+      price: t('free.price'),
+      period: t('free.period'),
+      features: t.raw('free.features') as string[],
+      cta: t('free.cta'),
       popular: false,
     },
     {
-      name: 'Premium Aylık',
-      price: '$13',
-      period: 'ay',
-      features: [
-        'Aylık 5 tane gezi kartı ekleme',
-        'Standart TTS modeli',
-        'Valiz Özelliği',
-        'Gelişmiş rota optimizasyonu',
-        'Offline haritalar',
-        'Öncelikli destek',
-      ],
-      cta: 'Aylık Planı Seç',
+      name: t('monthly.title'),
+      price: t('monthly.price'),
+      period: t('monthly.period'),
+      features: t.raw('monthly.features') as string[],
+      cta: t('monthly.cta'),
       popular: true,
     },
     {
-      name: 'Premium Yıllık',
-      price: '$59',
-      period: 'yıl',
-      save: 'En iyi değer',
-      features: [
-        'Ayda 20 tane gezi kartı ekleme',
-        'Elevenlabs kaliteli sesli rehber',
-        'Valiz Özelliği',
-        'Gider takibi',
-        'Restoran kartı AI özeti',
-        'Kendi rotanızı ekleme',
-        '7/24 öncelikli destek',
-      ],
-      cta: 'Yıllık Planı Seç',
+      name: t('yearly.title'),
+      price: t('yearly.price'),
+      period: t('yearly.period'),
+      save: t('yearly.save'),
+      features: t.raw('yearly.features') as string[],
+      cta: t('yearly.cta'),
       popular: false,
     },
   ];
@@ -69,7 +51,9 @@ export function PricingTable() {
           <Card className={`relative h-full bg-white/85 backdrop-blur-sm border ${plan.popular ? 'border-amber-600 shadow-xl scale-105 ring-2 ring-amber-500/20' : 'border-amber-900/10 shadow-md'}`}>
             {plan.popular && (
               <div className="absolute -top-4 left-0 right-0 flex justify-center">
-                <Badge className="px-4 py-1 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-semibold shadow-md">Most Popular</Badge>
+                <Badge className="px-4 py-1 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-semibold shadow-md">
+                  {t('popularBadge')}
+                </Badge>
               </div>
             )}
             <CardHeader className="text-center">
@@ -108,4 +92,3 @@ export function PricingTable() {
     </div>
   );
 }
-

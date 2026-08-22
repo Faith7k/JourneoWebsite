@@ -1,6 +1,6 @@
 'use client';
 
-import { notFound } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { PricingTable } from '@/components/pricing-table';
 import {
   Accordion,
@@ -24,6 +24,7 @@ interface FloatingDollar {
 }
 
 export default function PricingPage() {
+  const t = useTranslations('pricing');
   const [dollars, setDollars] = useState<FloatingDollar[]>([]);
 
   useEffect(() => {
@@ -38,8 +39,8 @@ export default function PricingPage() {
           x: Math.random() * 100,
           y: Math.random() * 100,
           rotation: Math.random() * 360,
-          scale: 0.3 + Math.random() * 0.4, // 0.3-0.7 arası boyut
-          duration: 15 + Math.random() * 20, // 15-35 saniye
+          scale: 0.3 + Math.random() * 0.4,
+          duration: 15 + Math.random() * 20,
           delay: Math.random() * 5,
           image: dollarImages[Math.floor(Math.random() * dollarImages.length)],
         });
@@ -49,6 +50,7 @@ export default function PricingPage() {
 
     generateDollars();
   }, []);
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#FAF7F2]">
       {/* Modern Background Effects */}
@@ -111,9 +113,9 @@ export default function PricingPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20 space-y-6"
         >
-          <h1 className="heading-modern text-gradient">Pricing</h1>
+          <h1 className="heading-modern text-gradient">{t('title')}</h1>
           <p className="text-modern text-stone-600 max-w-3xl mx-auto leading-relaxed">
-            Choose the most suitable plan for your travels
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -136,30 +138,32 @@ export default function PricingPage() {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="heading-modern text-gradient text-center mb-12">Frequently Asked Questions</h2>
+          <h2 className="heading-modern text-gradient text-center mb-12">
+            {t('faq.title')}
+          </h2>
           <Accordion type="single" collapsible className="w-full space-y-4">
             <AccordionItem value="cancel" className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-md border border-amber-900/10 px-6">
               <AccordionTrigger className="text-left text-stone-900 hover:text-amber-700">
-                How can I cancel my subscription?
+                {t('faq.cancel.question')}
               </AccordionTrigger>
               <AccordionContent className="text-stone-600">
-                You can cancel your subscription at any time. You can easily perform the cancellation process from Settings &gt; Subscription &gt; Cancel section.
+                {t('faq.cancel.answer')}
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="refund" className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-md border border-amber-900/10 px-6">
               <AccordionTrigger className="text-left text-stone-900 hover:text-amber-700">
-                Can I get a refund?
+                {t('faq.refund.question')}
               </AccordionTrigger>
               <AccordionContent className="text-stone-600">
-                You can request a refund within the first 7 days. For later periods, the cancellation takes effect in the next billing period.
+                {t('faq.refund.answer')}
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="change" className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-md border border-amber-900/10 px-6">
               <AccordionTrigger className="text-left text-stone-900 hover:text-amber-700">
-                Can I change my plan?
+                {t('faq.change.question')}
               </AccordionTrigger>
               <AccordionContent className="text-stone-600">
-                Yes, you can upgrade or downgrade your plan at any time. Changes take effect in the next billing period.
+                {t('faq.change.answer')}
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -167,5 +171,4 @@ export default function PricingPage() {
       </div>
     </div>
   );
-  notFound();
 }

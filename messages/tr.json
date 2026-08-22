@@ -27,14 +27,20 @@
       },
       "language": {
         "title": "Çoklu Dil",
-        "description": "100+ dilde seyahat rehberliği"
+        "description": "8 dilde akıllı seyahat rehberliği"
       }
+    },
+    "trust": {
+      "downloads": "100K+ İndirme",
+      "rating": "4.9/5 Puan",
+      "aiPowered": "Yapay Zekâ Destekli"
     }
   },
   "features": {
     "title": "Güçlü Özellikler",
     "subtitle": "Seyahatinizi kolaylaştıran akıllı araçlar",
     "allFeatures": "Tüm Özellikler",
+    "pageDescription": "Journeo'nun güçlü özellikleriyle seyahat deneyiminizi bir üst seviyeye taşıyın.",
     "aiRoute": {
       "title": "AI Rota Planlama",
       "description": "Yapay zeka destekli akıllı rota önerileri ile zamanınızı en verimli şekilde kullanın."
@@ -66,6 +72,61 @@
     "trips": {
       "title": "Seyahat Yönetimi",
       "description": "Geçmiş ve gelecek seyahatlerinizi tek yerden yönetin."
+    },
+    "offlineMode": {
+      "title": "Çevrimdışı Mod",
+      "description": "İnternet bağlantısı olmadan seyahat bilgilerinize ve rotalarınıza erişin."
+    },
+    "securePrivate": {
+      "title": "Güvenli ve Gizli",
+      "description": "Verileriniz endüstri standardı güvenlik önlemleriyle şifrelenir ve korunur."
+    },
+    "fastReliable": {
+      "title": "Hızlı ve Güvenilir",
+      "description": "Yüksek hızlı harita ve kesintisiz akıllı seyahat rehberliği."
+    },
+    "userFriendly": {
+      "title": "Kullanıcı Dostu",
+      "description": "Her seviyeden gezgin için tasarlanmış sezgisel ve modern arayüz."
+    }
+  },
+  "screenshots": {
+    "title": "Ekran Görüntüleri",
+    "subtitle": "Journeo uygulamasını yakından keşfedin ve harika özelliklerini görün!",
+    "loading": "Ekran görüntüleri yükleniyor...",
+    "zoom": "Büyüt",
+    "footerNote": "📱 Ekran görüntüleri gerçek uygulamayı yansıtmaktadır. Arayüz güncellemelerle değişebilir.",
+    "items": {
+      "dashboard": {
+        "title": "Karşılama Paneli",
+        "description": "Yapay zekâ içgörüleriyle kişiselleştirilmiş seyahat merkeziniz",
+        "alt": "Ana Ekran"
+      },
+      "map": {
+        "title": "İnteraktif Harita",
+        "description": "Akıllı rota önerileriyle gerçek zamanlı navigasyon",
+        "alt": "Harita Görünümü"
+      },
+      "route": {
+        "title": "AI Rota Planlama",
+        "description": "Seyahatiniz için en verimli durak sıralaması ve süre hesabı",
+        "alt": "Rota Planlama"
+      },
+      "trips": {
+        "title": "Seyahat Yönetimi",
+        "description": "Geçmiş ve gelecek seyahatlerinizi tek bir yerden yönetin",
+        "alt": "Seyahat Detayları"
+      },
+      "packing": {
+        "title": "Akıllı Bavul",
+        "description": "Yapay zekâ destekli hava durumu ve lokasyona özel bavul önerileri",
+        "alt": "Akıllı Bavul"
+      },
+      "expenses": {
+        "title": "Masraf Takibi",
+        "description": "Seyahat bütçenizi ve arkadaşlarınızla ortak harcamaları zahmetsizce yönetin",
+        "alt": "Masraf Takibi"
+      }
     }
   },
   "howItWorks": {
@@ -86,7 +147,8 @@
   },
   "pricing": {
     "title": "Basit ve Şeffaf Fiyatlandırma",
-    "subtitle": "Size uygun planı seçin",
+    "subtitle": "Seyahat tarzınıza en uygun planı seçin",
+    "popularBadge": "En Popüler",
     "free": {
       "title": "Ücretsiz",
       "price": "$0",
@@ -136,6 +198,10 @@
       "refund": {
         "question": "İade politikanız nedir?",
         "answer": "Apple ve Google'ın iade politikaları geçerlidir. Satın alma işleminden sonraki ilk 14 gün içinde platform üzerinden iade talebinde bulunabilirsiniz."
+      },
+      "change": {
+        "question": "Planımı değiştirebilir miyim?",
+        "answer": "Evet, istediğiniz zaman planınızı yükseltebilir veya değiştirebilirsiniz. Değişiklikler bir sonraki fatura döneminde geçerli olur."
       }
     }
   },
@@ -163,17 +229,123 @@
     "send": "Gönder",
     "sending": "Gönderiliyor...",
     "success": "Mesajınız başarıyla gönderildi!",
-    "error": "Bir hata oluştu. Lütfen tekrar deneyin."
+    "error": "Bir hata oluştu. Lütfen tekrar deneyin.",
+    "info": {
+      "emailTitle": "E-posta",
+      "emailValue": "support@journeo.ai",
+      "addressTitle": "Adres",
+      "addressValue": "İstanbul, Türkiye",
+      "responseTimeTitle": "Yanıt Süresi",
+      "responseTimeDesc": "Genellikle 24-48 saat içinde yanıt veriyoruz",
+      "formTitle": "Bize Mesaj Gönderin",
+      "formSubtitle": "Aşağıdaki formu doldurun, en kısa sürede size dönüş yapalım."
+    },
+    "placeholders": {
+      "name": "Adınız Soyadınız",
+      "email": "ornek@eposta.com",
+      "message": "Mesajınızı buraya yazın..."
+    }
   },
   "support": {
     "title": "Destek Merkezi",
     "subtitle": "Size yardımcı olmak için buradayız",
     "faq": "Sık Sorulan Sorular",
+    "faqSubtitle": "Seyahatlerinizle ilgili merak ettiğiniz tüm sorular!",
     "contactUs": "Bize Ulaşın",
     "dataDeletion": {
       "title": "Hesap ve Veri Silme",
       "description": "Hesabınızı ve verilerinizi kalıcı olarak silmek için aşağıdaki adımları takip edebilirsiniz."
+    },
+    "cards": {
+      "faq": {
+        "title": "Sık Sorulan Sorular",
+        "description": "En çok merak edilen soruların yanıtlarını bulun",
+        "button": "🔍 SSS'e Göz At"
+      },
+      "contact": {
+        "title": "Bize Ulaşın",
+        "description": "Ekibimize doğrudan bir mesaj gönderin",
+        "button": "📧 İletişim Formu"
+      },
+      "dataDeletion": {
+        "title": "Veri Silme",
+        "description": "Hesap ve verilerinizi nasıl sileceğinizi öğrenin",
+        "button": "🗂️ Verileri Sil"
+      },
+      "docs": {
+        "title": "Dokümantasyon & Özellikler",
+        "description": "Rehberlerimizi ve özelliklerimizi inceleyin",
+        "button": "📖 Özellikleri İncele"
+      }
+    },
+    "faqs": {
+      "password": {
+        "question": "Şifremi nasıl sıfırlayabilirim?",
+        "answer": "Giriş ekranındaki 'Şifremi Unuttum' bağlantısına tıklayarak şifrenizi e-postanıza gelen bağlantı üzerinden sıfırlayabilirsiniz."
+      },
+      "dataDeletion": {
+        "question": "Hesabımı ve verilerimi nasıl silebilirim?",
+        "answer": "Hesap ve tüm verilerinizi silmek için Veri Silme sayfamızı ziyaret ederek uygulama içi adımları veya e-posta yöntemini takip edebilirsiniz."
+      },
+      "offline": {
+        "question": "Çevrimdışı mod mevcut mu?",
+        "answer": "Evet, uygulama ayarlarından haritaları ve gezi planınızı çevrimdışı kullanım için önceden indirebilirsiniz."
+      },
+      "subscription": {
+        "question": "Aboneliğimi nasıl iptal edebilirim?",
+        "answer": "iOS cihazınızda App Store veya Android cihazınızda Google Play abonelik ayarlarından dilediğiniz zaman iptal edebilirsiniz."
+      }
+    },
+    "cta": {
+      "title": "Hâlâ yardıma mı ihtiyacınız var? Birlikte keşfedelim!",
+      "description": "Destek ekibimiz yolculuğunuzda size rehberlik etmek için hazır!",
+      "button": "Destek ile İletişime Geç →"
     }
+  },
+  "dataDeletionPage": {
+    "title": "Hesap ve Veri Silme",
+    "subtitle": "Hesabınızı ve tüm verilerinizi kalıcı olarak silebilirsiniz",
+    "alert": "Bu işlem geri alınamaz! Tüm verileriniz kalıcı olarak silinecektir.",
+    "appMethod": {
+      "title": "1. Mobil Uygulama Üzerinden",
+      "badge": "En hızlı yöntem (Önerilen)",
+      "step1": "Journeo uygulamasını açın",
+      "step2": "Profil sekmesine gidin",
+      "step3": "Ayarlar → Hesap ayarlarını seçin",
+      "step4": "'Hesabı Sil' butonuna tıklayın",
+      "step5": "Onay kodunuzu girin ve işlemi onaylayın"
+    },
+    "emailMethod": {
+      "title": "2. E-posta ile Talep",
+      "badge": "Uygulamaya erişiminiz yoksa",
+      "instruction": "Aşağıdaki bilgileri içeren bir e-posta gönderin:",
+      "to": "Kime:",
+      "subject": "Konu:",
+      "subjectValue": "Hesap Silme Talebi",
+      "contentLabel": "İçerik:",
+      "item1": "Kayıtlı e-posta adresiniz",
+      "item2": "Kullanıcı adınız (varsa)",
+      "item3": "Hesap silme talebiniz",
+      "note": "Talebiniz 30 gün içinde işleme alınacaktır."
+    },
+    "deletedData": {
+      "title": "Silinecek Veriler",
+      "item1": "Hesap bilgileriniz",
+      "item2": "Profil bilgileriniz",
+      "item3": "Seyahat geçmişiniz",
+      "item4": "Kaydedilmiş rotalarınız",
+      "item5": "Harcama kayıtlarınız",
+      "item6": "Paylaşımlarınız",
+      "item7": "Tercihleriniz ve ayarlarınız"
+    },
+    "importantNotes": {
+      "title": "Önemli Notlar",
+      "note1": "Aktif aboneliğiniz varsa, önce iptal etmeniz önerilir.",
+      "note2": "Silinen veriler geri getirilemez.",
+      "note3": "Yasal yükümlülükler için bazı veriler 90 gün süreyle saklanabilir.",
+      "note4": "Yeni hesap oluşturmak için aynı e-posta adresini kullanabilirsiniz."
+    },
+    "footerContact": "Sorularınız için: privacy@journeo.ai"
   },
   "privacy": {
     "title": "Gizlilik Politikası",
@@ -310,7 +482,7 @@
       "modify": "Uygulamayı değiştiremez, uyarlayamaz veya çeviremezsiniz",
       "distribute": "Uygulamayı dağıtamaz, alt lisans veremez veya kiralayamazsınız",
       "reverse": "Uygulamayı tersine mühendislik yapamaz, derleyemez veya parçalarına ayıramazsınız",
-      "transfer": "Yazılı onımız olmadan bu EULA kapsamındaki haklarınızı devredemezsiniz"
+      "transfer": "Yazılı onayımız olmadan bu EULA kapsamındaki haklarınızı devredemezsiniz"
     },
     "ownership": {
       "title": "Sahiplik",

@@ -1,82 +1,71 @@
 'use client';
 
 import { FeatureCard } from '@/components/feature-card';
-import {
-  MapPin,
-  Brain,
-  Volume2,
-  Briefcase,
-  Cloud,
-  Share2,
-  Wallet,
-  Calendar,
-  Globe,
-  Shield,
-  Zap,
-  Heart,
-} from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 
 export default function FeaturesPage() {
+  const t = useTranslations('features');
+
   const allFeatures = [
     {
-      title: 'AI Route Planning',
-      description: 'Use your time most efficiently with AI-powered smart route suggestions.',
+      title: t('aiRoute.title'),
+      description: t('aiRoute.description'),
       iconName: 'Brain',
     },
     {
-      title: 'Interactive Map',
-      description: 'Discover places to visit on a real-time map and plan your route.',
+      title: t('interactiveMap.title'),
+      description: t('interactiveMap.description'),
       iconName: 'MapPin',
     },
     {
-      title: 'Voice Guide (TTS)',
-      description: 'Find your way with voice guidance while keeping your hands free.',
+      title: t('ttsGuide.title'),
+      description: t('ttsGuide.description'),
       iconName: 'Volume2',
     },
     {
-      title: 'Smart Suitcase',
-      description: 'Organize what you need for your trip with artificial intelligence.',
+      title: t('smartSuitcase.title'),
+      description: t('smartSuitcase.description'),
       iconName: 'Briefcase',
     },
     {
-      title: 'Weather Forecast',
-      description: 'Learn the current weather at your destination and be prepared.',
+      title: t('weather.title'),
+      description: t('weather.description'),
       iconName: 'Cloud',
     },
     {
-      title: 'Sharing',
-      description: 'Share your travel experiences with friends and family.',
+      title: t('sharing.title'),
+      description: t('sharing.description'),
       iconName: 'Share2',
     },
     {
-      title: 'Expense Tracking',
-      description: 'Easily track and report your travel budget.',
+      title: t('expenses.title'),
+      description: t('expenses.description'),
       iconName: 'Wallet',
     },
     {
-      title: 'Trip Management',
-      description: 'Manage your past and future trips from one place.',
+      title: t('trips.title'),
+      description: t('trips.description'),
       iconName: 'Calendar',
     },
     {
-      title: 'Offline Mode',
-      description: 'Access your travel information without internet connection.',
+      title: t('offlineMode.title'),
+      description: t('offlineMode.description'),
       iconName: 'Globe',
     },
     {
-      title: 'Secure & Private',
-      description: 'Your data is encrypted and protected with industry-standard security.',
+      title: t('securePrivate.title'),
+      description: t('securePrivate.description'),
       iconName: 'Shield',
     },
     {
-      title: 'Fast & Reliable',
-      description: 'Lightning-fast performance with reliable navigation and guidance.',
+      title: t('fastReliable.title'),
+      description: t('fastReliable.description'),
       iconName: 'Zap',
     },
     {
-      title: 'User Friendly',
-      description: 'Intuitive interface designed for travelers of all experience levels.',
+      title: t('userFriendly.title'),
+      description: t('userFriendly.description'),
       iconName: 'Heart',
     },
   ];
@@ -113,9 +102,9 @@ export default function FeaturesPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20 space-y-6"
         >
-          <h1 className="heading-modern text-gradient">Features</h1>
+          <h1 className="heading-modern text-gradient">{t('title')}</h1>
           <p className="text-modern text-stone-600 max-w-3xl mx-auto leading-relaxed">
-            Discover your travel with Journeo's powerful features
+            {t('pageDescription')}
           </p>
         </motion.div>
 

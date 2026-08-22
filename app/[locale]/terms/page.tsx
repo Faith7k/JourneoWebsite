@@ -9,10 +9,11 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'terms' });
   return genMeta({
-    title: locale === 'tr' ? 'Kullanım Koşulları' : 'Terms of Service',
-    description: locale === 'tr' ? 'Journeo kullanım koşulları' : 'Journeo terms of service',
-    locale: locale === 'tr' ? 'tr_TR' : 'en_US',
+    title: t('title'),
+    description: t('intro'),
+    locale: locale === 'tr' ? 'tr_TR' : `${locale}_${locale.toUpperCase()}`,
     path: '/terms',
   });
 }
