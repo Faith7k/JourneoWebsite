@@ -336,5 +336,59 @@
       "title": "Contact",
       "body": "For questions about this EULA, contact us at legal@journeo.ai."
     }
+  },
+  "scrollStory": {
+    "eyebrow": "Demo en vivo",
+    "title": "Desplázate y mira Journeo en acción",
+    "subtitle": "Sigue todo el flujo paso a paso: desde iniciar sesión hasta planificar, trazar la ruta y dividir gastos.",
+    "hint": "Empieza a desplazarte",
+    "stepLabel": "Paso",
+    "cta": "Ver todas las pantallas",
+    "steps": {
+      "login": {
+        "title": "Inicia sesión",
+        "description": "Entra en segundos con tu correo o una cuenta social."
+      },
+      "home": {
+        "title": "Inicio",
+        "description": "Próximos viajes, recomendaciones y accesos rápidos en un solo lugar."
+      },
+      "createTrip": {
+        "title": "Crea un viaje",
+        "description": "Elige ciudad, fechas y estilo de viaje; Journeo se encarga del resto."
+      },
+      "aiPlanner": {
+        "title": "La IA lo planifica",
+        "description": "La IA crea un itinerario día a día según tus intereses."
+      },
+      "route": {
+        "title": "Tu ruta",
+        "description": "Las paradas se ordenan de forma eficiente, con tiempos y distancias."
+      },
+      "maps": {
+        "title": "En el mapa",
+        "description": "Ve cada parada en un mapa interactivo y obtén indicaciones al instante."
+      },
+      "meetingPoint": {
+        "title": "Punto de encuentro",
+        "description": "Define un punto de encuentro común con tus amigos."
+      },
+      "tripDetail": {
+        "title": "Detalle del viaje",
+        "description": "Descripciones, fotos y guía de audio para cada parada."
+      },
+      "expenses": {
+        "title": "Divide los gastos",
+        "description": "Registra los gastos y Journeo calcula quién le debe a quién."
+      },
+      "trips": {
+        "title": "Mis viajes",
+        "description": "Todos tus viajes pasados y futuros en un archivo ordenado."
+      },
+      "profile": {
+        "title": "Tu perfil",
+        "description": "Gestiona preferencias, idioma y tus estadísticas de viaje."
+      }
+    }
   }
 }

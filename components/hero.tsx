@@ -156,10 +156,23 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
   }, [mounted]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#FAF7F2]">
       {/* Modern Background Effects */}
       <div className="absolute inset-0 mesh-gradient" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+      <div className="absolute inset-0 bg-map-grid opacity-100" />
+
+      {/* Topographic Contours SVGs */}
+      <svg className="absolute -left-10 -top-10 w-[500px] h-[500px] text-amber-900/[0.04] pointer-events-none" viewBox="0 0 100 100" fill="none">
+        <path className="map-contour" d="M-20,10 C15,-5 25,25 35,50 C45,75 75,85 120,90" />
+        <path className="map-contour" d="M-20,25 C20,10 30,40 40,65 C50,90 85,100 130,105" />
+      </svg>
+      <svg className="absolute -right-20 bottom-10 w-[500px] h-[500px] text-amber-900/[0.04] pointer-events-none" viewBox="0 0 100 100" fill="none">
+        <path className="map-contour" d="M30,120 C40,90 70,80 85,55 C100,30 80,10 120,-20" />
+        <path className="map-contour" d="M15,120 C25,80 60,70 75,45 C90,20 70,0 110,-30" />
+      </svg>
+      <svg className="absolute inset-0 w-full h-full text-amber-800/[0.07] pointer-events-none" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5,5">
+        <path d="M 8% 35% Q 25% 15% 50% 30% T 92% 65%" />
+      </svg>
 
       {/* Top-Right Corner App Logo Badge */}
       <div className="absolute top-6 right-6 z-20">
@@ -167,7 +180,7 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
           initial={{ opacity: 0, y: -20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.4, duration: 0.8, type: "spring" }}
-          className="glass-card p-2.5 sm:p-3 rounded-2xl flex items-center gap-3 border border-white/20 shadow-2xl backdrop-blur-md bg-white/10 hover:bg-white/20 transition-all group"
+          className="glass-card p-2.5 sm:p-3 rounded-2xl flex items-center gap-3 border border-amber-900/10 shadow-lg backdrop-blur-md bg-white/80 hover:bg-white transition-all group"
         >
           <Image
             src="/logo.png"
@@ -175,11 +188,11 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
             width={48}
             height={48}
             priority
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl shadow-lg group-hover:scale-105 transition-transform object-cover"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl shadow-md group-hover:scale-105 transition-transform object-cover"
           />
           <div className="hidden sm:block text-left pr-1">
-            <div className="text-xs font-bold text-white tracking-wide">Journeo</div>
-            <div className="text-[10px] font-medium text-white/70">AI Travel Guide</div>
+            <div className="text-xs font-bold text-stone-900 tracking-wide">Journeo</div>
+            <div className="text-[10px] font-medium text-stone-500">AI Travel Guide</div>
           </div>
         </motion.div>
       </div>
@@ -198,7 +211,7 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
             x: [0, Math.random() * 200 - 100, Math.random() * 200 - 100, 0],
             y: [0, Math.random() * 200 - 100, Math.random() * 200 - 100, 0],
             rotate: [0, 360],
-            opacity: [0.3, 0.7, 0.3],
+            opacity: [0.25, 0.6, 0.25],
           }}
           transition={{
             duration: emoji.duration,
@@ -212,9 +225,9 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
       ))}
       
       {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-blue-500/20 rounded-full blur-xl animate-float" />
-      <div className="absolute top-40 right-20 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }} />
-      <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-cyan-500/20 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }} />
+      <div className="absolute top-20 left-10 w-20 h-20 bg-amber-500/10 rounded-full blur-xl animate-float" />
+      <div className="absolute top-40 right-20 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }} />
+      <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-amber-600/10 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }} />
       
       {/* Confetti Animation */}
       {mounted && confettis.map((confetti) => (
@@ -243,12 +256,12 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
         />
       ))}
 
-      <div className="container-modern relative z-10">
+      <div className="container-modern relative z-10 py-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="mx-auto max-w-6xl text-center space-y-12"
+          className="mx-auto max-w-6xl text-center space-y-10"
         >
           {/* Logo/Title with Typewriter Animation */}
           <motion.div
@@ -272,7 +285,7 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
                   width={96}
                   height={96}
                   priority
-                  className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl md:rounded-3xl shadow-2xl shadow-purple-500/30 border-2 border-white/20 object-cover hover:scale-105 transition-transform"
+                  className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl md:rounded-3xl shadow-xl shadow-amber-900/10 border-2 border-amber-900/10 object-cover hover:scale-105 transition-transform"
                 />
               </motion.div>
               <span className="inline-block">
@@ -281,7 +294,7 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
                   <motion.span
                     animate={{ opacity: [1, 0] }}
                     transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-                    className="inline-block ml-1 text-blue-500"
+                    className="inline-block ml-1 text-amber-600"
                   >
                     |
                   </motion.span>
@@ -319,16 +332,16 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
               transition={{ delay: 0.8, duration: 0.5 }}
               className="absolute -top-4 -right-4"
             >
-              <Sparkles className="h-8 w-8 text-yellow-400 animate-pulse" />
+              <Sparkles className="h-8 w-8 text-amber-500 animate-pulse" />
             </motion.div>
           </motion.div>
 
-          {/* Subtitle with Glow Effect */}
+          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 1 }}
-            className="subheading-modern text-glow"
+            className="subheading-modern text-stone-800"
           >
             {t('hero.subtitle')}
           </motion.p>
@@ -338,7 +351,7 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 1 }}
-            className="text-modern text-white/90 max-w-3xl mx-auto leading-relaxed"
+            className="text-modern text-stone-600 max-w-3xl mx-auto leading-relaxed"
           >
             {t('hero.description')}
           </motion.p>
@@ -378,13 +391,13 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto"
               >
-                <Button size="lg" variant="outline" className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-white/30 text-white hover:bg-white/10 bg-white/10 backdrop-blur-sm">
+                <Button size="lg" variant="outline" className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-amber-900/15 text-stone-800 hover:bg-white bg-white/80 backdrop-blur-sm shadow-md">
                   <Smartphone className="h-6 w-6" />
                   {t('hero.cta.playStore')}
                 </Button>
               </a>
             ) : (
-              <Button size="lg" variant="outline" disabled className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-white/30 text-white bg-white/10 backdrop-blur-sm opacity-50 cursor-not-allowed">
+              <Button size="lg" variant="outline" disabled className="glass-card w-full sm:w-auto gap-3 text-lg px-10 py-6 border-amber-900/15 text-stone-800 bg-white/80 backdrop-blur-sm opacity-50 cursor-not-allowed shadow-md">
                 <Smartphone className="h-6 w-6" />
                 {t('hero.cta.playStore')}
               </Button>
@@ -399,133 +412,35 @@ export function Hero({ appStoreUrl, playStoreUrl }: { appStoreUrl?: string; play
             className="pt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
           >
             {/* Card 1 - AI-Powered */}
-            <div className="glass-card p-6 rounded-2xl text-center group hover:scale-105 transition-all duration-300 relative overflow-hidden">
-              {/* Floating emojis in card */}
-              <motion.div
-                className="absolute text-2xl opacity-30"
-                animate={{
-                  x: [-20, 120],
-                  y: [0, -20, 0],
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              >
-                🤖
-              </motion.div>
-              <motion.div
-                className="absolute text-xl opacity-20"
-                animate={{
-                  x: [100, -20],
-                  y: [80, 20],
-                  rotate: [0, -360],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: 1,
-                }}
-              >
-                🧠
-              </motion.div>
+            <div className="glass-card p-6 rounded-2xl text-center group hover:scale-105 transition-all duration-300 relative overflow-hidden bg-white/80 border border-amber-900/10 shadow-lg">
               <div className="relative z-10">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-400 to-blue-500 rounded-2xl flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-md">
                   <Zap className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">{t('hero.features.ai.title')}</h3>
-                <p className="text-white/70">{t('hero.features.ai.description')}</p>
+                <h3 className="text-xl font-semibold text-stone-900 mb-2">{t('hero.features.ai.title')}</h3>
+                <p className="text-stone-600">{t('hero.features.ai.description')}</p>
               </div>
             </div>
             
             {/* Card 2 - Sesli Rehber */}
-            <div className="glass-card p-6 rounded-2xl text-center group hover:scale-105 transition-all duration-300 relative overflow-hidden">
-              {/* Floating emojis in card */}
-              <motion.div
-                className="absolute text-2xl opacity-30"
-                animate={{
-                  x: [-20, 120],
-                  y: [60, 0],
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 4.5,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: 0.5,
-                }}
-              >
-                🔊
-              </motion.div>
-              <motion.div
-                className="absolute text-xl opacity-20"
-                animate={{
-                  x: [100, -20],
-                  y: [0, 60],
-                  rotate: [0, -360],
-                }}
-                transition={{
-                  duration: 5.5,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: 1.5,
-                }}
-              >
-                🎙️
-              </motion.div>
+            <div className="glass-card p-6 rounded-2xl text-center group hover:scale-105 transition-all duration-300 relative overflow-hidden bg-white/80 border border-amber-900/10 shadow-lg">
               <div className="relative z-10">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-orange-500 to-amber-700 rounded-2xl flex items-center justify-center shadow-md">
                   <Volume2 className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">{t('hero.features.voice.title')}</h3>
-                <p className="text-white/70">{t('hero.features.voice.description')}</p>
+                <h3 className="text-xl font-semibold text-stone-900 mb-2">{t('hero.features.voice.title')}</h3>
+                <p className="text-stone-600">{t('hero.features.voice.description')}</p>
               </div>
             </div>
             
             {/* Card 3 - Çoklu Dil Desteği */}
-            <div className="glass-card p-6 rounded-2xl text-center group hover:scale-105 transition-all duration-300 relative overflow-hidden">
-              {/* Floating emojis in card */}
-              <motion.div
-                className="absolute text-2xl opacity-30"
-                animate={{
-                  x: [-20, 120],
-                  y: [20, 60, 20],
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: 0.25,
-                }}
-              >
-                🌍
-              </motion.div>
-              <motion.div
-                className="absolute text-xl opacity-20"
-                animate={{
-                  x: [100, -20],
-                  y: [40, 0],
-                  rotate: [0, -360],
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: 2,
-                }}
-              >
-                🗣️
-              </motion.div>
+            <div className="glass-card p-6 rounded-2xl text-center group hover:scale-105 transition-all duration-300 relative overflow-hidden bg-white/80 border border-amber-900/10 shadow-lg">
               <div className="relative z-10">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-600 to-rose-600 rounded-2xl flex items-center justify-center shadow-md">
                   <Languages className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">{t('hero.features.language.title')}</h3>
-                <p className="text-white/70">{t('hero.features.language.description')}</p>
+                <h3 className="text-xl font-semibold text-stone-900 mb-2">{t('hero.features.language.title')}</h3>
+                <p className="text-stone-600">{t('hero.features.language.description')}</p>
               </div>
             </div>
           </motion.div>

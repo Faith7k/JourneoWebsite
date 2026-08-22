@@ -4,48 +4,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --background: 38 33% 97%;
+    --foreground: 24 20% 16%;
+    --card: 38 30% 99%;
+    --card-foreground: 24 20% 16%;
+    --popover: 38 30% 99%;
+    --popover-foreground: 24 20% 16%;
+    --primary: 28 85% 50%;
+    --primary-foreground: 38 33% 97%;
+    --secondary: 38 25% 93%;
+    --secondary-foreground: 24 20% 16%;
+    --muted: 38 25% 93%;
+    --muted-foreground: 28 10% 45%;
+    --accent: 38 25% 93%;
+    --accent-foreground: 24 20% 16%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --border: 38 20% 88%;
+    --input: 38 20% 88%;
+    --ring: 28 85% 50%;
+    --radius: 0.75rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 24 20% 12%;
+    --foreground: 38 33% 95%;
+    --card: 24 20% 15%;
+    --card-foreground: 38 33% 95%;
+    --popover: 24 20% 15%;
+    --popover-foreground: 38 33% 95%;
+    --primary: 28 85% 54%;
+    --primary-foreground: 24 20% 12%;
+    --secondary: 24 15% 20%;
+    --secondary-foreground: 38 33% 95%;
+    --muted: 24 15% 20%;
+    --muted-foreground: 38 15% 65%;
+    --accent: 24 15% 20%;
+    --accent-foreground: 38 33% 95%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --border: 24 15% 22%;
+    --input: 24 15% 22%;
+    --ring: 28 85% 54%;
   }
 }
 
@@ -63,15 +63,15 @@
 @layer components {
   /* Glassmorphism Effects */
   .glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
+    @apply bg-white/70 backdrop-blur-md border border-amber-900/10 shadow-sm;
   }
   
   .glass-dark {
-    @apply bg-black/10 backdrop-blur-md border border-white/10;
+    @apply bg-stone-900/70 backdrop-blur-md border border-white/10;
   }
   
   .glass-card {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl;
+    @apply bg-white/80 backdrop-blur-xl border border-amber-900/10 shadow-xl shadow-amber-900/5;
   }
 
   /* 3D Effects */
@@ -84,51 +84,65 @@
   }
   
   .glow {
-    @apply shadow-lg shadow-primary/25;
+    @apply shadow-lg shadow-amber-500/20;
   }
   
   .glow-hover {
-    @apply transition-all duration-300 hover:shadow-2xl hover:shadow-primary/50;
+    @apply transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/30;
   }
 
   /* Modern Gradients */
   .gradient-primary {
-    @apply bg-gradient-to-br from-blue-500 via-purple-600 to-cyan-500;
+    @apply bg-gradient-to-br from-amber-500 via-orange-600 to-amber-700;
   }
   
   .gradient-secondary {
-    @apply bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500;
+    @apply bg-gradient-to-br from-amber-400 via-rose-400 to-orange-500;
   }
   
   .gradient-accent {
-    @apply bg-gradient-to-br from-green-400 via-blue-500 to-purple-600;
+    @apply bg-gradient-to-br from-emerald-500 via-teal-600 to-amber-600;
   }
 
   /* Mesh Background */
   .mesh-gradient {
     background: 
-      radial-gradient(at 40% 20%, hsla(228,100%,74%,1) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
-      radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%),
-      radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
-      radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
-      radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);
+      radial-gradient(at 40% 20%, hsla(38,100%,94%,1) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(28,95%,92%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(45,90%,95%,1) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, hsla(24,85%,93%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(38,80%,90%,1) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, hsla(32,90%,92%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 0%, hsla(40,95%,94%,1) 0px, transparent 50%);
+    background-color: #FAF7F2;
   }
 
   /* Grid Pattern */
   .bg-grid-pattern {
     background-image: 
-      linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+      linear-gradient(rgba(139, 92, 26, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139, 92, 26, 0.05) 1px, transparent 1px);
     background-size: 20px 20px;
+  }
+
+  .bg-map-grid {
+    background-image: 
+      linear-gradient(rgba(139, 92, 26, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139, 92, 26, 0.04) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .map-contour {
+    stroke: rgba(139, 92, 26, 0.035);
+    stroke-width: 1.5;
+    fill: none;
   }
 
   /* Modern Buttons */
   .btn-modern {
     @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold transition-all duration-300;
-    @apply bg-gradient-to-r from-blue-600 to-purple-600 text-white;
-    @apply hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25;
+    @apply bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 text-white shadow-lg shadow-amber-600/20;
+    @apply hover:scale-105 hover:shadow-2xl hover:shadow-orange-600/30;
   }
   
   .btn-modern::before {
@@ -143,13 +157,13 @@
 
   /* Modern Cards */
   .card-modern {
-    @apply relative overflow-hidden rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20;
-    @apply shadow-2xl transition-all duration-500 hover:scale-105 hover:shadow-3xl;
+    @apply relative overflow-hidden rounded-3xl bg-white/80 backdrop-blur-xl border border-amber-900/10;
+    @apply shadow-xl shadow-amber-900/5 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:border-amber-900/20;
   }
   
   .card-modern::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-br from-white/10 to-transparent;
+    @apply absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent;
     @apply opacity-0 transition-opacity duration-300;
   }
   
@@ -159,12 +173,11 @@
 
   /* Text Effects */
   .text-gradient {
-    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-amber-800 via-orange-600 to-amber-900 bg-clip-text text-transparent;
   }
   
   .text-glow {
-    @apply text-white drop-shadow-lg;
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    @apply text-stone-900 drop-shadow-sm;
   }
 
   /* Animations */
@@ -248,24 +261,24 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  @apply bg-[#FAF7F2] dark:bg-stone-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gradient-to-b from-blue-500 to-purple-600 rounded-full;
+  @apply bg-gradient-to-b from-amber-400 to-orange-500 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply from-blue-600 to-purple-700;
+  @apply from-amber-500 to-orange-600;
 }
 
 /* Selection */
 ::selection {
-  @apply bg-blue-500/20 text-blue-900;
+  @apply bg-amber-500/20 text-amber-950;
 }
 
 /* Focus */
 .focus-modern:focus {
-  @apply outline-none ring-4 ring-blue-500/50 ring-offset-2;
+  @apply outline-none ring-4 ring-amber-500/30 ring-offset-2;
 }
 

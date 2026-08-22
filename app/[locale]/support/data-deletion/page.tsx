@@ -20,22 +20,38 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
   const isTurkish = locale === 'tr';
 
   return (
-    <div className="py-24">
-      <div className="container max-w-4xl">
+    <div className="relative min-h-screen overflow-hidden bg-[#FAF7F2] py-24">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-[#FAF7F2]" />
+      <div className="absolute inset-0 bg-map-grid opacity-100" />
+      
+      {/* Topographic Contours SVGs */}
+      <svg className="absolute -left-10 top-10 w-[500px] h-[500px] text-amber-900/[0.035] pointer-events-none" viewBox="0 0 100 100" fill="none">
+        <path className="map-contour" d="M-20,10 C15,-5 25,25 35,50 C45,75 75,85 120,90" />
+        <path className="map-contour" d="M-20,25 C20,10 30,40 40,65 C50,90 85,100 130,105" />
+      </svg>
+      <svg className="absolute -right-20 bottom-10 w-[500px] h-[500px] text-amber-900/[0.035] pointer-events-none" viewBox="0 0 100 100" fill="none">
+        <path className="map-contour" d="M30,120 C40,90 70,80 85,55 C100,30 80,10 120,-20" />
+        <path className="map-contour" d="M15,120 C25,80 60,70 75,45 C90,20 70,0 110,-30" />
+      </svg>
+
+      <div className="container relative z-10 max-w-4xl">
         <div className="text-center mb-12">
-          <Trash2 className="h-16 w-16 text-destructive mx-auto mb-4" />
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <div className="w-16 h-16 rounded-2xl bg-rose-500/10 flex items-center justify-center mx-auto mb-4">
+            <Trash2 className="h-8 w-8 text-rose-600" />
+          </div>
+          <h1 className="heading-modern text-gradient mb-4">
             {isTurkish ? 'Hesap ve Veri Silme' : 'Account and Data Deletion'}
           </h1>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl text-stone-600">
             {isTurkish
               ? 'Hesabınızı ve tüm verilerinizi kalıcı olarak silebilirsiniz'
               : 'You can permanently delete your account and all your data'}
           </p>
         </div>
 
-        <Alert className="mb-8 border-destructive">
-          <AlertCircle className="h-4 w-4" />
+        <Alert className="mb-8 border-rose-300 bg-rose-50/80 text-rose-900">
+          <AlertCircle className="h-4 w-4 text-rose-600" />
           <AlertDescription>
             {isTurkish
               ? 'Bu işlem geri alınamaz! Tüm verileriniz kalıcı olarak silinecektir.'
@@ -44,7 +60,7 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
         </Alert>
 
         <div className="space-y-6">
-          <Card>
+          <Card className="bg-white/85 backdrop-blur-sm border border-amber-900/10 shadow-md">
             <CardHeader>
               <CardTitle>
                 {isTurkish ? '1. Mobil Uygulama Üzerinden' : '1. Through Mobile App'}
@@ -66,7 +82,7 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-white/85 backdrop-blur-sm border border-amber-900/10 shadow-md">
             <CardHeader>
               <CardTitle>
                 {isTurkish ? '2. E-posta ile Talep' : '2. Request via Email'}
@@ -83,7 +99,7 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
                   ? 'Aşağıdaki bilgileri içeren bir e-posta gönderin:'
                   : 'Send an email with the following information:'}
               </p>
-              <div className="bg-muted p-4 rounded-lg space-y-2">
+              <div className="bg-[#FAF7F2] border border-amber-900/10 p-4 rounded-lg space-y-2">
                 <p><strong>{isTurkish ? 'Kime:' : 'To:'}</strong> privacy@journeo.ai</p>
                 <p><strong>{isTurkish ? 'Konu:' : 'Subject:'}</strong> Account Deletion Request</p>
                 <p><strong>{isTurkish ? 'İçerik:' : 'Content:'}</strong></p>
@@ -101,7 +117,7 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-white/85 backdrop-blur-sm border border-amber-900/10 shadow-md">
             <CardHeader>
               <CardTitle>
                 {isTurkish ? 'Silinecek Veriler' : 'Data That Will Be Deleted'}
@@ -120,7 +136,7 @@ export default async function DataDeletionPage({ params }: { params: Promise<{ l
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-white/85 backdrop-blur-sm border border-amber-900/10 shadow-md">
             <CardHeader>
               <CardTitle>
                 {isTurkish ? 'Önemli Notlar' : 'Important Notes'}

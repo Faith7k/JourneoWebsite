@@ -24,7 +24,6 @@ interface FloatingDollar {
 }
 
 export default function PricingPage() {
-  notFound();
   const [dollars, setDollars] = useState<FloatingDollar[]>([]);
 
   useEffect(() => {
@@ -51,15 +50,25 @@ export default function PricingPage() {
     generateDollars();
   }, []);
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-[#FAF7F2]">
       {/* Modern Background Effects */}
-      <div className="absolute inset-0 mesh-gradient" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+      <div className="absolute inset-0 bg-[#FAF7F2]" />
+      <div className="absolute inset-0 bg-map-grid opacity-100" />
       
+      {/* Topographic Contours SVGs */}
+      <svg className="absolute -left-10 top-10 w-[500px] h-[500px] text-amber-900/[0.035] pointer-events-none" viewBox="0 0 100 100" fill="none">
+        <path className="map-contour" d="M-20,10 C15,-5 25,25 35,50 C45,75 75,85 120,90" />
+        <path className="map-contour" d="M-20,25 C20,10 30,40 40,65 C50,90 85,100 130,105" />
+      </svg>
+      <svg className="absolute -right-20 bottom-10 w-[500px] h-[500px] text-amber-900/[0.035] pointer-events-none" viewBox="0 0 100 100" fill="none">
+        <path className="map-contour" d="M30,120 C40,90 70,80 85,55 C100,30 80,10 120,-20" />
+        <path className="map-contour" d="M15,120 C25,80 60,70 75,45 C90,20 70,0 110,-30" />
+      </svg>
+
       {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-blue-500/20 rounded-full blur-xl animate-float" />
-      <div className="absolute top-40 right-20 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }} />
-      <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-cyan-500/20 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }} />
+      <div className="absolute top-20 left-10 w-20 h-20 bg-amber-500/10 rounded-full blur-xl animate-float" />
+      <div className="absolute top-40 right-20 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }} />
+      <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-amber-600/10 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }} />
       
       {/* Floating Dollar Bills */}
       {dollars.map((dollar) => (
@@ -75,7 +84,7 @@ export default function PricingPage() {
             x: [0, Math.random() * 200 - 100, Math.random() * 200 - 100, 0],
             y: [0, Math.random() * 200 - 100, Math.random() * 200 - 100, 0],
             rotate: [0, 360, 720],
-            opacity: [0.4, 0.8, 0.4],
+            opacity: [0.3, 0.6, 0.3],
           }}
           transition={{
             duration: dollar.duration,
@@ -89,7 +98,7 @@ export default function PricingPage() {
             alt="Dollar bill"
             width={80}
             height={40}
-            className="opacity-60"
+            className="opacity-40"
           />
         </motion.div>
       ))}
@@ -103,7 +112,7 @@ export default function PricingPage() {
           className="text-center mb-20 space-y-6"
         >
           <h1 className="heading-modern text-gradient">Pricing</h1>
-          <p className="text-modern text-white/90 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-modern text-stone-600 max-w-3xl mx-auto leading-relaxed">
             Choose the most suitable plan for your travels
           </p>
         </motion.div>
@@ -128,28 +137,28 @@ export default function PricingPage() {
           className="max-w-3xl mx-auto"
         >
           <h2 className="heading-modern text-gradient text-center mb-12">Frequently Asked Questions</h2>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="cancel">
-              <AccordionTrigger className="text-left text-white hover:text-primary">
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            <AccordionItem value="cancel" className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-md border border-amber-900/10 px-6">
+              <AccordionTrigger className="text-left text-stone-900 hover:text-amber-700">
                 How can I cancel my subscription?
               </AccordionTrigger>
-              <AccordionContent className="text-white/80">
+              <AccordionContent className="text-stone-600">
                 You can cancel your subscription at any time. You can easily perform the cancellation process from Settings &gt; Subscription &gt; Cancel section.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="refund">
-              <AccordionTrigger className="text-left text-white hover:text-primary">
+            <AccordionItem value="refund" className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-md border border-amber-900/10 px-6">
+              <AccordionTrigger className="text-left text-stone-900 hover:text-amber-700">
                 Can I get a refund?
               </AccordionTrigger>
-              <AccordionContent className="text-white/80">
+              <AccordionContent className="text-stone-600">
                 You can request a refund within the first 7 days. For later periods, the cancellation takes effect in the next billing period.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="change">
-              <AccordionTrigger className="text-left text-white hover:text-primary">
+            <AccordionItem value="change" className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-md border border-amber-900/10 px-6">
+              <AccordionTrigger className="text-left text-stone-900 hover:text-amber-700">
                 Can I change my plan?
               </AccordionTrigger>
-              <AccordionContent className="text-white/80">
+              <AccordionContent className="text-stone-600">
                 Yes, you can upgrade or downgrade your plan at any time. Changes take effect in the next billing period.
               </AccordionContent>
             </AccordionItem>
@@ -158,4 +167,5 @@ export default function PricingPage() {
       </div>
     </div>
   );
+  notFound();
 }

@@ -336,5 +336,59 @@
       "title": "Contact",
       "body": "For questions about this EULA, contact us at legal@journeo.ai."
     }
+  },
+  "scrollStory": {
+    "eyebrow": "Live Demo",
+    "title": "Scroll to see Journeo in action",
+    "subtitle": "Follow the whole flow step by step — from signing in to planning, routing and splitting costs.",
+    "hint": "Start scrolling",
+    "stepLabel": "Step",
+    "cta": "See all screens",
+    "steps": {
+      "login": {
+        "title": "Sign In",
+        "description": "Get in within seconds using your email or a social account."
+      },
+      "home": {
+        "title": "Home",
+        "description": "Upcoming trips, recommendations and quick actions in one place."
+      },
+      "createTrip": {
+        "title": "Create a Trip",
+        "description": "Pick your city, dates and travel style — Journeo takes it from there."
+      },
+      "aiPlanner": {
+        "title": "AI Plans It",
+        "description": "AI builds a day-by-day itinerary around what you actually like."
+      },
+      "route": {
+        "title": "Your Route",
+        "description": "Stops get ordered efficiently, with travel times and distances worked out."
+      },
+      "maps": {
+        "title": "On the Map",
+        "description": "See every stop on an interactive map and get directions instantly."
+      },
+      "meetingPoint": {
+        "title": "Meeting Point",
+        "description": "Set a shared meeting point with friends so nobody gets lost."
+      },
+      "tripDetail": {
+        "title": "Trip Details",
+        "description": "Descriptions, photos and audio guidance for every single stop."
+      },
+      "expenses": {
+        "title": "Split Expenses",
+        "description": "Log spending and let Journeo work out who owes whom."
+      },
+      "trips": {
+        "title": "My Trips",
+        "description": "Every past and upcoming trip, kept in one tidy archive."
+      },
+      "profile": {
+        "title": "Your Profile",
+        "description": "Manage preferences, language and your travel stats."
+      }
+    }
   }
 }

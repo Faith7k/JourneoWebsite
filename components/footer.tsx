@@ -56,7 +56,7 @@ export function Footer({
   };
 
   return (
-    <footer className="border-t bg-muted/40">
+    <footer className="border-t border-amber-900/10 bg-[#F3ECE1]">
       <div className="container py-12 md:py-16">
         <div className="mb-10 flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3 group">
@@ -75,7 +75,7 @@ export function Footer({
         <div className="grid grid-cols-2 gap-8 md:grid-cols-3">
           {Object.values(footerLinks).map((section) => (
             <div key={section.name}>
-              <h3 className="mb-4 text-sm font-semibold">{section.name}</h3>
+              <h3 className="mb-4 text-sm font-semibold text-stone-900">{section.name}</h3>
               <ul className="space-y-3">
                 {section.items.map((link) => {
                   const isExternal = link.href.startsWith('http://') || link.href.startsWith('https://');
@@ -85,7 +85,7 @@ export function Footer({
                         href={link.href}
                         target={isExternal ? '_blank' : undefined}
                         rel={isExternal ? 'noopener noreferrer' : undefined}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="text-sm text-stone-600 hover:text-stone-900 transition-colors"
                       >
                         {link.label}
                       </Link>
@@ -96,7 +96,7 @@ export function Footer({
             </div>
           ))}
         </div>
-        <div className="mt-12 border-t pt-8 text-center text-sm text-muted-foreground">
+        <div className="mt-12 border-t border-amber-900/10 pt-8 text-center text-sm text-stone-500">
           <p>{t('rights')}</p>
         </div>
       </div>

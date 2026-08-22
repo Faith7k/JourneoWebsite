@@ -336,5 +336,59 @@
       "title": "Contact",
       "body": "For questions about this EULA, contact us at legal@journeo.ai."
     }
+  },
+  "scrollStory": {
+    "eyebrow": "Démo en direct",
+    "title": "Faites défiler pour voir Journeo à l’œuvre",
+    "subtitle": "Suivez tout le parcours étape par étape : connexion, planification, itinéraire et partage des dépenses.",
+    "hint": "Commencez à faire défiler",
+    "stepLabel": "Étape",
+    "cta": "Voir tous les écrans",
+    "steps": {
+      "login": {
+        "title": "Connexion",
+        "description": "Entrez en quelques secondes avec un e‑mail ou un compte social."
+      },
+      "home": {
+        "title": "Accueil",
+        "description": "Voyages à venir, recommandations et accès rapides au même endroit."
+      },
+      "createTrip": {
+        "title": "Créer un voyage",
+        "description": "Choisissez la ville, les dates et le style ; Journeo fait le reste."
+      },
+      "aiPlanner": {
+        "title": "L’IA planifie",
+        "description": "L’IA construit un programme jour par jour selon vos envies."
+      },
+      "route": {
+        "title": "Votre itinéraire",
+        "description": "Les étapes sont classées efficacement, temps et distances calculés."
+      },
+      "maps": {
+        "title": "Sur la carte",
+        "description": "Visualisez chaque étape sur une carte interactive et obtenez l’itinéraire."
+      },
+      "meetingPoint": {
+        "title": "Point de rendez-vous",
+        "description": "Définissez un point de rendez-vous commun avec vos amis."
+      },
+      "tripDetail": {
+        "title": "Détails du voyage",
+        "description": "Descriptions, photos et guide audio pour chaque étape."
+      },
+      "expenses": {
+        "title": "Partage des dépenses",
+        "description": "Notez les dépenses, Journeo calcule qui doit quoi à qui."
+      },
+      "trips": {
+        "title": "Mes voyages",
+        "description": "Tous vos voyages passés et à venir dans une archive claire."
+      },
+      "profile": {
+        "title": "Votre profil",
+        "description": "Gérez vos préférences, votre langue et vos statistiques de voyage."
+      }
+    }
   }
 }

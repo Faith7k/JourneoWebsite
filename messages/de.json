@@ -336,5 +336,59 @@
       "title": "Contact",
       "body": "For questions about this EULA, contact us at legal@journeo.ai."
     }
+  },
+  "scrollStory": {
+    "eyebrow": "Live-Demo",
+    "title": "Scrolle und sieh Journeo in Aktion",
+    "subtitle": "Verfolge den kompletten Ablauf Schritt für Schritt – vom Login über die Planung bis zur Kostenteilung.",
+    "hint": "Jetzt scrollen",
+    "stepLabel": "Schritt",
+    "cta": "Alle Screens ansehen",
+    "steps": {
+      "login": {
+        "title": "Anmelden",
+        "description": "In Sekunden per E‑Mail oder Social Account einloggen."
+      },
+      "home": {
+        "title": "Startseite",
+        "description": "Anstehende Reisen, Empfehlungen und Schnellzugriffe auf einen Blick."
+      },
+      "createTrip": {
+        "title": "Reise erstellen",
+        "description": "Stadt, Datum und Reisestil wählen – den Rest übernimmt Journeo."
+      },
+      "aiPlanner": {
+        "title": "Die KI plant",
+        "description": "Die KI erstellt Tag für Tag ein Programm nach deinen Interessen."
+      },
+      "route": {
+        "title": "Deine Route",
+        "description": "Stopps werden effizient sortiert, inklusive Zeiten und Entfernungen."
+      },
+      "maps": {
+        "title": "Auf der Karte",
+        "description": "Alle Stopps auf einer interaktiven Karte, Navigation sofort verfügbar."
+      },
+      "meetingPoint": {
+        "title": "Treffpunkt",
+        "description": "Lege mit Freunden einen gemeinsamen Treffpunkt fest."
+      },
+      "tripDetail": {
+        "title": "Reisedetails",
+        "description": "Beschreibungen, Fotos und Audioguide für jeden Stopp."
+      },
+      "expenses": {
+        "title": "Kosten teilen",
+        "description": "Ausgaben erfassen – Journeo berechnet, wer wem was schuldet."
+      },
+      "trips": {
+        "title": "Meine Reisen",
+        "description": "Alle vergangenen und kommenden Reisen in einem Archiv."
+      },
+      "profile": {
+        "title": "Dein Profil",
+        "description": "Einstellungen, Sprache und Reisestatistiken verwalten."
+      }
+    }
   }
 }

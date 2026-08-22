@@ -336,5 +336,59 @@
       "title": "Contact",
       "body": "For questions about this EULA, contact us at legal@journeo.ai."
     }
+  },
+  "scrollStory": {
+    "eyebrow": "实时演示",
+    "title": "滚动查看 Journeo 的实际使用",
+    "subtitle": "从登录到规划行程、生成路线、分摊费用，逐步了解完整流程。",
+    "hint": "开始滚动",
+    "stepLabel": "步骤",
+    "cta": "查看全部界面",
+    "steps": {
+      "login": {
+        "title": "登录",
+        "description": "使用邮箱或社交账号，几秒即可进入。"
+      },
+      "home": {
+        "title": "首页",
+        "description": "即将出发的行程、推荐内容和快捷操作，一屏尽览。"
+      },
+      "createTrip": {
+        "title": "创建行程",
+        "description": "选择城市、日期和出行风格，其余交给 Journeo。"
+      },
+      "aiPlanner": {
+        "title": "AI 智能规划",
+        "description": "AI 会根据你的兴趣，逐日安排行程。"
+      },
+      "route": {
+        "title": "路线就绪",
+        "description": "站点按最优顺序排列，自动计算时间与距离。"
+      },
+      "maps": {
+        "title": "地图视图",
+        "description": "在交互地图上查看每个站点，立即获取导航。"
+      },
+      "meetingPoint": {
+        "title": "集合地点",
+        "description": "与朋友设定共同的集合地点，谁都不会走散。"
+      },
+      "tripDetail": {
+        "title": "行程详情",
+        "description": "每个站点的介绍、照片与语音导览，随时可看。"
+      },
+      "expenses": {
+        "title": "费用分摊",
+        "description": "记录开销，自动算出谁该付给谁多少钱。"
+      },
+      "trips": {
+        "title": "我的行程",
+        "description": "过去与未来的所有行程，统一归档管理。"
+      },
+      "profile": {
+        "title": "个人中心",
+        "description": "管理偏好、语言和你的旅行数据。"
+      }
+    }
   }
 }

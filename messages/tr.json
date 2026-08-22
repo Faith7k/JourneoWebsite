@@ -336,5 +336,59 @@
       "title": "İletişim",
       "body": "Bu EULA hakkında sorularınız için bize legal@journeo.ai adresinden ulaşın."
     }
+  },
+  "scrollStory": {
+    "eyebrow": "Canlı Demo",
+    "title": "Kaydır, Journeo’yu iş başında gör",
+    "subtitle": "Girişten gezi planına, rotadan masraf paylaşımına kadar tüm akışı adım adım izle.",
+    "hint": "Kaydırmaya başla",
+    "stepLabel": "Adım",
+    "cta": "Tüm ekranları gör",
+    "steps": {
+      "login": {
+        "title": "Giriş Yap",
+        "description": "E‑posta veya sosyal hesabınla saniyeler içinde içeri gir."
+      },
+      "home": {
+        "title": "Ana Sayfa",
+        "description": "Yaklaşan gezilerin, öneriler ve hızlı erişim tek ekranda."
+      },
+      "createTrip": {
+        "title": "Gezi Oluştur",
+        "description": "Şehri, tarihleri ve seyahat tarzını seç; gerisini Journeo halletsin."
+      },
+      "aiPlanner": {
+        "title": "Yapay Zekâ Planlıyor",
+        "description": "AI, ilgi alanlarına göre gün gün gezi programını hazırlar."
+      },
+      "route": {
+        "title": "Rotan Hazır",
+        "description": "Duraklar en verimli sıraya dizilir, süreler ve mesafeler hesaplanır."
+      },
+      "maps": {
+        "title": "Harita Üzerinde",
+        "description": "Tüm duraklarını interaktif haritada gör, yol tarifini anında al."
+      },
+      "meetingPoint": {
+        "title": "Buluşma Noktası",
+        "description": "Arkadaşlarınla ortak bir buluşma noktası belirle, kimse kaybolmasın."
+      },
+      "tripDetail": {
+        "title": "Gezi Detayı",
+        "description": "Her durağın açıklaması, fotoğrafları ve sesli rehberliği elinin altında."
+      },
+      "expenses": {
+        "title": "Masraf Paylaşımı",
+        "description": "Harcamaları kaydet, kimin kime ne kadar borcu olduğunu Journeo hesaplasın."
+      },
+      "trips": {
+        "title": "Gezilerim",
+        "description": "Geçmiş ve gelecek tüm gezilerin tek bir düzenli arşivde."
+      },
+      "profile": {
+        "title": "Profilin",
+        "description": "Tercihlerini, dilini ve seyahat istatistiklerini yönet."
+      }
+    }
   }
 }

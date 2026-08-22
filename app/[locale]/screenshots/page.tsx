@@ -130,20 +130,33 @@ export default function ScreenshotsPage() {
 
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-[#FAF7F2]">
       {/* Dynamic Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sky-400 via-blue-500 to-purple-600" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+      <div className="absolute inset-0 bg-[#FAF7F2]" />
+      <div className="absolute inset-0 bg-map-grid opacity-100" />
+      
+      {/* Topographic Contours SVGs */}
+      <svg className="absolute -left-10 top-10 w-[500px] h-[500px] text-amber-900/[0.035] pointer-events-none" viewBox="0 0 100 100" fill="none">
+        <path className="map-contour" d="M-20,10 C15,-5 25,25 35,50 C45,75 75,85 120,90" />
+        <path className="map-contour" d="M-20,25 C20,10 30,40 40,65 C50,90 85,100 130,105" />
+      </svg>
+      <svg className="absolute -right-20 bottom-10 w-[500px] h-[500px] text-amber-900/[0.035] pointer-events-none" viewBox="0 0 100 100" fill="none">
+        <path className="map-contour" d="M30,120 C40,90 70,80 85,55 C100,30 80,10 120,-20" />
+        <path className="map-contour" d="M15,120 C25,80 60,70 75,45 C90,20 70,0 110,-30" />
+      </svg>
+      <svg className="absolute inset-0 w-full h-full text-amber-800/[0.06] pointer-events-none" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5,5">
+        <path d="M 10% 25% Q 30% 12% 55% 28% T 90% 55%" />
+      </svg>
       
       {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl animate-float">
-        <Smartphone className="w-10 h-10 text-white/60 m-5" />
+      <div className="absolute top-20 left-10 w-20 h-20 bg-amber-500/10 rounded-full blur-xl animate-float">
+        <Smartphone className="w-10 h-10 text-amber-800/40 m-5" />
       </div>
-      <div className="absolute top-40 right-20 w-24 h-24 bg-white/10 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }}>
-        <MapPin className="w-12 h-12 text-white/60 m-6" />
+      <div className="absolute top-40 right-20 w-24 h-24 bg-orange-500/10 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }}>
+        <MapPin className="w-12 h-12 text-orange-800/40 m-6" />
       </div>
-      <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-white/10 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }}>
-        <Route className="w-8 h-8 text-white/60 m-4" />
+      <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-amber-600/10 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }}>
+        <Route className="w-8 h-8 text-amber-900/40 m-4" />
       </div>
 
       <div className="container relative z-10 py-24">
@@ -160,8 +173,8 @@ export default function ScreenshotsPage() {
             transition={{ delay: 0.3, duration: 0.8, type: "spring", stiffness: 200 }}
             className="mx-auto w-32 h-32 relative"
           >
-            <div className="w-full h-full bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-              <Smartphone className="w-16 h-16 text-white" />
+            <div className="w-full h-full bg-white/80 border border-amber-900/10 shadow-lg rounded-full flex items-center justify-center backdrop-blur-sm">
+              <Smartphone className="w-16 h-16 text-amber-600" />
             </div>
           </motion.div>
           
@@ -169,13 +182,13 @@ export default function ScreenshotsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="space-y-6"
+            className="space-y-4"
           >
-            <h1 className="heading-modern text-white drop-shadow-lg">
-              📱 Screenshots 📱
+            <h1 className="heading-modern text-gradient">
+              Screenshots
             </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">
-              Explore the Journeo app up close and discover its amazing features! ✨
+            <p className="text-xl text-stone-600 max-w-3xl mx-auto leading-relaxed font-medium">
+              Explore the Journeo app up close and discover its amazing features!
             </p>
           </motion.div>
         </motion.div>
@@ -184,8 +197,8 @@ export default function ScreenshotsPage() {
         {/* Loading State */}
         {loading && (
           <div className="text-center py-20">
-            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-white/80">Loading screenshots...</p>
+            <div className="w-8 h-8 border-2 border-amber-600/30 border-t-amber-600 rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-stone-600">Loading screenshots...</p>
           </div>
         )}
 
@@ -378,9 +391,9 @@ export default function ScreenshotsPage() {
           transition={{ delay: 1, duration: 0.8 }}
           className="mt-16 text-center"
         >
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-            <p className="text-white/90 text-lg font-medium">
-              📱 Screenshots reflect the actual application. Interface may change with updates. 📱
+          <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-amber-900/10 shadow-md max-w-2xl mx-auto">
+            <p className="text-stone-700 text-base font-medium">
+              📱 Screenshots reflect the actual application. Interface may change with updates.
             </p>
           </div>
         </motion.div>

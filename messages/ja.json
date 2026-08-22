@@ -336,5 +336,59 @@
       "title": "Contact",
       "body": "For questions about this EULA, contact us at legal@journeo.ai."
     }
+  },
+  "scrollStory": {
+    "eyebrow": "ライブデモ",
+    "title": "スクロールして Journeo の動きを見る",
+    "subtitle": "ログインからプラン作成、ルート、費用の割り勘まで、すべての流れをステップごとに。",
+    "hint": "スクロールしてみる",
+    "stepLabel": "ステップ",
+    "cta": "すべての画面を見る",
+    "steps": {
+      "login": {
+        "title": "ログイン",
+        "description": "メールまたはソーシャルアカウントで数秒サインイン。"
+      },
+      "home": {
+        "title": "ホーム",
+        "description": "予定の旅行、おすすめ、クイック操作をひと目で。"
+      },
+      "createTrip": {
+        "title": "旅行を作成",
+        "description": "都市・日程・旅のスタイルを選ぶだけ。あとは Journeo におまかせ。"
+      },
+      "aiPlanner": {
+        "title": "AI がプランを作成",
+        "description": "興味に合わせて、AI が 1 日ごとの旅程を組み立てます。"
+      },
+      "route": {
+        "title": "ルートが完成",
+        "description": "立ち寄り先を効率的に並べ替え、所要時間と距離も自動計算。"
+      },
+      "maps": {
+        "title": "地図で確認",
+        "description": "すべてのスポットをインタラクティブな地図で見て、すぐに経路案内。"
+      },
+      "meetingPoint": {
+        "title": "集合場所",
+        "description": "友だちと共有の集合場所を決めて、全員で迷わず合流。"
+      },
+      "tripDetail": {
+        "title": "旅行の詳細",
+        "description": "各スポットの解説・写真・音声ガイドをその場で。"
+      },
+      "expenses": {
+        "title": "費用の割り勘",
+        "description": "支出を記録すれば、誰が誰にいくら払うかを自動で計算。"
+      },
+      "trips": {
+        "title": "マイトリップ",
+        "description": "過去とこれからの旅行を、ひとつのアーカイブに整理。"
+      },
+      "profile": {
+        "title": "プロフィール",
+        "description": "設定、言語、旅の統計を管理できます。"
+      }
+    }
   }
 }
