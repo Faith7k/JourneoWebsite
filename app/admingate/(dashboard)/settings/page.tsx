@@ -16,9 +16,9 @@ export default async function AdminSettingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-slate-100">Settings</h2>
-        <p className="text-sm text-slate-400">
-          Site-wide configuration used by the landing page and footer.
+        <h2 className="text-2xl font-bold tracking-tight text-slate-900">Site & Platform Ayarları</h2>
+        <p className="text-sm text-slate-500 mt-1">
+          Web sitesi, yasal metinler, mağaza bağlantıları ve kurumsal iletişim bilgileri.
         </p>
       </div>
       <SettingsForm initial={data ?? null} />

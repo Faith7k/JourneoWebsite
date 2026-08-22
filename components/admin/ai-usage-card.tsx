@@ -39,60 +39,60 @@ export function AdminAIUsageCard({
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       {/* Gemini LLM Usage Card */}
-      <Card className="border-slate-800 bg-slate-900/50">
+      <Card className="border-slate-200/80 bg-white shadow-xs">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2 text-slate-100">
-              <Sparkles className="h-5 w-5 text-purple-400" />
+            <CardTitle className="flex items-center gap-2 text-base font-bold text-slate-900">
+              <Sparkles className="h-4 w-4 text-purple-600" />
               Google Gemini LLM Engine
             </CardTitle>
-            <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">
-              {aiCallsToday} requests today
+            <Badge className="bg-purple-50 text-purple-700 border-purple-200 font-semibold">
+              {aiCallsToday} istek bugün
             </Badge>
           </div>
-          <CardDescription className="text-slate-400">
-            Real-time track of LLM itinerary generation and chat turns.
+          <CardDescription className="text-xs text-slate-500">
+            LLM seyahat planı üretimleri ve sohbet turnlerinin canlı takibi.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-3 gap-3 rounded-lg border border-slate-800 bg-slate-800/30 p-3 text-center">
+          <div className="grid grid-cols-3 gap-3 rounded-xl border border-slate-100 bg-slate-50/80 p-3 text-center">
             <div>
-              <p className="text-xs text-slate-400">Today</p>
-              <p className="text-lg font-bold text-purple-300">{aiCallsToday}</p>
+              <p className="text-[11px] font-medium text-slate-500">Bugün</p>
+              <p className="text-lg font-bold text-purple-700 tabular-nums">{aiCallsToday}</p>
             </div>
             <div>
-              <p className="text-xs text-slate-400">7 Days</p>
-              <p className="text-lg font-bold text-slate-100">{aiCalls7d}</p>
+              <p className="text-[11px] font-medium text-slate-500">Son 7 Gün</p>
+              <p className="text-lg font-bold text-slate-900 tabular-nums">{aiCalls7d}</p>
             </div>
             <div>
-              <p className="text-xs text-slate-400">30 Days</p>
-              <p className="text-lg font-bold text-slate-100">{aiCalls30d}</p>
+              <p className="text-[11px] font-medium text-slate-500">Son 30 Gün</p>
+              <p className="text-lg font-bold text-slate-900 tabular-nums">{aiCalls30d}</p>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-              Usage by Request Category
+          <div className="space-y-2.5">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+              Kategori Bazlı AI Kullanımı
             </p>
             {aiByKind.length === 0 ? (
-              <p className="text-xs text-slate-500">No AI requests logged yet.</p>
+              <p className="text-xs text-slate-400 italic">Henüz kaydedilmiş AI isteği yok.</p>
             ) : (
               aiByKind.map((k) => {
                 const pct = Math.round((k.count / totalAiKindCalls) * 100);
                 return (
                   <div key={k.kind} className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-300">
+                      <span className="font-medium text-slate-700">
                         {kindLabels[k.kind] ?? k.kind}
                       </span>
-                      <span className="font-mono text-slate-400">
+                      <span className="font-mono text-slate-500 font-medium">
                         {k.count} ({pct}%)
                       </span>
                     </div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-slate-800">
+                    <div className="h-2 overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-purple-500 to-pink-500"
-                        style={{ width: `${pct}%` }}
+                        className="h-full rounded-full bg-purple-600 transition-all"
+                        style={{ width: `${Math.max(pct, 2)}%` }}
                       />
                     </div>
                   </div>
@@ -101,12 +101,12 @@ export function AdminAIUsageCard({
             )}
           </div>
 
-          <div className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900 p-2.5 text-xs text-slate-400">
-            <span className="flex items-center gap-1.5">
-              <Database className="h-4 w-4 text-cyan-400" />
-              Cached AI Plans (`ai_plan_cache`)
+          <div className="flex items-center justify-between rounded-lg border border-slate-200/80 bg-slate-50 p-2.5 text-xs text-slate-600">
+            <span className="flex items-center gap-1.5 font-medium">
+              <Database className="h-4 w-4 text-cyan-600" />
+              Önbellek AI Planları (<code className="font-mono text-[11px]">ai_plan_cache</code>)
             </span>
-            <Badge variant="outline" className="border-slate-700 text-cyan-300">
+            <Badge variant="outline" className="border-cyan-200 bg-cyan-50 text-cyan-700 font-semibold">
               {cachedAiPlansCount} cached
             </Badge>
           </div>
@@ -114,90 +114,88 @@ export function AdminAIUsageCard({
       </Card>
 
       {/* Google Places & Cache Card */}
-      <Card className="border-slate-800 bg-slate-900/50">
+      <Card className="border-slate-200/80 bg-white shadow-xs">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2 text-slate-100">
-              <MapPin className="h-5 w-5 text-emerald-400" />
+            <CardTitle className="flex items-center gap-2 text-base font-bold text-slate-900">
+              <MapPin className="h-4 w-4 text-emerald-600" />
               Google Places & POI Cache
             </CardTitle>
             <Badge
               variant="outline"
               className={
                 placesBudgetPct > 80
-                  ? 'border-amber-700 text-amber-300'
-                  : 'border-emerald-700 text-emerald-300'
+                  ? 'border-amber-200 bg-amber-50 text-amber-700 font-semibold'
+                  : 'border-emerald-200 bg-emerald-50 text-emerald-700 font-semibold'
               }
             >
-              {placesBudgetPct}% budget used
+              %{placesBudgetPct} bütçe tüketimi
             </Badge>
           </div>
-          <CardDescription className="text-slate-400">
-            Monthly Google Places call tracking and cache efficiency.
+          <CardDescription className="text-xs text-slate-500">
+            Aylık Google Places kota kullanımı ve POI önbellek tasarrufu.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-300">Monthly Call Budget</span>
-              <span className="font-mono text-slate-400">
-                {googlePlacesCallsMonth} / {placesBudget} calls
+              <span className="text-slate-600 font-medium">Aylık Çağrı Bütçesi</span>
+              <span className="font-mono text-slate-500">
+                {googlePlacesCallsMonth} / {placesBudget} çağrı
               </span>
             </div>
-            <div className="h-2 overflow-hidden rounded-full bg-slate-800">
+            <div className="h-2 overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
               <div
-                className={`h-full rounded-full bg-gradient-to-r ${
-                  placesBudgetPct > 80
-                    ? 'from-amber-500 to-red-500'
-                    : 'from-emerald-500 to-teal-500'
+                className={`h-full rounded-full transition-all ${
+                  placesBudgetPct > 80 ? 'bg-amber-500' : 'bg-emerald-500'
                 }`}
-                style={{ width: `${placesBudgetPct}%` }}
+                style={{ width: `${Math.max(placesBudgetPct, 2)}%` }}
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-lg border border-slate-800 bg-slate-800/30 p-3">
-              <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                <Database className="h-4 w-4 text-emerald-400" />
-                Global POI Cache
+            <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-3">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600">
+                <Database className="h-3.5 w-3.5 text-emerald-600" />
+                Global POI Önbelleği
               </div>
-              <p className="mt-1 text-xl font-bold text-slate-100">{cachedPlacesCount}</p>
-              <p className="text-[10px] text-slate-500">Places stored (180d TTL)</p>
+              <p className="mt-1 text-xl font-bold text-slate-900 tabular-nums">{cachedPlacesCount}</p>
+              <p className="text-[10px] text-slate-500">Kayıtlı mekan (180g TTL)</p>
             </div>
-            <div className="rounded-lg border border-slate-800 bg-slate-800/30 p-3">
-              <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                <Zap className="h-4 w-4 text-amber-400" />
-                API Cost Savings
+            <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-3">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600">
+                <Zap className="h-3.5 w-3.5 text-amber-600" />
+                Önbellek Tasarrufu
               </div>
-              <p className="mt-1 text-xl font-bold text-amber-300">
+              <p className="mt-1 text-xl font-bold text-amber-700 tabular-nums">
                 ~${(cachedPlacesCount * 0.017).toFixed(1)}
               </p>
-              <p className="text-[10px] text-slate-500">Saved by Cache Hits</p>
+              <p className="text-[10px] text-slate-500">Cache Hit ile Korunan Bütçe</p>
             </div>
           </div>
 
           <div className="space-y-2 pt-1">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-              Connected External Services
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+              Bağlı Harici Servisler
             </p>
             <div className="grid grid-cols-3 gap-2">
-              <div className="rounded border border-slate-800 bg-slate-900 p-2 text-center text-xs">
-                <p className="text-slate-400">OpenWeather</p>
-                <Badge className="mt-1 bg-emerald-500/20 text-emerald-300 border-none text-[10px]">
-                  Active
+              <div className="rounded-lg border border-slate-200/80 bg-white p-2 text-center text-xs">
+                <p className="font-medium text-slate-700">OpenWeather</p>
+                <Badge className="mt-1 bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-[10px]">
+                  Aktif
                 </Badge>
               </div>
-              <div className="rounded border border-slate-800 bg-slate-900 p-2 text-center text-xs">
-                <p className="text-slate-400">ExchangeRate</p>
-                <Badge className="mt-1 bg-emerald-500/20 text-emerald-300 border-none text-[10px]">
-                  Active
+              <div className="rounded-lg border border-slate-200/80 bg-white p-2 text-center text-xs">
+                <p className="font-medium text-slate-700">ExchangeRate</p>
+                <Badge className="mt-1 bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-[10px]">
+                  Aktif
                 </Badge>
               </div>
-              <div className="rounded border border-slate-800 bg-slate-900 p-2 text-center text-xs">
-                <p className="text-slate-400">Pexels Photos</p>
-                <Badge className="mt-1 bg-emerald-500/20 text-emerald-300 border-none text-[10px]">
-                  Active
+              <div className="rounded-lg border border-slate-200/80 bg-white p-2 text-center text-xs">
+                <p className="font-medium text-slate-700">Pexels Photos</p>
+                <Badge className="mt-1 bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-[10px]">
+                  Aktif
                 </Badge>
               </div>
             </div>

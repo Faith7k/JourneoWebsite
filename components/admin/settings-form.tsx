@@ -12,6 +12,7 @@ import {
   ExternalLink,
   MapPin,
   Phone,
+  CheckCircle2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -89,54 +90,54 @@ export function SettingsForm({ initial }: Props) {
       const data = await res.json();
 
       if (!res.ok || data.error) {
-        setError(data.error || 'Failed to save settings.');
+        setError(data.error || 'Ayarlar kaydedilirken hata oluştu.');
       } else {
         setSaved(true);
         setTimeout(() => setSaved(false), 2500);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred while saving.');
+      setError(err instanceof Error ? err.message : 'Bir hata meydana geldi.');
     } finally {
       setSaving(false);
     }
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6 pb-12">
       {error && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="rounded-2xl border-rose-200 bg-rose-50 text-rose-800 font-semibold">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
       {saved && (
-        <Alert className="border-emerald-800/50 bg-emerald-500/10 text-emerald-300">
-          <Check className="h-4 w-4" />
-          <AlertDescription>Settings saved successfully.</AlertDescription>
+        <Alert className="rounded-2xl border-emerald-200 bg-emerald-50 text-emerald-800 font-semibold flex items-center gap-2">
+          <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+          <AlertDescription>Ayarlar başarıyla güncellendi.</AlertDescription>
         </Alert>
       )}
 
       {/* Store URLs */}
-      <Card className="border-slate-800 bg-slate-900/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-slate-100">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-blue-500/20">
-              <Store className="h-4 w-4 text-blue-400" />
+      <Card className="border border-slate-200/80 bg-white shadow-2xs rounded-2xl">
+        <CardHeader className="pb-3 border-b border-slate-100/80">
+          <CardTitle className="flex items-center gap-3 text-base font-bold text-slate-900">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100">
+              <Store className="h-4.5 w-4.5" />
             </div>
-            App Store Links
+            Uygulama Mağazası Linkleri
           </CardTitle>
-          <CardDescription className="text-slate-400">
-            These URLs power the download buttons on the landing page.
+          <CardDescription className="text-xs text-slate-500">
+            Bu URL&apos;ler ana sayfadaki ve indirme butonlarındaki yönlendirmeleri yönetir.
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="pt-5 grid gap-5 sm:grid-cols-2">
           <UrlField
-            label="App Store URL"
+            label="App Store URL (iOS)"
             value={form.app_store_url}
             onChange={update('app_store_url')}
             placeholder="https://apps.apple.com/app/..."
           />
           <UrlField
-            label="Play Store URL"
+            label="Google Play Store URL (Android)"
             value={form.play_store_url}
             onChange={update('play_store_url')}
             placeholder="https://play.google.com/store/apps/..."
@@ -145,31 +146,28 @@ export function SettingsForm({ initial }: Props) {
       </Card>
 
       {/* Legal Links */}
-      <Card className="border-slate-800 bg-slate-900/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-slate-100">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-purple-500/20">
-              <Shield className="h-4 w-4 text-purple-400" />
+      <Card className="border border-slate-200/80 bg-white shadow-2xs rounded-2xl">
+        <CardHeader className="pb-3 border-b border-slate-100/80">
+          <CardTitle className="flex items-center gap-3 text-base font-bold text-slate-900">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600 border border-purple-100">
+              <Shield className="h-4.5 w-4.5" />
             </div>
-            Legal Links
+            Yasal Belgeler & URL Bağlantıları
           </CardTitle>
-          <CardDescription className="text-slate-400">
-            Required by App Store and Google Play — these links are shown in the app and on the
-            site footer. Use full URLs (e.g.{' '}
-            <code className="rounded bg-slate-800 px-1 text-xs">https://journeo.app/privacy</code>
-            ).
+          <CardDescription className="text-xs text-slate-500">
+            App Store ve Google Play tarafından zorunlu kılınan yasal sayfaların harici veya dahili linkleri.
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="pt-5 grid gap-5 sm:grid-cols-2">
           <UrlField
-            label="Privacy Policy URL"
+            label="Gizlilik Politikası URL"
             value={form.privacy_policy_url}
             onChange={update('privacy_policy_url')}
             placeholder="https://journeo.app/privacy"
             required
           />
           <UrlField
-            label="Terms of Service URL"
+            label="Kullanım Koşulları URL"
             value={form.terms_of_service_url}
             onChange={update('terms_of_service_url')}
             placeholder="https://journeo.app/terms"
@@ -179,23 +177,27 @@ export function SettingsForm({ initial }: Props) {
       </Card>
 
       {/* Legal Contents */}
-      <Card className="border-slate-800 bg-slate-900/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-slate-100">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-purple-500/20">
-              <Shield className="h-4 w-4 text-purple-400" />
+      <Card className="border border-slate-200/80 bg-white shadow-2xs rounded-2xl">
+        <CardHeader className="pb-3 border-b border-slate-100/80">
+          <CardTitle className="flex items-center gap-3 text-base font-bold text-slate-900">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600 border border-purple-100">
+              <Shield className="h-4.5 w-4.5" />
             </div>
-            Privacy Policy Content
+            Gizlilik Politikası Metin İçerikleri
           </CardTitle>
-          <CardDescription className="text-slate-400">
-            Enter the actual text content of your Privacy Policy. If empty, the website will use default system translations.
+          <CardDescription className="text-xs text-slate-500">
+            Özel bir gizlilik sözleşmesi metni girin. Boş bırakıldığında varsayılan sistem çevirisi kullanılır.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="en" className="w-full">
-            <TabsList className="mb-4 flex flex-wrap h-auto gap-2 p-1 bg-transparent justify-start">
+        <CardContent className="pt-5">
+          <Tabs defaultValue="tr" className="w-full">
+            <TabsList className="mb-4 flex flex-wrap h-auto gap-1.5 p-1 bg-slate-100/80 border border-slate-200/60 rounded-xl justify-start">
               {LANGUAGES.map((lang) => (
-                <TabsTrigger key={lang.code} value={lang.code} className="bg-slate-800/50 data-[state=active]:bg-slate-700">
+                <TabsTrigger
+                  key={lang.code}
+                  value={lang.code}
+                  className="text-xs font-bold rounded-lg px-3 py-1.5 data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-2xs"
+                >
                   {lang.label} ({lang.code.toUpperCase()})
                 </TabsTrigger>
               ))}
@@ -203,10 +205,10 @@ export function SettingsForm({ initial }: Props) {
             {LANGUAGES.map((lang) => (
               <TabsContent key={lang.code} value={lang.code}>
                 <TextareaField
-                  label={`Privacy Policy (${lang.code.toUpperCase()})`}
+                  label={`Gizlilik Politikası (${lang.label})`}
                   value={form[`privacy_policy_text_${lang.code}` as keyof typeof form]}
                   onChange={updateTextarea(`privacy_policy_text_${lang.code}` as keyof typeof form)}
-                  placeholder={`Enter privacy policy text in ${lang.label}...`}
+                  placeholder={`${lang.label} dilinde gizlilik politikası metnini girin...`}
                 />
               </TabsContent>
             ))}
@@ -214,23 +216,27 @@ export function SettingsForm({ initial }: Props) {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-800 bg-slate-900/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-slate-100">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-purple-500/20">
-              <Shield className="h-4 w-4 text-purple-400" />
+      <Card className="border border-slate-200/80 bg-white shadow-2xs rounded-2xl">
+        <CardHeader className="pb-3 border-b border-slate-100/80">
+          <CardTitle className="flex items-center gap-3 text-base font-bold text-slate-900">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600 border border-purple-100">
+              <Shield className="h-4.5 w-4.5" />
             </div>
-            Terms of Service Content
+            Kullanım Koşulları Metin İçerikleri
           </CardTitle>
-          <CardDescription className="text-slate-400">
-            Enter the actual text content of your Terms of Service. If empty, the website will use default system translations.
+          <CardDescription className="text-xs text-slate-500">
+            Özel bir kullanım şartları metni girin. Boş bırakıldığında varsayılan sistem çevirisi kullanılır.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="en" className="w-full">
-            <TabsList className="mb-4 flex flex-wrap h-auto gap-2 p-1 bg-transparent justify-start">
+        <CardContent className="pt-5">
+          <Tabs defaultValue="tr" className="w-full">
+            <TabsList className="mb-4 flex flex-wrap h-auto gap-1.5 p-1 bg-slate-100/80 border border-slate-200/60 rounded-xl justify-start">
               {LANGUAGES.map((lang) => (
-                <TabsTrigger key={lang.code} value={lang.code} className="bg-slate-800/50 data-[state=active]:bg-slate-700">
+                <TabsTrigger
+                  key={lang.code}
+                  value={lang.code}
+                  className="text-xs font-bold rounded-lg px-3 py-1.5 data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-2xs"
+                >
                   {lang.label} ({lang.code.toUpperCase()})
                 </TabsTrigger>
               ))}
@@ -238,10 +244,10 @@ export function SettingsForm({ initial }: Props) {
             {LANGUAGES.map((lang) => (
               <TabsContent key={lang.code} value={lang.code}>
                 <TextareaField
-                  label={`Terms of Service (${lang.code.toUpperCase()})`}
+                  label={`Kullanım Koşulları (${lang.label})`}
                   value={form[`terms_of_service_text_${lang.code}` as keyof typeof form]}
                   onChange={updateTextarea(`terms_of_service_text_${lang.code}` as keyof typeof form)}
-                  placeholder={`Enter terms of service text in ${lang.label}...`}
+                  placeholder={`${lang.label} dilinde kullanım koşulları metnini girin...`}
                 />
               </TabsContent>
             ))}
@@ -250,56 +256,56 @@ export function SettingsForm({ initial }: Props) {
       </Card>
 
       {/* Contact */}
-      <Card className="border-slate-800 bg-slate-900/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-slate-100">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-emerald-500/20">
-              <Mail className="h-4 w-4 text-emerald-400" />
+      <Card className="border border-slate-200/80 bg-white shadow-2xs rounded-2xl">
+        <CardHeader className="pb-3 border-b border-slate-100/80">
+          <CardTitle className="flex items-center gap-3 text-base font-bold text-slate-900">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
+              <Mail className="h-4.5 w-4.5" />
             </div>
-            Contact Info
+            İletişim & Kurumsal Bilgiler
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="pt-5 grid gap-5 sm:grid-cols-2">
           <Field
-            label="Support email"
+            label="Destek E-postası"
             value={form.support_email}
             onChange={update('support_email')}
             placeholder="support@journeo.app"
           />
           <Field
-            label="Press email"
+            label="Basın & Medya E-postası"
             value={form.press_email}
             onChange={update('press_email')}
             placeholder="press@journeo.app"
           />
           <Field
-            label="Phone"
+            label="Telefon"
             value={form.phone}
             onChange={update('phone')}
             placeholder="+90 ..."
-            icon={<Phone className="h-3.5 w-3.5 text-slate-500" />}
+            icon={<Phone className="h-3.5 w-3.5 text-slate-400" />}
           />
           <Field
-            label="Address"
+            label="Adres"
             value={form.address}
             onChange={update('address')}
             placeholder="Istanbul, Turkey"
-            icon={<MapPin className="h-3.5 w-3.5 text-slate-500" />}
+            icon={<MapPin className="h-3.5 w-3.5 text-slate-400" />}
           />
         </CardContent>
       </Card>
 
       {/* Social */}
-      <Card className="border-slate-800 bg-slate-900/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-slate-100">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-pink-500/20">
-              <Share2 className="h-4 w-4 text-pink-400" />
+      <Card className="border border-slate-200/80 bg-white shadow-2xs rounded-2xl">
+        <CardHeader className="pb-3 border-b border-slate-100/80">
+          <CardTitle className="flex items-center gap-3 text-base font-bold text-slate-900">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-pink-50 text-pink-600 border border-pink-100">
+              <Share2 className="h-4.5 w-4.5" />
             </div>
-            Social Media
+            Sosyal Medya Hesapları
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-3">
+        <CardContent className="pt-5 grid gap-5 sm:grid-cols-3">
           <UrlField
             label="Twitter / X"
             value={form.twitter_url}
@@ -321,14 +327,17 @@ export function SettingsForm({ initial }: Props) {
         </CardContent>
       </Card>
 
-      <Button
-        onClick={handleSave}
-        disabled={saving}
-        className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500"
-      >
-        {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-        {saving ? 'Saving…' : 'Save settings'}
-      </Button>
+      {/* Action Save Bar */}
+      <div className="flex justify-end pt-2">
+        <Button
+          onClick={handleSave}
+          disabled={saving}
+          className="bg-blue-600 text-white hover:bg-blue-700 font-bold shadow-md rounded-xl px-6 py-2.5 text-sm transition-all"
+        >
+          {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
+          {saving ? 'Kaydediliyor…' : 'Ayarları Kaydet'}
+        </Button>
+      </div>
     </div>
   );
 }
@@ -347,8 +356,8 @@ function Field({
   icon?: React.ReactNode;
 }) {
   return (
-    <div className="space-y-2">
-      <Label className="text-sm text-slate-300">{label}</Label>
+    <div className="space-y-1.5">
+      <Label className="text-xs font-bold text-slate-700">{label}</Label>
       <div className="relative">
         {icon && (
           <span className="absolute left-3 top-1/2 -translate-y-1/2">{icon}</span>
@@ -356,8 +365,8 @@ function Field({
         <Input
           value={value}
           onChange={onChange}
-          className={`border-slate-700 bg-slate-800/50 text-slate-100 placeholder:text-slate-600 ${icon ? 'pl-8' : ''}`}
-          placeholder={placeholder ?? `Enter ${label.toLowerCase()}`}
+          className={`border-slate-200/80 bg-white text-slate-900 rounded-xl placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/20 text-xs ${icon ? 'pl-9' : ''}`}
+          placeholder={placeholder ?? `${label} giriniz`}
         />
       </div>
     </div>
@@ -380,27 +389,27 @@ function UrlField({
   const isValidUrl = value.startsWith('http://') || value.startsWith('https://');
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <Label className="text-sm text-slate-300">
+        <Label className="text-xs font-bold text-slate-700">
           {label}
-          {required && <span className="ml-1 text-purple-400">*</span>}
+          {required && <span className="ml-1 text-rose-500">*</span>}
         </Label>
         {value && isValidUrl && (
           <a
             href={value}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300"
+            className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 font-bold"
           >
-            Preview <ExternalLink className="h-3 w-3" />
+            Önizle <ExternalLink className="h-3 w-3" />
           </a>
         )}
       </div>
       <Input
         value={value}
         onChange={onChange}
-        className="border-slate-700 bg-slate-800/50 text-slate-100 placeholder:text-slate-600"
+        className="border-slate-200/80 bg-white text-slate-900 rounded-xl placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/20 text-xs"
         placeholder={placeholder ?? `https://...`}
       />
     </div>
@@ -421,13 +430,13 @@ function TextareaField({
   rows?: number;
 }) {
   return (
-    <div className="space-y-2">
-      <Label className="text-sm text-slate-300">{label}</Label>
+    <div className="space-y-1.5">
+      <Label className="text-xs font-bold text-slate-700">{label}</Label>
       <textarea
         value={value}
         onChange={onChange}
         rows={rows}
-        className="w-full rounded-md border border-slate-700 bg-slate-800/50 p-3 text-sm text-slate-100 placeholder:text-slate-600 focus:border-blue-500 focus:outline-none"
+        className="w-full rounded-xl border border-slate-200/80 bg-white p-3.5 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none leading-relaxed font-sans"
         placeholder={placeholder}
       />
     </div>

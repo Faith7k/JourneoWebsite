@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
 
@@ -33,20 +34,15 @@ export const createClient = cache(async () => {
  * Use for admin operations that need to read/write any row regardless of RLS.
  */
 export async function createAdminClient() {
-  const cookieStore = await cookies();
-
-  return createServerClient(
+  return createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll();
-        },
-        setAll() {
-          // no-op for service role
-        },
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
       },
     }
   );
 }
+

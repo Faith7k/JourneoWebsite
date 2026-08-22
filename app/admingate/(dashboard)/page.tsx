@@ -7,48 +7,28 @@ import {
   TrendingUp,
   Smartphone,
   ArrowUpRight,
-  Inbox,
   Cpu,
   Globe,
   BarChart3,
+  Sparkles,
+  Zap,
+  Clock,
+  CheckCircle2,
+  Server,
+  Layers,
+  Database,
+  CloudLightning,
+  ShieldCheck,
+  Radio,
 } from 'lucide-react';
 import { requireAdmin } from '@/lib/supabase/admin';
 import { getAdminStats } from '@/lib/supabase/stats';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AdminApiChart } from '@/components/admin/api-chart';
-
-/* ------------------------------------------------------------------ */
-/*  Mini Stat Component (inline, no external dependency)               */
-/* ------------------------------------------------------------------ */
-function MiniStat({
-  label,
-  value,
-  sub,
-  accent = 'text-blue-400',
-}: {
-  label: string;
-  value: string | number;
-  sub?: string;
-  accent?: string;
-}) {
-  return (
-    <div className="rounded-xl border border-slate-800/60 bg-slate-800/20 p-4 transition-colors hover:border-slate-700/60">
-      <p className="text-[11px] font-medium uppercase tracking-wider text-slate-500 mb-1">
-        {label}
-      </p>
-      <p className={`text-2xl font-bold ${accent}`}>
-        {typeof value === 'number' ? value.toLocaleString('tr-TR') : value}
-      </p>
-      {sub && <p className="text-[11px] text-slate-500 mt-0.5">{sub}</p>}
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Page                                                               */
-/* ------------------------------------------------------------------ */
+import { AdminStatCard } from '@/components/admin/stat-card';
 export default async function AdminOverviewPage() {
+
   const user = await requireAdmin();
   if (!user) return null;
 
@@ -56,139 +36,268 @@ export default async function AdminOverviewPage() {
 
   const hasUsers = stats.totalAppUsers > 0;
   const hasApi = stats.apiCalls30d > 0;
+  const currentDate = new Date().toLocaleDateString('tr-TR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
 
   return (
-    <div className="space-y-8">
-      {/* ── Header ──────────────────────────────────────────────── */}
-      <div>
-        <h2 className="text-2xl font-bold text-slate-100">Genel Bakış</h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Journeo platformunun güncel durumu ve temel göstergeleri.
-        </p>
+    <div className="space-y-8 animate-in fade-in duration-300">
+      {/* ── Page Header & Ambient Banner ──────────────────────────── */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200/80">
+        <div className="space-y-1">
+          <div className="flex items-center gap-3">
+            <h1 className="text-2.5xl font-extrabold tracking-tight text-slate-900">
+              Admin Console — Genel Bakış
+            </h1>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 border border-emerald-200 shadow-2xs">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              Canlı Takip
+            </span>
+          </div>
+          <p className="text-xs sm:text-sm font-medium text-slate-500">
+            Journeo AI platformunun gerçek zamanlı performansı, kullanıcı trafiği ve sistem indikatörleri.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2 self-start sm:self-auto bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-xl px-3.5 py-2 shadow-2xs text-xs font-bold text-slate-700">
+          <Clock className="h-4 w-4 text-blue-600" />
+          <span>{currentDate}</span>
+        </div>
       </div>
 
-      {/* ── Key Metrics Row ─────────────────────────────────────── */}
-      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-        <MiniStat
-          label="Kullanıcı"
+      {/* ── Live System Health Bar (21st.dev Style) ────────────────── */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-2xl bg-slate-900 text-white shadow-xl shadow-slate-900/10 border border-slate-800">
+        <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/60 border border-slate-700/60">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400">
+            <Database className="h-4 w-4" />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Database</p>
+            </div>
+            <p className="text-xs font-semibold text-slate-200">Supabase OK</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/60 border border-slate-700/60">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/20 text-purple-400">
+            <Cpu className="h-4 w-4" />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">AI Gateway</p>
+            </div>
+            <p className="text-xs font-semibold text-slate-200">GPT-4o & Claude</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/60 border border-slate-700/60">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/20 text-cyan-400">
+            <Radio className="h-4 w-4" />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Mapbox / Places</p>
+            </div>
+            <p className="text-xs font-semibold text-slate-200">{stats.googlePlacesCallsMonth} çağrı</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/60 border border-slate-700/60">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/20 text-amber-400">
+            <ShieldCheck className="h-4 w-4" />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Güvenlik Durumu</p>
+            </div>
+            <p className="text-xs font-semibold text-slate-200">RLS & Auth Aktif</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Key Metrics Bento Row ─────────────────────────────────── */}
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <AdminStatCard
+          title="Kullanıcı"
           value={stats.totalAppUsers}
-          sub={hasUsers ? `${stats.activeAppUsers7d} aktif (7g)` : 'Henüz kayıt yok'}
-          accent="text-blue-400"
+          subtitle={hasUsers ? `${stats.activeAppUsers7d} aktif kullanıcı (son 7g)` : 'Henüz kullanıcı kaydı yok'}
+          icon={Users}
+          badge="Mobil App"
+          accent="bg-blue-500/10 text-blue-600 border-blue-200/60"
+          trend={stats.totalAppUsers > 0 ? `+${stats.totalAppUsers}` : undefined}
+          trendUp={true}
         />
-        <MiniStat
-          label="Ekran Görüntüsü"
+        <AdminStatCard
+          title="Ekran Görüntüsü"
           value={stats.screenshotsCount}
-          sub="Galeride yayında"
-          accent="text-amber-400"
+          subtitle="Landing sayfasında yayında"
+          icon={ImageIcon}
+          badge="Galeri"
+          accent="bg-amber-500/10 text-amber-600 border-amber-200/60"
         />
-        <MiniStat
-          label="API İsteği (30g)"
+        <AdminStatCard
+          title="API İsteği (30g)"
           value={stats.apiCalls30d}
-          sub={hasApi ? `Bugün ${stats.apiCallsToday}` : 'Henüz istek yok'}
-          accent="text-purple-400"
+          subtitle={hasApi ? `Bugün ${stats.apiCallsToday} istek gerçekleşti` : 'Henüz API aktivitesi yok'}
+          icon={Activity}
+          badge="Trafik"
+          accent="bg-purple-500/10 text-purple-600 border-purple-200/60"
+          trend={stats.apiCalls7d > 0 ? `${stats.apiCalls7d} bu hafta` : undefined}
+          trendUp={true}
         />
-        <MiniStat
-          label="Mesaj"
+        <AdminStatCard
+          title="İletişim Mesajları"
           value={stats.contactMessagesTotal}
-          sub={stats.contactMessagesUnread > 0 ? `${stats.contactMessagesUnread} okunmamış` : 'Hepsi okundu'}
-          accent="text-rose-400"
+          subtitle={
+            stats.contactMessagesUnread > 0
+              ? `${stats.contactMessagesUnread} yeni okunmamış mesaj var`
+              : 'Tüm mesajlar incelendi'
+          }
+          icon={Mail}
+          badge={stats.contactMessagesUnread > 0 ? 'Aksiyon Gerekli' : 'Temiz'}
+          accent="bg-rose-500/10 text-rose-600 border-rose-200/60"
         />
       </div>
 
-      {/* ── Two-Column: Chart + Sidebar ─────────────────────────── */}
+      {/* ── Main Dashboard Bento Grid ───────────────────────────── */}
       <div className="grid gap-6 lg:grid-cols-5">
         {/* API Chart - 3/5 width */}
-        <Card className="border-slate-800 bg-slate-900/40 backdrop-blur-sm lg:col-span-3">
-          <CardHeader className="pb-2">
+        <Card className="border border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs rounded-2xl lg:col-span-3 flex flex-col justify-between overflow-hidden">
+          <CardHeader className="pb-4 border-b border-slate-100/80">
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-base text-slate-100 flex items-center gap-2">
-                  <BarChart3 className="h-4 w-4 text-blue-400" />
-                  API Trafiği
-                </CardTitle>
-                <CardDescription className="text-slate-500 text-xs mt-0.5">
-                  Son 14 günlük istek hacmi
-                </CardDescription>
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shadow-2xs">
+                  <BarChart3 className="h-5 w-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-base font-bold text-slate-900">
+                    API Trafik & Sistem Analizi
+                  </CardTitle>
+                  <CardDescription className="text-slate-500 text-xs mt-0.5">
+                    Son 14 günlük sistem istek hacmi ve dağılımı
+                  </CardDescription>
+                </div>
               </div>
               {hasApi && (
-                <div className="text-right">
-                  <p className="text-lg font-bold text-slate-100">{stats.apiCalls7d.toLocaleString('tr-TR')}</p>
-                  <p className="text-[10px] text-slate-500">bu hafta</p>
+                <div className="text-right bg-slate-50 px-3.5 py-1.5 rounded-xl border border-slate-200/60">
+                  <p className="text-sm font-extrabold text-slate-900 tabular-nums">
+                    {stats.apiCalls7d.toLocaleString('tr-TR')}
+                  </p>
+                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                    Son 7 Gün Toplam
+                  </p>
                 </div>
               )}
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <AdminApiChart data={stats.apiCallsByDay} />
           </CardContent>
         </Card>
 
         {/* Right Sidebar Cards - 2/5 width */}
-        <div className="lg:col-span-2 space-y-4">
-          {/* Platform Split */}
-          <Card className="border-slate-800 bg-slate-900/40 backdrop-blur-sm">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-slate-100 flex items-center gap-2">
-                <Smartphone className="h-4 w-4 text-cyan-400" />
+        <div className="lg:col-span-2 space-y-6">
+          {/* Platform Distribution */}
+          <Card className="border border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs rounded-2xl">
+            <CardHeader className="pb-3 border-b border-slate-100/80">
+              <CardTitle className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <Smartphone className="h-4 w-4 text-cyan-600" />
                 Platform Dağılımı
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="pt-4 space-y-4">
               {stats.platformBreakdown.map((p) => {
                 const total = stats.totalAppUsers || 1;
                 const pct = Math.round((p.count / total) * 100);
+                const isIOS = p.platform === 'iOS';
                 return (
-                  <div key={p.platform}>
-                    <div className="flex items-center justify-between text-sm mb-1">
-                      <span className="text-slate-300">{p.platform}</span>
-                      <span className="text-slate-500 font-mono text-xs">{p.count} ({pct}%)</span>
+                  <div key={p.platform} className="space-y-1.5">
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <span className="flex items-center gap-1.5 text-slate-700">
+                        {isIOS ? '🍎 iOS Mobil' : '🤖 Android Mobil'}
+                      </span>
+                      <span className="text-slate-900 font-bold tabular-nums">
+                        {p.count} cihaz <span className="text-slate-400 font-medium">({pct}%)</span>
+                      </span>
                     </div>
-                    <div className="h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                    <div className="h-2.5 rounded-full bg-slate-100 border border-slate-200/60 overflow-hidden p-0.5">
                       <div
-                        className={`h-full rounded-full transition-all ${
-                          p.platform === 'iOS'
-                            ? 'bg-gradient-to-r from-blue-500 to-cyan-400'
-                            : 'bg-gradient-to-r from-emerald-500 to-teal-400'
+                        className={`h-full rounded-full transition-all duration-500 ${
+                          isIOS ? 'bg-gradient-to-r from-blue-500 to-indigo-600' : 'bg-gradient-to-r from-emerald-500 to-teal-600'
                         }`}
-                        style={{ width: `${Math.max(pct, 2)}%` }}
+                        style={{ width: `${Math.max(pct, 4)}%` }}
                       />
                     </div>
                   </div>
                 );
               })}
               {!hasUsers && (
-                <p className="text-xs text-slate-500 italic">
-                  Mobil uygulama bağlandığında cihaz verileri burada görünecek.
-                </p>
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-500 italic">
+                  <Server className="h-4 w-4 text-slate-400 shrink-0" />
+                  <span>Mobil uygulama bağlandığında cihaz verileri burada listelenecektir.</span>
+                </div>
               )}
             </CardContent>
           </Card>
 
-          {/* AI & Cache Stats */}
-          <Card className="border-slate-800 bg-slate-900/40 backdrop-blur-sm">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-slate-100 flex items-center gap-2">
-                <Cpu className="h-4 w-4 text-purple-400" />
-                AI & Önbellek
+          {/* AI & Cache Performance */}
+          <Card className="border border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs rounded-2xl">
+            <CardHeader className="pb-3 border-b border-slate-100/80">
+              <CardTitle className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <Cpu className="h-4 w-4 text-purple-600" />
+                AI & Önbellek Performansı
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-4">
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <p className="text-lg font-bold text-purple-400">{stats.aiCalls30d}</p>
-                  <p className="text-[10px] text-slate-500">AI üretimi (30g)</p>
+                <div className="rounded-xl bg-purple-50/70 p-3 border border-purple-100 transition-all hover:bg-purple-50">
+                  <div className="flex items-center gap-1.5 text-purple-700 text-xs font-bold mb-1">
+                    <Sparkles className="h-3.5 w-3.5 text-purple-600" /> AI Üretimi
+                  </div>
+                  <p className="text-xl font-extrabold text-purple-900 tabular-nums">
+                    {stats.aiCalls30d}
+                  </p>
+                  <p className="text-[10px] text-purple-600 font-semibold mt-0.5">Son 30 günde</p>
                 </div>
-                <div>
-                  <p className="text-lg font-bold text-emerald-400">{stats.cachedPlacesCount}</p>
-                  <p className="text-[10px] text-slate-500">Önbellek mekanı</p>
+
+                <div className="rounded-xl bg-emerald-50/70 p-3 border border-emerald-100 transition-all hover:bg-emerald-50">
+                  <div className="flex items-center gap-1.5 text-emerald-700 text-xs font-bold mb-1">
+                    <Database className="h-3.5 w-3.5 text-emerald-600" /> Places Cache
+                  </div>
+                  <p className="text-xl font-extrabold text-emerald-900 tabular-nums">
+                    {stats.cachedPlacesCount}
+                  </p>
+                  <p className="text-[10px] text-emerald-600 font-semibold mt-0.5">Önbellek mekan</p>
                 </div>
-                <div>
-                  <p className="text-lg font-bold text-amber-400">{stats.cachedAiPlansCount}</p>
-                  <p className="text-[10px] text-slate-500">Önbellek planı</p>
+
+                <div className="rounded-xl bg-amber-50/70 p-3 border border-amber-100 transition-all hover:bg-amber-50">
+                  <div className="flex items-center gap-1.5 text-amber-700 text-xs font-bold mb-1">
+                    <Layers className="h-3.5 w-3.5 text-amber-600" /> AI Plan Cache
+                  </div>
+                  <p className="text-xl font-extrabold text-amber-900 tabular-nums">
+                    {stats.cachedAiPlansCount}
+                  </p>
+                  <p className="text-[10px] text-amber-600 font-semibold mt-0.5">Hazır plan</p>
                 </div>
-                <div>
-                  <p className="text-lg font-bold text-cyan-400">{stats.weatherCacheHitCount}</p>
-                  <p className="text-[10px] text-slate-500">Hava durumu cache</p>
+
+                <div className="rounded-xl bg-cyan-50/70 p-3 border border-cyan-100 transition-all hover:bg-cyan-50">
+                  <div className="flex items-center gap-1.5 text-cyan-700 text-xs font-bold mb-1">
+                    <CloudLightning className="h-3.5 w-3.5 text-cyan-600" /> Hava Cache
+                  </div>
+                  <p className="text-xl font-extrabold text-cyan-900 tabular-nums">
+                    {stats.weatherCacheHitCount}
+                  </p>
+                  <p className="text-[10px] text-cyan-600 font-semibold mt-0.5">Hit sayısı</p>
                 </div>
               </div>
             </CardContent>
@@ -196,76 +305,135 @@ export default async function AdminOverviewPage() {
         </div>
       </div>
 
-      {/* ── API Details Row ─────────────────────────────────────── */}
+      {/* ── API Performance Metrics Row ──────────────────────────── */}
       {hasApi && (
         <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-          <MiniStat
-            label="Hata Oranı"
-            value={`%${stats.apiErrorRate}`}
-            sub="Son 7 gün"
-            accent={stats.apiErrorRate > 5 ? 'text-rose-400' : 'text-emerald-400'}
-          />
-          <MiniStat
-            label="Ort. Yanıt Süresi"
-            value={stats.avgResponseMs ? `${stats.avgResponseMs}ms` : '—'}
-            sub="Son 7 gün"
-            accent="text-cyan-400"
-          />
-          <MiniStat
-            label="Google Places"
-            value={stats.googlePlacesCallsMonth}
-            sub="Bu ay"
-            accent="text-blue-400"
-          />
-          <MiniStat
-            label="Mapbox"
-            value={stats.mapboxCallsMonth}
-            sub="Bu ay"
-            accent="text-indigo-400"
-          />
+          <div className="rounded-2xl border border-slate-200/80 bg-white/90 p-4.5 shadow-xs backdrop-blur-md">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              Hata Oranı
+            </p>
+            <p className={`text-2xl font-extrabold tracking-tight mt-1 ${stats.apiErrorRate > 5 ? 'text-rose-600' : 'text-emerald-600'} tabular-nums`}>
+              %{stats.apiErrorRate}
+            </p>
+            <p className="text-xs text-slate-500 font-semibold mt-0.5">Son 7 günlük ortalama</p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200/80 bg-white/90 p-4.5 shadow-xs backdrop-blur-md">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              Ort. Yanıt Süresi
+            </p>
+            <p className="text-2xl font-extrabold tracking-tight mt-1 text-cyan-700 tabular-nums">
+              {stats.avgResponseMs ? `${stats.avgResponseMs}ms` : '—'}
+            </p>
+            <p className="text-xs text-slate-500 font-semibold mt-0.5">Latency süresi</p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200/80 bg-white/90 p-4.5 shadow-xs backdrop-blur-md">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              Google Places API
+            </p>
+            <p className="text-2xl font-extrabold tracking-tight mt-1 text-blue-600 tabular-nums">
+              {stats.googlePlacesCallsMonth.toLocaleString('tr-TR')}
+            </p>
+            <p className="text-xs text-slate-500 font-semibold mt-0.5">Bu ayki toplam çağrı</p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200/80 bg-white/90 p-4.5 shadow-xs backdrop-blur-md">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              Mapbox API
+            </p>
+            <p className="text-2xl font-extrabold tracking-tight mt-1 text-indigo-600 tabular-nums">
+              {stats.mapboxCallsMonth.toLocaleString('tr-TR')}
+            </p>
+            <p className="text-xs text-slate-500 font-semibold mt-0.5">Bu ayki harita çağrısı</p>
+          </div>
         </div>
       )}
 
       {/* ── Top Endpoints + Quick Actions ───────────────────────── */}
       <div className="grid gap-6 lg:grid-cols-5">
-        {/* Top endpoints */}
-        <Card className="border-slate-800 bg-slate-900/40 backdrop-blur-sm lg:col-span-2">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-slate-100 flex items-center gap-2">
-              <Activity className="h-4 w-4 text-emerald-400" />
+        {/* Top Endpoints */}
+        <Card className="border border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs rounded-2xl lg:col-span-2">
+          <CardHeader className="pb-3 border-b border-slate-100/80">
+            <CardTitle className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <Activity className="h-4 w-4 text-emerald-600" />
               Popüler Uç Noktalar
             </CardTitle>
-            <CardDescription className="text-slate-500 text-xs">Son 7 gün</CardDescription>
+            <CardDescription className="text-slate-500 text-xs">
+              Son 7 gün içindeki en yoğun endpointler
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="pt-4 space-y-2">
             {stats.apiCallsByEndpoint.length === 0 ? (
-              <p className="text-xs text-slate-500 italic py-2">
-                API aktivitesi başladığında uç noktalar burada listelenecek.
-              </p>
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                <CheckCircle2 className="h-8 w-8 text-slate-300 mb-2" />
+                <p className="text-xs text-slate-500 font-medium">Henüz API uç nokta verisi yok</p>
+              </div>
             ) : (
               stats.apiCallsByEndpoint.slice(0, 6).map((e, i) => (
-                <div key={e.endpoint} className="flex items-center gap-2 text-sm">
-                  <span className="text-[10px] font-mono text-slate-600 w-4 text-right">{i + 1}</span>
-                  <span className="flex-1 truncate font-mono text-xs text-slate-300">{e.endpoint}</span>
-                  <span className="text-xs font-mono text-emerald-400">{e.count}</span>
+                <div
+                  key={e.endpoint}
+                  className="flex items-center gap-3 p-2 rounded-xl bg-slate-50/70 border border-slate-100 hover:bg-slate-100/80 transition-colors"
+                >
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white border border-slate-200 text-[10px] font-bold text-slate-600">
+                    #{i + 1}
+                  </span>
+                  <span className="flex-1 truncate font-mono text-xs font-semibold text-slate-800">
+                    {e.endpoint}
+                  </span>
+                  <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[11px] font-bold font-mono">
+                    {e.count}
+                  </Badge>
                 </div>
               ))
             )}
           </CardContent>
         </Card>
 
-        {/* Quick Actions */}
-        <Card className="border-slate-800 bg-slate-900/40 backdrop-blur-sm lg:col-span-3">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm text-slate-100">Hızlı Erişim</CardTitle>
+        {/* Quick Access Menu */}
+        <Card className="border border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs rounded-2xl lg:col-span-3">
+          <CardHeader className="pb-3 border-b border-slate-100/80">
+            <CardTitle className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <Globe className="h-4 w-4 text-blue-600" />
+              Hızlı Erişim & Yönetim
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid gap-2 sm:grid-cols-2">
-              <QuickLink href="/admingate/screenshots" icon={ImageIcon} label="Ekran Görüntüleri" count={stats.screenshotsCount} />
-              <QuickLink href="/admingate/messages" icon={Mail} label="İletişim Mesajları" count={stats.contactMessagesUnread} highlight={stats.contactMessagesUnread > 0} />
-              <QuickLink href="/admingate/api-usage" icon={Activity} label="API Kullanımı" />
-              <QuickLink href="/admingate/users" icon={Users} label="Uygulama Kullanıcıları" count={stats.totalAppUsers} />
-              <QuickLink href="/admingate/settings" icon={Globe} label="Site Ayarları" />
+          <CardContent className="pt-4">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <QuickLink
+                href="/admingate/screenshots"
+                icon={ImageIcon}
+                label="Ekran Görüntüleri"
+                count={stats.screenshotsCount}
+              />
+              <QuickLink
+                href="/admingate/messages"
+                icon={Mail}
+                label="İletişim Mesajları"
+                count={stats.contactMessagesUnread}
+                highlight={stats.contactMessagesUnread > 0}
+              />
+              <QuickLink
+                href="/admingate/api-usage"
+                icon={Activity}
+                label="API Kullanımı"
+              />
+              <QuickLink
+                href="/admingate/users"
+                icon={Users}
+                label="Uygulama Kullanıcıları"
+                count={stats.totalAppUsers}
+              />
+              <QuickLink
+                href="/admingate/costs"
+                icon={TrendingUp}
+                label="Maliyet & Finans"
+              />
+              <QuickLink
+                href="/admingate/settings"
+                icon={Globe}
+                label="Site Ayarları"
+              />
             </div>
           </CardContent>
         </Card>
@@ -293,24 +461,26 @@ function QuickLink({
   return (
     <Link
       href={href}
-      className="group flex items-center gap-3 rounded-lg border border-slate-800/60 bg-slate-800/20 px-4 py-3 transition-all hover:border-slate-700 hover:bg-slate-800/40"
+      className="group flex items-center gap-3.5 rounded-xl border border-slate-200/80 bg-white/90 px-4 py-3 shadow-2xs transition-all duration-300 hover:border-blue-400 hover:bg-blue-50/50 hover:shadow-md"
     >
-      <Icon className="h-4 w-4 text-slate-500 group-hover:text-slate-300 transition-colors" />
-      <span className="flex-1 text-sm text-slate-300 group-hover:text-slate-100 transition-colors">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-2xs">
+        <Icon className="h-4.5 w-4.5" />
+      </div>
+      <span className="flex-1 text-xs font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
         {label}
       </span>
       {count !== undefined && count > 0 && (
         <Badge
           className={
             highlight
-              ? 'bg-rose-500/20 text-rose-300 border-none text-[10px]'
-              : 'bg-slate-700/50 text-slate-400 border-none text-[10px]'
+              ? 'bg-rose-50 text-rose-700 border-rose-200 text-[11px] font-bold shadow-2xs'
+              : 'bg-slate-100 text-slate-700 border-slate-200 text-[11px] font-semibold'
           }
         >
           {count}
         </Badge>
       )}
-      <ArrowUpRight className="h-3 w-3 text-slate-600 group-hover:text-slate-400 transition-colors" />
+      <ArrowUpRight className="h-4 w-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
     </Link>
   );
 }

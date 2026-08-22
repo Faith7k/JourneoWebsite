@@ -42,55 +42,55 @@ function LoginForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12 antialiased">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <Link href="/" className="inline-flex items-center gap-3">
             <Image
               src="/logo.png"
               alt="Journeo Logo"
-              width={40}
-              height={40}
-              className="w-10 h-10 rounded-xl shadow-md object-cover"
+              width={44}
+              height={44}
+              className="w-11 h-11 rounded-xl shadow-sm object-cover border border-slate-200"
             />
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-3xl font-bold text-transparent">
+            <span className="text-2xl font-bold tracking-tight text-slate-900">
               Journeo
             </span>
           </Link>
-          <p className="mt-2 text-sm text-slate-400">Admin Dashboard</p>
+          <p className="mt-2 text-sm text-slate-500 font-medium">Yönetici Giriş Paneli</p>
         </div>
 
-        <Card className="border-slate-800 bg-slate-900/50 backdrop-blur-xl">
-          <CardHeader>
-            <CardTitle className="text-slate-100">Sign in</CardTitle>
-            <CardDescription className="text-slate-400">
-              Enter your admin credentials to access the dashboard.
+        <Card className="border-slate-200/80 bg-white shadow-sm">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg font-bold text-slate-900">Yönetici Girişi</CardTitle>
+            <CardDescription className="text-xs text-slate-500">
+              Yönetici hesabınızla kontrol paneline erişin.
             </CardDescription>
           </CardHeader>
           <CardContent>
             {errorCode === 'unauthorized' && (
-              <Alert variant="destructive" className="mb-4">
-                <ShieldAlert className="h-4 w-4" />
-                <AlertDescription>
-                  Your account is not authorized to access the admin panel.
+              <Alert variant="destructive" className="mb-4 bg-rose-50 border-rose-200 text-rose-800">
+                <ShieldAlert className="h-4 w-4 text-rose-600" />
+                <AlertDescription className="text-xs">
+                  Hesabınız admin paneline erişim yetkisine sahip değil.
                 </AlertDescription>
               </Alert>
             )}
 
             {error && (
-              <Alert variant="destructive" className="mb-4">
-                <ShieldAlert className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
+              <Alert variant="destructive" className="mb-4 bg-rose-50 border-rose-200 text-rose-800">
+                <ShieldAlert className="h-4 w-4 text-rose-600" />
+                <AlertDescription className="text-xs">{error}</AlertDescription>
               </Alert>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-slate-200">
-                  Email
+              <div className="space-y-1.5">
+                <Label htmlFor="email" className="text-xs font-semibold text-slate-700">
+                  E-posta
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                   <Input
                     id="email"
                     type="email"
@@ -98,19 +98,19 @@ function LoginForm() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="admin@journeo.ai"
-                    className="border-slate-700 bg-slate-800/50 pl-10 text-slate-100 placeholder:text-slate-500"
+                    className="border-slate-200 bg-white pl-10 text-slate-900 placeholder:text-slate-400 text-sm"
                     autoComplete="email"
                     autoFocus
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-slate-200">
-                  Password
+              <div className="space-y-1.5">
+                <Label htmlFor="password" className="text-xs font-semibold text-slate-700">
+                  Şifre
                 </Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                   <Input
                     id="password"
                     type="password"
@@ -118,7 +118,7 @@ function LoginForm() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="border-slate-700 bg-slate-800/50 pl-10 text-slate-100 placeholder:text-slate-500"
+                    className="border-slate-200 bg-white pl-10 text-slate-900 placeholder:text-slate-400 text-sm"
                     autoComplete="current-password"
                   />
                 </div>
@@ -127,17 +127,17 @@ function LoginForm() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500"
+                className="w-full bg-blue-600 text-white hover:bg-blue-700 font-semibold shadow-xs transition-colors"
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {loading ? 'Signing in…' : 'Sign in'}
+                {loading ? 'Giriş yapılıyor…' : 'Giriş Yap'}
               </Button>
             </form>
           </CardContent>
         </Card>
 
-        <p className="mt-6 text-center text-xs text-slate-500">
-          Authorized personnel only. All actions are logged.
+        <p className="mt-6 text-center text-xs text-slate-400">
+          Yalnızca yetkili personel içindir. Tüm erişim ve işlemler loglanmaktadır.
         </p>
       </div>
     </div>

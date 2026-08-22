@@ -15,9 +15,9 @@ export default async function AdminScreenshotsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-slate-100">Screenshots</h2>
-        <p className="text-sm text-slate-400">
-          Upload and manage screenshots shown on the public gallery.
+        <h2 className="text-2xl font-bold tracking-tight text-slate-900">Ekran Görüntüleri Galerisi</h2>
+        <p className="text-sm text-slate-500 mt-1">
+          Web sitesi ve mobil vitrinde yayınlanan uygulama ekran görüntüleri ve açıklamaları.
         </p>
       </div>
       <ScreenshotsManager initialScreenshots={screenshots ?? []} />

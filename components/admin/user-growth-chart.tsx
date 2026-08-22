@@ -33,8 +33,8 @@ export function UserGrowthChart({ data }: { data: DataPoint[] }) {
 
   if (!data || data.length === 0) {
     return (
-      <div className="flex h-48 items-center justify-center text-sm text-slate-500">
-        No user registration data yet.
+      <div className="flex h-48 items-center justify-center text-sm text-slate-400 italic">
+        Henüz kullanıcı kayıt verisi bulunmuyor.
       </div>
     );
   }
@@ -51,12 +51,12 @@ export function UserGrowthChart({ data }: { data: DataPoint[] }) {
       >
         <defs>
           <linearGradient id="growth-area" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgb(16 185 129)" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="rgb(16 185 129)" stopOpacity="0" />
+            <stop offset="0%" stopColor="#059669" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="#059669" stopOpacity="0.0" />
           </linearGradient>
           <linearGradient id="growth-line" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="rgb(16 185 129)" />
-            <stop offset="100%" stopColor="rgb(20 184 166)" />
+            <stop offset="0%" stopColor="#059669" />
+            <stop offset="100%" stopColor="#10b981" />
           </linearGradient>
         </defs>
 
@@ -70,7 +70,7 @@ export function UserGrowthChart({ data }: { data: DataPoint[] }) {
               y1={y}
               x2={padding.left + innerW}
               y2={y}
-              stroke="rgb(30 41 59)"
+              stroke="#f1f5f9"
               strokeWidth="1"
             />
           );
@@ -81,20 +81,35 @@ export function UserGrowthChart({ data }: { data: DataPoint[] }) {
 
         {/* Line */}
         {linePath && (
-          <path d={linePath} fill="none" stroke="url(#growth-line)" strokeWidth="2" />
+          <path
+            d={linePath}
+            fill="none"
+            stroke="url(#growth-line)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         )}
 
         {/* Points + Labels */}
         {points.map((p, i) => (
           <g key={p.date}>
-            <circle cx={p.x} cy={p.y} r="2.5" fill="rgb(20 184 166)" />
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r="3.5"
+              fill="#ffffff"
+              stroke="#059669"
+              strokeWidth="2"
+            />
             {i % labelStep === 0 && (
               <text
                 x={p.x}
                 y={padding.top + innerH + 18}
                 textAnchor="middle"
-                fontSize="9"
-                fill="rgb(100 116 139)"
+                fontSize="10"
+                fontWeight="500"
+                fill="#64748b"
               >
                 {p.date.slice(5)}
               </text>
@@ -109,11 +124,12 @@ export function UserGrowthChart({ data }: { data: DataPoint[] }) {
           return (
             <text
               key={t}
-              x={padding.left - 6}
-              y={y + 3}
+              x={padding.left - 8}
+              y={y + 3.5}
               textAnchor="end"
-              fontSize="9"
-              fill="rgb(100 116 139)"
+              fontSize="10"
+              fontWeight="500"
+              fill="#64748b"
             >
               {val}
             </text>

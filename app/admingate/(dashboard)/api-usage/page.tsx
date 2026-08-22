@@ -63,43 +63,44 @@ export default async function AdminApiUsagePage() {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-slate-100">API Usage</h2>
-        <p className="text-sm text-slate-400">
-          Request volume, error rates, and performance from the mobile app.
+        <h2 className="text-2xl font-bold tracking-tight text-slate-900">API Kullanımı & Sistem Metrikleri</h2>
+        <p className="text-sm text-slate-500 mt-1">
+          Mobil uygulamadan gelen gerçek zamanlı API trafiği, hata oranları, maliyet ve uç nokta dağılımı.
         </p>
       </div>
 
       {/* Stat cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <AdminStatCard
-          title="Calls Today"
+          title="Bugünkü Çağrılar"
           value={stats.apiCallsToday}
-          subtitle={`${stats.apiCalls7d} this week`}
+          subtitle={`${stats.apiCalls7d.toLocaleString('tr-TR')} bu hafta`}
           icon={Activity}
-          accent="from-blue-500 to-cyan-500"
-          trend={`${stats.apiCalls30d} / 30d`}
+          accent="bg-blue-50 text-blue-600 border border-blue-100"
+          trend={`${stats.apiCalls30d.toLocaleString('tr-TR')} / 30 gün`}
         />
         <AdminStatCard
-          title="Error Rate (7d)"
-          value={`${stats.apiErrorRate}%`}
-          subtitle="4xx / 5xx responses"
+          title="Hata Oranı (7g)"
+          value={`%${stats.apiErrorRate}`}
+          subtitle="4xx / 5xx yanıtları"
           icon={AlertCircle}
-          accent={stats.apiErrorRate > 5 ? 'from-red-500 to-rose-500' : 'from-emerald-500 to-teal-500'}
+          accent={stats.apiErrorRate > 5 ? 'bg-rose-50 text-rose-600 border border-rose-100' : 'bg-emerald-50 text-emerald-600 border border-emerald-100'}
         />
         <AdminStatCard
-          title="Avg Response"
+          title="Ort. Yanıt Süresi"
           value={stats.avgResponseMs !== null ? `${stats.avgResponseMs}ms` : '—'}
-          subtitle="7-day average"
+          subtitle="7 günlük ortalama gecikme"
           icon={Clock}
-          accent="from-purple-500 to-pink-500"
+          accent="bg-purple-50 text-purple-600 border border-purple-100"
         />
         <AdminStatCard
-          title="Platforms"
+          title="Aktif Platformlar"
           value={stats.apiByPlatform.length}
-          subtitle={stats.apiByPlatform.map((p) => p.platform).join(' · ') || 'No data'}
+          subtitle={stats.apiByPlatform.map((p) => p.platform).join(' · ') || 'Veri bekleniyor'}
           icon={Smartphone}
-          accent="from-amber-500 to-orange-500"
+          accent="bg-amber-50 text-amber-600 border border-amber-100"
         />
       </div>
 
@@ -132,11 +133,11 @@ export default async function AdminApiUsagePage() {
       {/* Top Power Users Leaderboard */}
       <AdminTopCreatorsCard topTripCreators={stats.topTripCreators} />
 
-      {/* Chart */}
-      <Card className="border-slate-800 bg-slate-900/50">
-        <CardHeader>
-          <CardTitle className="text-slate-100">API Calls — Last 14 Days</CardTitle>
-          <CardDescription className="text-slate-400">Daily request volume across all endpoints.</CardDescription>
+      {/* API Chart (14 Days) */}
+      <Card className="border-slate-200/80 bg-white shadow-xs">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base font-bold text-slate-900">API Çağrı Hacmi — Son 14 Gün</CardTitle>
+          <CardDescription className="text-xs text-slate-500">Tüm uç noktalardan geçen günlük toplam istek sayısı.</CardDescription>
         </CardHeader>
         <CardContent>
           <AdminApiChart data={chartData} />
@@ -145,34 +146,34 @@ export default async function AdminApiUsagePage() {
 
       {/* Endpoints + Platform breakdown */}
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="border-slate-800 bg-slate-900/50">
-          <CardHeader>
-            <CardTitle className="text-slate-100">Endpoints (14d)</CardTitle>
-            <CardDescription className="text-slate-400">
-              Call volume per endpoint.
+        <Card className="border-slate-200/80 bg-white shadow-xs">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base font-bold text-slate-900">En Çok Kullanılan Uç Noktalar (14g)</CardTitle>
+            <CardDescription className="text-xs text-slate-500">
+              Endpoint başına istek dağılımı ve oranları.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {endpoints.length === 0 ? (
-              <p className="text-xs text-slate-500">No data yet.</p>
+              <p className="text-xs text-slate-400 italic py-4">Henüz kaydedilmiş endpoint çağrısı yok.</p>
             ) : (
               endpoints.map((e) => {
                 const pct = Math.round((e.count / totalEndpointCalls) * 100);
                 return (
                   <div key={e.endpoint} className="space-y-1">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="truncate font-mono text-slate-300">{e.endpoint}</span>
+                      <span className="truncate font-mono text-xs font-semibold text-slate-800">{e.endpoint}</span>
                       <div className="flex items-center gap-2 ml-2 shrink-0">
-                        <span className="text-xs text-slate-500">{pct}%</span>
-                        <Badge variant="outline" className="border-slate-700 text-slate-300">
+                        <span className="text-xs text-slate-500 font-medium">%{pct}</span>
+                        <Badge variant="outline" className="border-slate-200 bg-slate-50 text-slate-700 font-mono text-xs">
                           {e.count}
                         </Badge>
                       </div>
                     </div>
-                    <div className="h-1 overflow-hidden rounded-full bg-slate-800">
+                    <div className="h-2 overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-500"
-                        style={{ width: `${pct}%` }}
+                        className="h-full rounded-full bg-blue-600 transition-all"
+                        style={{ width: `${Math.max(pct, 2)}%` }}
                       />
                     </div>
                   </div>
@@ -183,38 +184,40 @@ export default async function AdminApiUsagePage() {
         </Card>
 
         {/* Platform breakdown */}
-        <Card className="border-slate-800 bg-slate-900/50">
-          <CardHeader>
-            <CardTitle className="text-slate-100">API by Platform (7d)</CardTitle>
-            <CardDescription className="text-slate-400">
-              Request distribution across iOS, Android, and Web.
+        <Card className="border-slate-200/80 bg-white shadow-xs">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base font-bold text-slate-900">Platform Dağılımı (7g)</CardTitle>
+            <CardDescription className="text-xs text-slate-500">
+              İsteklerin iOS, Android ve Web cihaz dağılımı.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {stats.apiByPlatform.length === 0 ? (
-              <p className="text-xs text-slate-500">No platform data yet.</p>
+              <p className="text-xs text-slate-400 italic py-4">Henüz platform verisi bulunmuyor.</p>
             ) : (
               stats.apiByPlatform.map((p) => {
                 const total = stats.apiByPlatform.reduce((s, x) => s + x.count, 0) || 1;
                 const pct = Math.round((p.count / total) * 100);
-                const gradientMap: Record<string, string> = {
-                  ios: 'from-blue-500 to-cyan-500',
-                  android: 'from-emerald-500 to-teal-500',
-                  web: 'from-purple-500 to-pink-500',
-                  unknown: 'from-slate-500 to-slate-400',
+                const platformColors: Record<string, string> = {
+                  ios: 'bg-blue-600',
+                  android: 'bg-emerald-600',
+                  web: 'bg-purple-600',
+                  unknown: 'bg-slate-500',
                 };
                 return (
                   <div key={p.platform}>
                     <div className="mb-1 flex items-center justify-between text-sm">
-                      <span className="capitalize text-slate-300">{p.platform}</span>
-                      <span className="text-slate-400">
-                        {p.count} · {pct}%
+                      <span className="capitalize font-semibold text-slate-800">
+                        {p.platform === 'ios' ? '🍎 iOS' : p.platform === 'android' ? '🤖 Android' : '🌐 Web'}
+                      </span>
+                      <span className="text-slate-500 text-xs font-mono">
+                        {p.count} çağrı · %{pct}
                       </span>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-slate-800">
+                    <div className="h-2 overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
                       <div
-                        className={`h-full rounded-full bg-gradient-to-r ${gradientMap[p.platform] ?? 'from-slate-500 to-slate-400'}`}
-                        style={{ width: `${pct}%` }}
+                        className={`h-full rounded-full transition-all ${platformColors[p.platform] ?? 'bg-slate-500'}`}
+                        style={{ width: `${Math.max(pct, 2)}%` }}
                       />
                     </div>
                   </div>
@@ -226,67 +229,69 @@ export default async function AdminApiUsagePage() {
       </div>
 
       {/* Recent requests */}
-      <Card className="border-slate-800 bg-slate-900/50">
-        <CardHeader>
-          <CardTitle className="text-slate-100">Recent Requests</CardTitle>
-          <CardDescription className="text-slate-400">
-            Latest 50 API calls, most recent first.
+      <Card className="border-slate-200/80 bg-white shadow-xs">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base font-bold text-slate-900">Son Gelen İstekler</CardTitle>
+          <CardDescription className="text-xs text-slate-500">
+            En güncel 50 API çağrısı, durum kodları ve yanıt süreleri.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow className="border-slate-800">
-                <TableHead className="text-slate-400">Endpoint</TableHead>
-                <TableHead className="text-slate-400">Method</TableHead>
-                <TableHead className="text-slate-400">Status</TableHead>
-                <TableHead className="text-slate-400">Platform</TableHead>
-                <TableHead className="text-slate-400">Duration</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {(recent ?? []).length === 0 && (
-                <TableRow className="border-slate-800">
-                  <TableCell colSpan={5} className="text-slate-500">
-                    No requests yet.
-                  </TableCell>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-slate-100 hover:bg-transparent">
+                  <TableHead className="text-slate-500 font-semibold">Uç Nokta (Endpoint)</TableHead>
+                  <TableHead className="text-slate-500 font-semibold">Metot</TableHead>
+                  <TableHead className="text-slate-500 font-semibold">Durum</TableHead>
+                  <TableHead className="text-slate-500 font-semibold">Platform</TableHead>
+                  <TableHead className="text-slate-500 font-semibold">Süre</TableHead>
                 </TableRow>
-              )}
-              {(recent ?? []).map((r) => (
-                <TableRow key={r.id} className="border-slate-800">
-                  <TableCell className="font-mono text-xs text-slate-300">
-                    {r.endpoint}
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant="outline"
-                      className="border-slate-700 font-mono text-xs text-slate-400"
-                    >
-                      {r.method}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant="outline"
-                      className={
-                        r.status_code < 400
-                          ? 'border-emerald-700/50 text-emerald-300'
-                          : r.status_code < 500
-                          ? 'border-amber-700/50 text-amber-300'
-                          : 'border-red-800/50 text-red-300'
-                      }
-                    >
-                      {r.status_code}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-slate-400">{r.platform ?? '—'}</TableCell>
-                  <TableCell className="text-xs text-slate-400">
-                    {r.duration_ms !== null ? `${r.duration_ms}ms` : '—'}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {(recent ?? []).length === 0 && (
+                  <TableRow className="border-slate-100 hover:bg-transparent">
+                    <TableCell colSpan={5} className="text-center text-xs text-slate-400 py-6 italic">
+                      Henüz API isteği kaydedilmedi.
+                    </TableCell>
+                  </TableRow>
+                )}
+                {(recent ?? []).map((r) => (
+                  <TableRow key={r.id} className="border-slate-100 hover:bg-slate-50/70">
+                    <TableCell className="font-mono text-xs font-semibold text-slate-800">
+                      {r.endpoint}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className="border-slate-200 bg-slate-50 font-mono text-[11px] text-slate-700"
+                      >
+                        {r.method}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={
+                          r.status_code < 400
+                            ? 'border-emerald-200 bg-emerald-50 text-emerald-700 font-semibold'
+                            : r.status_code < 500
+                            ? 'border-amber-200 bg-amber-50 text-amber-700 font-semibold'
+                            : 'border-rose-200 bg-rose-50 text-rose-700 font-semibold'
+                        }
+                      >
+                        {r.status_code}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-xs text-slate-600 font-medium">{r.platform ?? '—'}</TableCell>
+                    <TableCell className="text-xs font-mono text-slate-600">
+                      {r.duration_ms !== null ? `${r.duration_ms}ms` : '—'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -218,32 +218,32 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
       <div className="flex justify-end">
         <Button
           onClick={openCreate}
-          className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500"
+          className="bg-blue-600 text-white hover:bg-blue-700 font-semibold shadow-xs"
         >
           <Plus className="mr-2 h-4 w-4" />
-          Add screenshot
+          Ekran Görüntüsü Ekle
         </Button>
       </div>
 
       {items.length === 0 ? (
-        <Card className="border-slate-800 bg-slate-900/50">
+        <Card className="border-slate-200/80 bg-white shadow-xs">
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <p className="text-slate-400">No screenshots yet.</p>
+            <p className="text-xs text-slate-400 italic">Henüz ekran görüntüsü eklenmedi.</p>
             <Button
               onClick={openCreate}
               variant="outline"
-              className="mt-4 border-slate-700 text-slate-200"
+              className="mt-4 border-slate-200 text-slate-700 hover:bg-slate-50 font-medium"
             >
               <Plus className="mr-2 h-4 w-4" />
-              Add your first screenshot
+              İlk Ekran Görüntüsünü Yükle
             </Button>
           </CardContent>
         </Card>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((s) => (
-            <Card key={s.id} className="overflow-hidden border-slate-800 bg-slate-900/50">
-              <div className="relative aspect-[9/16] bg-slate-800">
+            <Card key={s.id} className="overflow-hidden border-slate-200/80 bg-white shadow-xs hover:border-slate-300 transition-all">
+              <div className="relative aspect-[9/16] bg-slate-100 border-b border-slate-100">
                 <Image
                   src={s.image_url}
                   alt={s.alt_text ?? s.title}
@@ -255,35 +255,37 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="truncate font-medium text-slate-100">{s.title}</p>
-                    <p className="truncate text-xs text-slate-400">
-                      {s.description ?? 'No description'}
+                    <p className="truncate font-semibold text-sm text-slate-900">{s.title}</p>
+                    <p className="truncate text-xs text-slate-500 mt-0.5">
+                      {s.description ?? 'Açıklama yok'}
                     </p>
                   </div>
                   {s.is_published ? (
-                    <Badge className="bg-emerald-500/20 text-emerald-300">Live</Badge>
+                    <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px] font-semibold">Yayında</Badge>
                   ) : (
-                    <Badge variant="outline" className="border-slate-700 text-slate-400">
-                      Hidden
+                    <Badge variant="outline" className="border-slate-200 bg-slate-50 text-slate-500 text-[10px]">
+                      Gizli
                     </Badge>
                   )}
                 </div>
-                <div className="mt-3 flex gap-2">
+                <div className="mt-3 flex gap-2 pt-2 border-t border-slate-100">
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => openEdit(s)}
-                    className="border-slate-700 text-slate-200"
+                    className="border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                   >
-                    <Pencil className="h-3 w-3" />
+                    <Pencil className="h-3 w-3 mr-1" />
+                    Düzenle
                   </Button>
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => handleDelete(s)}
-                    className="border-red-900/50 text-red-400 hover:bg-red-500/10"
+                    className="border-rose-200 text-rose-600 hover:bg-rose-50"
                   >
-                    <Trash2 className="h-3 w-3" />
+                    <Trash2 className="h-3 w-3 mr-1" />
+                    Sil
                   </Button>
                 </div>
               </CardContent>
@@ -293,9 +295,9 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
       )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto border-slate-800 bg-slate-900 text-slate-100">
+        <DialogContent className="max-h-[90vh] overflow-y-auto border-slate-200 bg-white text-slate-900 shadow-xl sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>{editing ? 'Edit screenshot' : 'Add screenshot'}</DialogTitle>
+            <DialogTitle className="text-base font-bold text-slate-900">{editing ? 'Ekran Görüntüsünü Düzenle' : 'Yeni Ekran Görüntüsü Ekle'}</DialogTitle>
           </DialogHeader>
 
           {error && (
@@ -304,13 +306,13 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
             </Alert>
           )}
 
-          <div className="space-y-4">
+          <div className="space-y-4 py-1">
             <div className="space-y-2">
-              <Label>Image {editing && '(leave empty to keep current)'}</Label>
+              <Label className="text-xs font-semibold text-slate-700">Görsel Dosyası {editing && '(değiştirmemek için boş bırakın)'}</Label>
               <div className="flex items-center gap-3">
-                <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-700 bg-slate-800/50 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800">
-                  <Upload className="h-4 w-4" />
-                  Choose file
+                <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 transition-colors">
+                  <Upload className="h-4 w-4 text-slate-500" />
+                  Dosya Seç
                   <input
                     type="file"
                     accept="image/*"
@@ -319,11 +321,11 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
                   />
                 </label>
                 {imageFile && (
-                  <span className="flex items-center gap-2 text-sm text-slate-300">
+                  <span className="flex items-center gap-2 text-xs text-slate-700 font-mono">
                     {imageFile.name}
                     <button
                       onClick={() => setImageFile(null)}
-                      className="text-slate-500 hover:text-slate-300"
+                      className="text-slate-400 hover:text-slate-600"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -331,50 +333,50 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
                 )}
               </div>
               {imageUrl && !imageFile && (
-                <p className="text-xs text-slate-500">Current image will be kept.</p>
+                <p className="text-xs text-slate-400">Mevcut görsel korunacaktır.</p>
               )}
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="title">Title</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="title" className="text-xs font-semibold text-slate-700">Başlık</Label>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="border-slate-700 bg-slate-800/50 text-slate-100"
-                placeholder="AI route planner"
+                className="border-slate-200 bg-white text-slate-900"
+                placeholder="Örn: AI Rota Oluşturucu"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="desc">Description</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="desc" className="text-xs font-semibold text-slate-700">Açıklama</Label>
               <Textarea
                 id="desc"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="border-slate-700 bg-slate-800/50 text-slate-100"
-                placeholder="Short caption shown under the screenshot"
+                className="border-slate-200 bg-white text-slate-900"
+                placeholder="Ekran görüntüsünün altında yer alacak kısa açıklama"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="alt">Alt text (accessibility)</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="alt" className="text-xs font-semibold text-slate-700">Alt Metin (Erişilebilirlik)</Label>
               <Input
                 id="alt"
                 value={altText}
                 onChange={(e) => setAltText(e.target.value)}
-                className="border-slate-700 bg-slate-800/50 text-slate-100"
-                placeholder="Screenshot of the AI route planner screen"
+                className="border-slate-200 bg-white text-slate-900"
+                placeholder="AI rota planlama ekranı görüntüsü"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Icon</Label>
+              <div className="space-y-1.5">
+                <Label className="text-xs font-semibold text-slate-700">İkon</Label>
                 <select
                   value={icon}
                   onChange={(e) => setIcon(e.target.value)}
-                  className="w-full rounded-md border border-slate-700 bg-slate-800/50 px-3 py-2 text-sm text-slate-100"
+                  className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900"
                 >
                   {ICON_OPTIONS.map((o) => (
                     <option key={o} value={o}>
@@ -383,12 +385,12 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
                   ))}
                 </select>
               </div>
-              <div className="space-y-2">
-                <Label>Color theme</Label>
+              <div className="space-y-1.5">
+                <Label className="text-xs font-semibold text-slate-700">Renk Teması</Label>
                 <select
                   value={colorTheme}
                   onChange={(e) => setColorTheme(e.target.value)}
-                  className="w-full rounded-md border border-slate-700 bg-slate-800/50 px-3 py-2 text-sm text-slate-100"
+                  className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900"
                 >
                   {COLOR_OPTIONS.map((o) => (
                     <option key={o} value={o}>
@@ -400,45 +402,45 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="sort">Sort order</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="sort" className="text-xs font-semibold text-slate-700">Sıralama</Label>
                 <Input
                   id="sort"
                   type="number"
                   value={sortOrder}
                   onChange={(e) => setSortOrder(Number(e.target.value))}
-                  className="border-slate-700 bg-slate-800/50 text-slate-100"
+                  className="border-slate-200 bg-white text-slate-900"
                 />
               </div>
-              <div className="flex items-end">
-                <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-200">
+              <div className="flex items-end pb-2">
+                <label className="flex cursor-pointer items-center gap-2 text-xs font-semibold text-slate-700">
                   <input
                     type="checkbox"
                     checked={isPublished}
                     onChange={(e) => setIsPublished(e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-700 bg-slate-800"
+                    className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                   />
-                  Published
+                  Web Sitesinde Yayında
                 </label>
               </div>
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="gap-2">
             <Button
               variant="outline"
               onClick={() => setDialogOpen(false)}
-              className="border-slate-700 text-slate-200"
+              className="border-slate-200 text-slate-700 hover:bg-slate-50"
             >
-              Cancel
+              Vazgeç
             </Button>
             <Button
               onClick={handleSave}
               disabled={uploading}
-              className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500"
+              className="bg-blue-600 text-white hover:bg-blue-700 font-semibold"
             >
               {uploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {uploading ? 'Uploading…' : editing ? 'Save changes' : 'Create'}
+              {uploading ? 'Yükleniyor…' : editing ? 'Değişiklikleri Kaydet' : 'Oluştur'}
             </Button>
           </DialogFooter>
         </DialogContent>

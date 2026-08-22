@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'Journeo - AI Destekli Seyahat Rehberi',
   description: 'Yapay zeka destekli kişisel seyahat asistanınız',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://journeo.ai'),
+  icons: {
+    icon: '/icon.png',
+  },
 };
 
 export default function RootLayout({
