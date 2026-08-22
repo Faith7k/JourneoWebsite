@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Loader2, Plus, Pencil, Trash2, Upload, X } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
@@ -54,6 +54,21 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
   const [sortOrder, setSortOrder] = useState(0);
   const [isPublished, setIsPublished] = useState(true);
 
+  // Drag and drop states
+  const [isDragging, setIsDragging] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  // Clean up object URL to prevent memory leaks
+  useEffect(() => {
+    if (!imageFile) {
+      setImagePreview(null);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(imageFile);
+    setImagePreview(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [imageFile]);
+
   const openCreate = () => {
     setEditing(null);
     setTitle('');
@@ -86,35 +101,59 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
     setDialogOpen(true);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const processFile = (file: File) => {
     if (!file.type.startsWith('image/')) {
-      setError('Please choose an image file.');
+      setError('Lütfen geçerli bir resim dosyası seçin.');
       return;
     }
     if (file.size > 4 * 1024 * 1024) {
-      setError('Image must be under 4MB.');
+      setError('Resim boyutu en fazla 4MB olabilir.');
       return;
     }
     setImageFile(file);
     setError(null);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) processFile(file);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) processFile(file);
+  };
+
   const uploadFile = async (): Promise<{ url: string; path: string } | null> => {
     if (!imageFile) return null;
     setUploading(true);
     try {
-      const ext = imageFile.name.split('.').pop() ?? 'png';
-      const path = `screenshots/${Date.now()}-${Math.random()
-        .toString(36)
-        .slice(2)}.${ext}`;
-      const { error: upErr } = await supabase.storage
-        .from('screenshots')
-        .upload(path, imageFile, { cacheControl: '3600', upsert: false });
-      if (upErr) throw upErr;
-      const { data } = supabase.storage.from('screenshots').getPublicUrl(path);
-      return { url: data.publicUrl, path };
+      const formData = new FormData();
+      formData.append('file', imageFile);
+
+      const res = await fetch('/api/screenshots/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const json = await res.json();
+      if (!res.ok || json.error) {
+        throw new Error(json.error || 'Görsel yüklenemedi.');
+      }
+
+      return { url: json.url, path: json.path };
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Upload failed');
       return null;
@@ -309,32 +348,67 @@ export function ScreenshotsManager({ initialScreenshots }: Props) {
           <div className="space-y-4 py-1">
             <div className="space-y-2">
               <Label className="text-xs font-semibold text-slate-700">Görsel Dosyası {editing && '(değiştirmemek için boş bırakın)'}</Label>
-              <div className="flex items-center gap-3">
-                <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 transition-colors">
-                  <Upload className="h-4 w-4 text-slate-500" />
-                  Dosya Seç
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                </label>
-                {imageFile && (
-                  <span className="flex items-center gap-2 text-xs text-slate-700 font-mono">
-                    {imageFile.name}
-                    <button
-                      onClick={() => setImageFile(null)}
-                      className="text-slate-400 hover:text-slate-600"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </span>
+              
+              <div
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                className={`relative flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-6 transition-all duration-200 ${
+                  isDragging
+                    ? 'border-blue-500 bg-blue-50/50 scale-[0.99] shadow-inner'
+                    : 'border-slate-200 hover:border-slate-300 bg-slate-50/50 hover:bg-slate-50'
+                }`}
+              >
+                <input
+                  type="file"
+                  id="screenshot-image-upload"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                />
+                
+                {imagePreview || (imageUrl && !imageFile) ? (
+                  <div className="relative flex flex-col items-center gap-3 w-full">
+                    <div className="relative w-24 aspect-[9/16] rounded-lg overflow-hidden border border-slate-200 shadow-md">
+                      <Image
+                        src={imagePreview || imageUrl}
+                        alt="Önizleme"
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
+                    </div>
+                    <div className="flex items-center gap-2 text-xs font-medium text-slate-600 bg-white border border-slate-100 px-3 py-1.5 rounded-full shadow-xs z-20">
+                      <span className="truncate max-w-[150px] font-mono">
+                        {imageFile ? imageFile.name : 'Mevcut Görsel'}
+                      </span>
+                      {imageFile && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setImageFile(null);
+                          }}
+                          className="text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 p-0.5"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center text-center gap-2 pointer-events-none">
+                    <div className="p-3 bg-white rounded-full shadow-xs border border-slate-100">
+                      <Upload className="h-5 w-5 text-slate-400" />
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs font-semibold text-slate-800">Resmi buraya sürükleyin</p>
+                      <p className="text-[10px] text-slate-400">veya tıklayarak dosya seçin (Maks. 4MB)</p>
+                    </div>
+                  </div>
                 )}
               </div>
-              {imageUrl && !imageFile && (
-                <p className="text-xs text-slate-400">Mevcut görsel korunacaktır.</p>
-              )}
             </div>
 
             <div className="space-y-1.5">

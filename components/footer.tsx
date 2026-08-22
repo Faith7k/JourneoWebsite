@@ -33,7 +33,7 @@ export function Footer({
       name: t('product'),
       items: [
         { label: t('features'), href: '/features' },
-        { label: t('pricing'), href: '/pricing' },
+        // { label: t('pricing'), href: '/pricing' },
         { label: t('screenshots'), href: '/screenshots' },
       ]
     },

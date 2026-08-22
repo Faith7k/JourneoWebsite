@@ -1,5 +1,6 @@
 'use client';
 
+import { notFound } from 'next/navigation';
 import { PricingTable } from '@/components/pricing-table';
 import {
   Accordion,
@@ -23,6 +24,7 @@ interface FloatingDollar {
 }
 
 export default function PricingPage() {
+  notFound();
   const [dollars, setDollars] = useState<FloatingDollar[]>([]);
 
   useEffect(() => {
