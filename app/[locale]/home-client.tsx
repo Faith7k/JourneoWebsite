@@ -2,7 +2,7 @@
 
 import { Hero } from '@/components/hero';
 import { FeatureCard } from '@/components/feature-card';
-import { ScrollStory, type StoryScreen } from '@/components/scroll-story';
+import { CanvasScrollStory, type StoryScreen } from '@/components/canvas-scroll-story';
 import { StoreButtons } from '@/components/store-buttons';
 import {
   MapPin,
@@ -78,7 +78,7 @@ export function HomePageClient({
       <Hero appStoreUrl={appStoreUrl} playStoreUrl={playStoreUrl} />
 
       {/* GSAP + ScrollTrigger anlatısı: kaydırdıkça uygulama adım adım ilerler */}
-      <ScrollStory screens={storyScreens} />
+      <CanvasScrollStory screens={storyScreens} />
 
         {/* Features Section */}
         <section className="section-padding relative overflow-hidden bg-[#FAF7F2]">

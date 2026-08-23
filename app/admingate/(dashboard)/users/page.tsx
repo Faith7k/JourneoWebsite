@@ -370,6 +370,7 @@ async function RawUsersTableData() {
       countries,
       createdAt: u.created_at,
       lastActiveAt: u.last_sign_in_at || u.created_at,
+      role: p?.role || 'user',
     };
   });
 
