@@ -25,7 +25,7 @@ import { requireAdmin } from '@/lib/supabase/admin';
 import { getAdminStats } from '@/lib/supabase/stats';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { AdminApiChart } from '@/components/admin/api-chart';
+import { AdminDownloadsChart } from '@/components/admin/downloads-chart';
 import { AdminStatCard } from '@/components/admin/stat-card';
 export default async function AdminOverviewPage() {
 
@@ -171,7 +171,7 @@ export default async function AdminOverviewPage() {
 
       {/* ── Main Dashboard Bento Grid ───────────────────────────── */}
       <div className="grid gap-6 lg:grid-cols-5">
-        {/* API Chart - 3/5 width */}
+        {/* Mobile Downloads Chart - 3/5 width */}
         <Card className="border border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs rounded-2xl lg:col-span-3 flex flex-col justify-between overflow-hidden">
           <CardHeader className="pb-4 border-b border-slate-100/80">
             <div className="flex items-center justify-between">
@@ -181,27 +181,30 @@ export default async function AdminOverviewPage() {
                 </div>
                 <div>
                   <CardTitle className="text-base font-bold text-slate-900">
-                    API Trafik & Sistem Analizi
+                    Mobil İndirme & Büyüme Analizi
                   </CardTitle>
                   <CardDescription className="text-slate-500 text-xs mt-0.5">
-                    Son 14 günlük sistem istek hacmi ve dağılımı
+                    Ay bazında App Store & Google Play Store indirme oranları
                   </CardDescription>
                 </div>
               </div>
-              {hasApi && (
-                <div className="text-right bg-slate-50 px-3.5 py-1.5 rounded-xl border border-slate-200/60">
-                  <p className="text-sm font-extrabold text-slate-900 tabular-nums">
-                    {stats.apiCalls7d.toLocaleString('tr-TR')}
-                  </p>
-                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
-                    Son 7 Gün Toplam
-                  </p>
-                </div>
-              )}
+              <div className="text-right bg-slate-50 px-3.5 py-1.5 rounded-xl border border-slate-200/60">
+                <p className="text-sm font-extrabold text-slate-900 tabular-nums">
+                  {stats.totalDownloadsCount.toLocaleString('tr-TR')}
+                </p>
+                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                  Toplam İndirme
+                </p>
+              </div>
             </div>
           </CardHeader>
-          <CardContent className="pt-6">
-            <AdminApiChart data={stats.apiCallsByDay} />
+          <CardContent className="pt-5">
+            <AdminDownloadsChart
+              data={stats.monthlyDownloads}
+              totalDownloads={stats.totalDownloadsCount}
+              appStoreDownloads={stats.appStoreDownloadsCount}
+              playStoreDownloads={stats.playStoreDownloadsCount}
+            />
           </CardContent>
         </Card>
 
