@@ -19,12 +19,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 async function loadMarkdown(locale: string): Promise<string | null> {
-  // EN is the legal SSOT (docs/legal → content/legal). TR falls back to EN
-  // until a dedicated translation ships — never serve the outdated i18n stub.
-  const candidates =
-    locale === 'tr'
-      ? ['privacy.tr.md', 'privacy.en.md']
-      : ['privacy.en.md'];
+  const candidates = [
+    `privacy.${locale}.md`,
+    'privacy.en.md',
+    'privacy.tr.md',
+  ];
   for (const name of candidates) {
     try {
       const file = path.join(process.cwd(), 'content', 'legal', name);
@@ -57,7 +56,6 @@ export default async function PrivacyPage({
     if (settings) {
       dbContent =
         (settings[`privacy_policy_text_${locale}` as keyof typeof settings] as string | undefined)?.trim() ||
-        settings.privacy_policy_text_en?.trim() ||
         null;
     }
   } catch (err) {
@@ -77,12 +75,6 @@ export default async function PrivacyPage({
   if (md) {
     return (
       <LegalLayout title={t('title')} lastUpdated={t('lastUpdated')}>
-        {locale === 'tr' && !md.includes('Gizlilik Politikası') ? (
-          <p className="text-sm text-slate-400 mb-4">
-            Bu sayfanın yasal metni şu an İngilizce sunulmaktadır. Türkçe çeviri
-            yakında eklenecektir.
-          </p>
-        ) : null}
         <LegalMarkdown source={md} />
       </LegalLayout>
     );
