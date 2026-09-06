@@ -3,6 +3,9 @@ import { requireAdmin } from '@/lib/supabase/admin';
 import { AdminSidebar } from '@/components/admin/sidebar';
 import { AdminTopbar } from '@/components/admin/topbar';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function AdminLayout({
   children,
 }: {

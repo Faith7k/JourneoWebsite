@@ -8,6 +8,10 @@ import { UserGrowthChart } from '@/components/admin/user-growth-chart';
 import { AdminTopCreatorsCard } from '@/components/admin/top-creators-card';
 import { Admin3DGlobeCard } from '@/components/admin/globe-3d';
 import { Users, UserCheck, Smartphone, Crown, Globe, Layers } from 'lucide-react';
+import type { UserItem } from '@/components/admin/users-table';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function AdminUsersPage() {
   const user = await requireAdmin();
@@ -270,7 +274,7 @@ async function RawUsersTableData() {
 
   const [authUsersRes, profilesRes, subsRes, passesRes, tokensRes, tripsRes, aiLogsRes] =
     await Promise.all([
-      supabase.auth.admin.listUsers({ page: 1, perPage: 100 }),
+      supabase.auth.admin.listUsers({ page: 1, perPage: 1000 }),
       supabase.from('profiles').select('*'),
       supabase.from('user_subscriptions').select('*'),
       supabase.from('trip_pass_credits').select('*'),
@@ -288,16 +292,30 @@ async function RawUsersTableData() {
   const aiLogs = aiLogsRes.data ?? [];
 
   const profileMap = new Map(profiles.map((p: any) => [p.id, p]));
+  const authUserMap = new Map(authUsers.map((u: any) => [u.id, u]));
+
+  // Active annual subscriptions (not expired)
+  const nowTime = Date.now();
   const subMap = new Map(
     subs
-      .filter((s: any) => s.status === 'active' || s.status === 'trial')
+      .filter((s: any) => {
+        if (s.status !== 'active' && s.status !== 'trial') return false;
+        if (s.current_period_end && new Date(s.current_period_end).getTime() <= nowTime) return false;
+        return true;
+      })
       .map((s: any) => [s.user_id, s])
   );
 
-  const passMap = new Map<string, any[]>();
+  // Unconsumed vs Consumed Trip Passes
+  const unconsumedPassMap = new Map<string, number>();
+  const consumedPassMap = new Map<string, number>();
+
   passes.forEach((pass: any) => {
-    if (!passMap.has(pass.user_id)) passMap.set(pass.user_id, []);
-    passMap.get(pass.user_id)!.push(pass);
+    if (pass.is_active && !pass.consumed_trip_id && !pass.consumed_at) {
+      unconsumedPassMap.set(pass.user_id, (unconsumedPassMap.get(pass.user_id) ?? 0) + 1);
+    } else if (pass.is_active && (pass.consumed_trip_id || pass.consumed_at)) {
+      consumedPassMap.set(pass.user_id, (consumedPassMap.get(pass.user_id) ?? 0) + 1);
+    }
   });
 
   const tokenMap = new Map<string, any[]>();
@@ -317,62 +335,100 @@ async function RawUsersTableData() {
     if (a.user_id) aiMap.set(a.user_id, (aiMap.get(a.user_id) ?? 0) + 1);
   });
 
-  const usersList = authUsers.map((u) => {
-    const p = profileMap.get(u.id);
-    const s = subMap.get(u.id);
-    const userPasses = passMap.get(u.id) ?? [];
-    const userTokens = tokenMap.get(u.id) ?? [];
-    const userTrips = tripMap.get(u.id) ?? [];
-    const aiCount = aiMap.get(u.id) ?? 0;
+  // Collect all unique user IDs from auth.users and profiles
+  const allUserIds = Array.from(
+    new Set([...authUsers.map((u) => u.id), ...profiles.map((p) => p.id)])
+  );
+
+  const usersList: UserItem[] = allUserIds.map((userId) => {
+    const u = authUserMap.get(userId);
+    const p = profileMap.get(userId);
+    const s = subMap.get(userId);
+    const userTokens = tokenMap.get(userId) ?? [];
+    const userTrips = tripMap.get(userId) ?? [];
+    const aiCount = aiMap.get(userId) ?? 0;
+    const unconsumedPasses = unconsumedPassMap.get(userId) ?? 0;
+    const consumedPasses = consumedPassMap.get(userId) ?? 0;
 
     const platforms = Array.from(new Set(userTokens.map((t: any) => t.platform).filter(Boolean)));
     const countries = Array.from(
       new Set(userTrips.map((t: any) => t.destination_country).filter(Boolean))
     );
 
-    const isAnnual = !!s;
-    const hasTripPass = userPasses.length > 0;
-    const isPremium = isAnnual || hasTripPass;
+    const hasAnnual = !!s;
+    const hasUnlimited = hasAnnual;
+    const isPremium = hasAnnual || unconsumedPasses > 0;
 
-    let planBadge = { label: 'Free', style: 'border-slate-200 bg-slate-50 text-slate-700 font-semibold' };
-    if (isAnnual) {
+    let planType: 'annual' | 'trip_pass' | 'free' = 'free';
+    let planBadge = { label: 'Free (Kâşif)', style: 'border-slate-200 bg-slate-50 text-slate-700 font-medium' };
+    let tripRightsSummary =
+      userTrips.length >= 3 ? 'Kota Doldu (0 Hak)' : `Standart (1 AI / 3 Gezi)`;
+
+    if (hasAnnual) {
+      planType = 'annual';
       const pId = s?.product_id || 'yearly';
       if (pId.includes('annual') || pId.includes('yearly')) {
-        planBadge = { label: '👑 Yıllık Plan ($49.99)', style: 'bg-amber-50 text-amber-700 border-amber-200 font-semibold' };
+        planBadge = {
+          label: '👑 Sınırsız Premium (Yıllık)',
+          style: 'bg-amber-100 text-amber-900 border-amber-300 font-bold',
+        };
       } else {
-        planBadge = { label: `👑 ${pId}`, style: 'bg-amber-50 text-amber-700 border-amber-200 font-semibold' };
+        planBadge = {
+          label: `👑 ${pId}`,
+          style: 'bg-amber-100 text-amber-900 border-amber-300 font-bold',
+        };
       }
-    } else if (hasTripPass) {
-      planBadge = { label: `🎫 Trip Pass (${userPasses.length} adet)`, style: 'bg-cyan-50 text-cyan-700 border-cyan-200 font-semibold' };
+      tripRightsSummary = '♾️ Sınırsız AI Gezisi';
+    } else if (unconsumedPasses > 0) {
+      planType = 'trip_pass';
+      planBadge = {
+        label: `🎫 ${unconsumedPasses} Gezi Hakkı`,
+        style: 'bg-cyan-100 text-cyan-900 border-cyan-300 font-bold',
+      };
+      tripRightsSummary = `${unconsumedPasses} Gezi Kredisi`;
     }
 
     const name =
       p?.full_name ||
-      (u.user_metadata?.full_name as string) ||
-      (u.user_metadata?.name as string) ||
-      'Journeo Traveler';
+      (u?.user_metadata?.full_name as string) ||
+      (u?.user_metadata?.name as string) ||
+      (u?.email ? u.email.split('@')[0] : 'Journeo Traveler');
 
     const username =
       p?.username ||
-      (u.user_metadata?.username as string) ||
-      `@user_${u.id.slice(0, 6)}`;
+      (u?.user_metadata?.username as string) ||
+      (u?.email ? `@${u.email.split('@')[0]}` : `@user_${userId.slice(0, 6)}`);
+
+    const email = u?.email || p?.email || '—';
+    const createdAt = u?.created_at || p?.created_at || new Date().toISOString();
+    const lastActiveAt = u?.last_sign_in_at || u?.created_at || createdAt;
 
     return {
-      id: u.id,
-      email: u.email || p?.email || '—',
+      id: userId,
+      email,
       name,
       username,
       platforms: platforms.length > 0 ? platforms : ['ios'],
-      subscription: (isPremium ? 'premium' : 'free') as 'premium' | 'free',
+      subscription: (hasAnnual ? 'premium' : unconsumedPasses > 0 ? 'trip_pass' : 'free') as 'premium' | 'trip_pass' | 'free',
+      planType,
+      hasUnlimited,
+      unconsumedPasses,
+      consumedPasses,
       planBadge,
+      tripRightsSummary,
       tripCount: userTrips.length,
       aiCount,
       countries,
-      createdAt: u.created_at,
-      lastActiveAt: u.last_sign_in_at || u.created_at,
-      role: p?.role || 'user',
+      createdAt,
+      lastActiveAt,
+      role: (p?.role as 'admin' | 'user') || (email === 'admin@journeo.ai' ? 'admin' : 'user'),
+      currentPeriodEnd: s?.current_period_end || null,
+      subscriptionProductId: s?.product_id || null,
     };
   });
+
+  // Sort by createdAt descending (newest registrations first!)
+  usersList.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   return <AdminUsersTable users={usersList} />;
 }
