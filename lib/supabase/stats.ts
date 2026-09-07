@@ -36,6 +36,14 @@ export type MonthlyDownloadStat = {
   cumulativeTotal: number;
 };
 
+export type UserGrowthPoint = {
+  date: string;
+  count: number;
+  cumulative?: number;
+  ios?: number;
+  android?: number;
+};
+
 export type AdminStats = {
   totalAppUsers: number;
   activeAppUsers30d: number;
@@ -59,7 +67,7 @@ export type AdminStats = {
   platformBreakdown: { platform: string; count: number }[];
   apiCallsByDay: { date: string; count: number }[];
   apiCallsByEndpoint: { endpoint: string; count: number }[];
-  userGrowthByDay: { date: string; count: number }[];
+  userGrowthByDay: UserGrowthPoint[];
   monthlyDownloads: MonthlyDownloadStat[];
   totalDownloadsCount: number;
   appStoreDownloadsCount: number;
@@ -136,6 +144,8 @@ const countryDict: Record<string, { code: string; flag: string; lat: number; lng
   İsviçre: { code: 'CH', flag: '🇨🇭', lat: 46.8182, lng: 8.2275 },
   Austria: { code: 'AT', flag: '🇦🇹', lat: 47.5162, lng: 14.5501 },
   Avusturya: { code: 'AT', flag: '🇦🇹', lat: 47.5162, lng: 14.5501 },
+  Egypt: { code: 'EG', flag: '🇪🇬', lat: 26.8206, lng: 30.8025 },
+  Mısır: { code: 'EG', flag: '🇪🇬', lat: 27.9158, lng: 34.3299 },
 };
 
 function normalizeCountryName(raw: string): string {
@@ -150,6 +160,8 @@ function normalizeCountryName(raw: string): string {
   if (['Japan', 'Japonya', 'JP'].includes(trimmed)) return 'Japan';
   if (['Portugal', 'Portekiz', 'PT'].includes(trimmed)) return 'Portugal';
   if (['Netherlands', 'Hollanda', 'NL'].includes(trimmed)) return 'Netherlands';
+  if (['Mısır', 'Egypt', 'EG'].includes(trimmed)) return 'Mısır';
+  if (['Avusturya', 'Austria', 'AT'].includes(trimmed)) return 'Avusturya';
   return trimmed;
 }
 
@@ -268,19 +280,26 @@ export async function getAdminStats(): Promise<AdminStats> {
 
   let active30dCount = 0;
   let active7dCount = 0;
+
+  // Track platform distribution per unique registered user
   let iosCount = 0;
   let androidCount = 0;
 
-  // Track platform distribution from tokens
-  fcmTokens.forEach((t: any) => {
-    if (t.platform === 'ios') iosCount += 1;
-    else if (t.platform === 'android') androidCount += 1;
-  });
+  authUsers.forEach((u) => {
+    const userTokens = (tokenMap.get(u.id) ?? []).filter((t: any) => t.is_active !== false);
+    const hasAndroidToken = userTokens.some((t: any) => t.platform === 'android');
+    const hasIosToken = userTokens.some((t: any) => t.platform === 'ios');
+    const sub = subMap.get(u.id);
 
-  // Fallback platform counting if token count is less than users
-  if (iosCount === 0 && androidCount === 0 && totalAppUsers > 0) {
-    iosCount = totalAppUsers;
-  }
+    if (hasAndroidToken || sub?.store === 'play_store') {
+      androidCount += 1;
+    } else if (hasIosToken || sub?.store === 'app_store' || u.app_metadata?.provider === 'apple' || u.email?.endsWith('@privaterelay.appleid.com')) {
+      iosCount += 1;
+    } else {
+      // Default to iOS for mobile app users because app is only live on Apple App Store
+      iosCount += 1;
+    }
+  });
 
   authUsers.forEach((u) => {
     const lastSeenTime = u.last_sign_in_at ? new Date(u.last_sign_in_at).getTime() : new Date(u.created_at).getTime();
@@ -338,17 +357,50 @@ export async function getAdminStats(): Promise<AdminStats> {
     .slice(0, 8);
 
   // User growth (30d) based on authentic signup dates
-  const growthByDay: Record<string, number> = {};
-  for (let i = 0; i < 30; i++) {
-    const d = new Date(Date.now() - (29 - i) * 86400_000);
+  const daysRange = 30;
+  const startOfRangeTime = Date.now() - (daysRange - 1) * 86400_000;
+  let runningCumulative = authUsers.filter(
+    (u) => new Date(u.created_at).getTime() < startOfRangeTime
+  ).length;
+
+  const growthByDayMap: Record<
+    string,
+    { count: number; ios: number; android: number; cumulative: number }
+  > = {};
+  for (let i = 0; i < daysRange; i++) {
+    const d = new Date(Date.now() - (daysRange - 1 - i) * 86400_000);
     d.setHours(0, 0, 0, 0);
-    growthByDay[d.toISOString().slice(0, 10)] = 0;
+    growthByDayMap[d.toISOString().slice(0, 10)] = { count: 0, ios: 0, android: 0, cumulative: 0 };
   }
+
   authUsers.forEach((u) => {
     const key = u.created_at.slice(0, 10);
-    if (key in growthByDay) growthByDay[key] += 1;
+    if (key in growthByDayMap) {
+      growthByDayMap[key].count += 1;
+      const userTokens = (tokenMap.get(u.id) ?? []).filter((t: any) => t.is_active !== false);
+      const isAndroid =
+        userTokens.some((t: any) => t.platform === 'android') ||
+        subMap.get(u.id)?.store === 'play_store';
+      if (isAndroid) {
+        growthByDayMap[key].android += 1;
+      } else {
+        growthByDayMap[key].ios += 1;
+      }
+    }
   });
-  const userGrowthByDay = Object.entries(growthByDay).map(([date, count]) => ({ date, count }));
+
+  const sortedDays = Object.keys(growthByDayMap).sort();
+  const userGrowthByDay: UserGrowthPoint[] = sortedDays.map((date) => {
+    const dayData = growthByDayMap[date];
+    runningCumulative += dayData.count;
+    return {
+      date,
+      count: dayData.count,
+      ios: dayData.ios,
+      android: dayData.android,
+      cumulative: runningCumulative,
+    };
+  });
 
   // API error rate & duration (7d)
   const logs = apiLogs7dRes.data ?? [];
@@ -411,35 +463,42 @@ export async function getAdminStats(): Promise<AdminStats> {
   const estimatedMonthlyRevenue = Number((annualSubscribers * (annualPrice / 12) + tripPassCreditsCount * tripPassPrice + affiliateCommissionTotal).toFixed(2));
   const estimatedNetProfit = Number((estimatedMonthlyRevenue - estimatedTotalApiCost).toFixed(2));
 
-  // Top Trip Creators Leaderboard
-  const userTripCounts: Record<string, number> = {};
+  // Top Trip Creators & Active AI Users Leaderboard
+  const userActivityMap = new Map<string, { tripCount: number; aiCount: number }>();
   trips.forEach((t: any) => {
     if (t.owner_id) {
-      userTripCounts[t.owner_id] = (userTripCounts[t.owner_id] ?? 0) + 1;
+      const prev = userActivityMap.get(t.owner_id) ?? { tripCount: 0, aiCount: 0 };
+      userActivityMap.set(t.owner_id, { ...prev, tripCount: prev.tripCount + 1 });
     }
   });
 
-  const sortedOwnerIds = Object.entries(userTripCounts)
-    .sort((a, b) => b[1] - a[1])
+  (aiRowsRes.data ?? []).forEach((row: any) => {
+    if (row.user_id) {
+      const prev = userActivityMap.get(row.user_id) ?? { tripCount: 0, aiCount: 0 };
+      userActivityMap.set(row.user_id, { ...prev, aiCount: prev.aiCount + 1 });
+    }
+  });
+
+  const sortedActiveUsers = Array.from(userActivityMap.entries())
+    .sort((a, b) => b[1].tripCount * 10 + b[1].aiCount - (a[1].tripCount * 10 + a[1].aiCount))
     .slice(0, 10);
 
   const topTripCreators: TopTripCreator[] = [];
-  sortedOwnerIds.forEach(([userId, tripCount]) => {
+  sortedActiveUsers.forEach(([userId, act]) => {
     const profile = profileMap.get(userId);
     const authUser = authUsers.find((u) => u.id === userId);
-    const aiCount = aiLogMap.get(userId) ?? 0;
     const isPremium = subMap.has(userId);
 
     const name =
       profile?.full_name ||
       authUser?.user_metadata?.full_name ||
       authUser?.user_metadata?.name ||
-      'Journeo Traveler';
+      (authUser?.email ? authUser.email.split('@')[0] : 'Journeo Traveler');
 
     const username =
       profile?.username ||
       authUser?.user_metadata?.username ||
-      `@user_${userId.slice(0, 6)}`;
+      (authUser?.email ? `@${authUser.email.split('@')[0]}` : `@user_${userId.slice(0, 6)}`);
 
     const email = authUser?.email || profile?.email || '—';
 
@@ -448,10 +507,10 @@ export async function getAdminStats(): Promise<AdminStats> {
       name,
       username,
       email,
-      tripCount,
-      aiGenerationsCount: aiCount,
+      tripCount: act.tripCount,
+      aiGenerationsCount: act.aiCount,
       subscription: isPremium ? 'premium' : 'free',
-      estimatedCost: Number((tripCount * (costPerTrip || 0.05)).toFixed(2)),
+      estimatedCost: Number((act.tripCount * (costPerTrip || 0.05) + act.aiCount * 0.005).toFixed(2)),
     });
   });
 
@@ -499,25 +558,6 @@ export async function getAdminStats(): Promise<AdminStats> {
     }
   });
 
-  // Also include user locations from profiles if not present
-  profiles.forEach((p: any) => {
-    const loc = p.preferred_locale;
-    const cName = loc === 'tr' ? 'Türkiye' : loc === 'en' ? 'United States' : loc === 'de' ? 'Germany' : loc === 'fr' ? 'France' : 'Türkiye';
-    if (!countryStatsMap.has(cName)) {
-      const meta = countryDict[cName] ?? { code: 'TR', flag: '🇹🇷', lat: 38.9637, lng: 35.2433 };
-      countryStatsMap.set(cName, {
-        country: cName,
-        countryCode: meta.code,
-        flag: meta.flag,
-        lat: meta.lat,
-        lng: meta.lng,
-        totalSubscribers: 1,
-        premiumSubscribers: subMap.has(p.id) ? 1 : 0,
-        subscribersThisMonth: 1,
-        subscribersLast3Months: 1,
-      });
-    }
-  });
 
   const countrySubscriberStats = Array.from(countryStatsMap.values()).sort(
     (a, b) => b.totalSubscribers - a.totalSubscribers
@@ -561,33 +601,61 @@ export async function getAdminStats(): Promise<AdminStats> {
   const supportedLocalesCount = 8; // 8 supported languages
   const weatherCacheHitCount = weatherCacheRes.count ?? 0;
 
-  // Monthly Downloads (App Store & Google Play Store)
-  const monthlyDownloadsRaw = [
-    { month: 'Ocak', shortMonth: 'Oca', year: 2026, ios: 145, android: 85 },
-    { month: 'Şubat', shortMonth: 'Şub', year: 2026, ios: 230, android: 140 },
-    { month: 'Mart', shortMonth: 'Mar', year: 2026, ios: 390, android: 220 },
-    { month: 'Nisan', shortMonth: 'Nis', year: 2026, ios: 510, android: 310 },
-    { month: 'Mayıs', shortMonth: 'May', year: 2026, ios: 680, android: 430 },
-    { month: 'Haziran', shortMonth: 'Haz', year: 2026, ios: 890, android: 560 },
-    { month: 'Temmuz', shortMonth: 'Tem', year: 2026, ios: 1150, android: 720 },
-    { month: 'Ağustos', shortMonth: 'Ağu', year: 2026, ios: 1420 + iosCount, android: 890 + androidCount },
+  // Dynamic Monthly User Registrations from authentic auth.users data
+  const monthNamesTr = [
+    'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+    'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık',
+  ];
+  const shortMonthNamesTr = [
+    'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz',
+    'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara',
   ];
 
+  // Build rolling monthly timeline slots for the last 6 months up to now
+  const now = new Date();
+  const monthlyMap: Record<string, { year: number; monthIdx: number; ios: number; android: number }> = {};
+
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2, '0')}`;
+    monthlyMap[key] = { year: d.getFullYear(), monthIdx: d.getMonth(), ios: 0, android: 0 };
+  }
+
+  // Count real users by registration month and platform
+  authUsers.forEach((u) => {
+    const d = new Date(u.created_at);
+    const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2, '0')}`;
+    if (!monthlyMap[key]) {
+      monthlyMap[key] = { year: d.getFullYear(), monthIdx: d.getMonth(), ios: 0, android: 0 };
+    }
+
+    const userTokens = (tokenMap.get(u.id) ?? []).filter((t: any) => t.is_active !== false);
+    const isAndroid = userTokens.some((t: any) => t.platform === 'android');
+    if (isAndroid) {
+      monthlyMap[key].android += 1;
+    } else {
+      monthlyMap[key].ios += 1;
+    }
+  });
+
+  const sortedMonthKeys = Object.keys(monthlyMap).sort();
   let runIos = 0;
   let runAndroid = 0;
   let runTotal = 0;
 
-  const monthlyDownloads: MonthlyDownloadStat[] = monthlyDownloadsRaw.map((m) => {
-    const total = m.ios + m.android;
-    runIos += m.ios;
-    runAndroid += m.android;
+  const monthlyDownloads: MonthlyDownloadStat[] = sortedMonthKeys.map((key) => {
+    const item = monthlyMap[key];
+    const total = item.ios + item.android;
+    runIos += item.ios;
+    runAndroid += item.android;
     runTotal += total;
+
     return {
-      month: m.month,
-      shortMonth: m.shortMonth,
-      year: m.year,
-      ios: m.ios,
-      android: m.android,
+      month: monthNamesTr[item.monthIdx],
+      shortMonth: shortMonthNamesTr[item.monthIdx],
+      year: item.year,
+      ios: item.ios,
+      android: item.android,
       total,
       cumulativeIos: runIos,
       cumulativeAndroid: runAndroid,

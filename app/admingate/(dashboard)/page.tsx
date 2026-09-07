@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { requireAdmin } from '@/lib/supabase/admin';
 import { getAdminStats } from '@/lib/supabase/stats';
+import { AppleIcon, AndroidIcon } from '@/components/admin/platform-icons';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AdminDownloadsChart } from '@/components/admin/downloads-chart';
@@ -94,7 +95,7 @@ export default async function AdminOverviewPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
               <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">AI Gateway</p>
             </div>
-            <p className="text-xs font-semibold text-slate-200">GPT-4o & Claude</p>
+            <p className="text-xs font-semibold text-slate-200">Gemini & Fal AI</p>
           </div>
         </div>
 
@@ -181,10 +182,10 @@ export default async function AdminOverviewPage() {
                 </div>
                 <div>
                   <CardTitle className="text-base font-bold text-slate-900">
-                    Mobil İndirme & Büyüme Analizi
+                    Mobil Kayıt & Büyüme Analizi
                   </CardTitle>
                   <CardDescription className="text-slate-500 text-xs mt-0.5">
-                    Ay bazında App Store & Google Play Store indirme oranları
+                    Ay bazında App Store & Google Play Store gerçek kayıt oranları
                   </CardDescription>
                 </div>
               </div>
@@ -193,7 +194,7 @@ export default async function AdminOverviewPage() {
                   {stats.totalDownloadsCount.toLocaleString('tr-TR')}
                 </p>
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
-                  Toplam İndirme
+                  Toplam Kayıt
                 </p>
               </div>
             </div>
@@ -213,10 +214,15 @@ export default async function AdminOverviewPage() {
           {/* Platform Distribution */}
           <Card className="border border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs rounded-2xl">
             <CardHeader className="pb-3 border-b border-slate-100/80">
-              <CardTitle className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Smartphone className="h-4 w-4 text-cyan-600" />
-                Platform Dağılımı
-              </CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <Smartphone className="h-4 w-4 text-cyan-600" />
+                  Platform Dağılımı
+                </CardTitle>
+                <Badge variant="outline" className="text-[10px] font-bold text-slate-500 border-slate-200">
+                  Canlı Cihazlar
+                </Badge>
+              </div>
             </CardHeader>
             <CardContent className="pt-4 space-y-4">
               {stats.platformBreakdown.map((p) => {
@@ -227,7 +233,22 @@ export default async function AdminOverviewPage() {
                   <div key={p.platform} className="space-y-1.5">
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="flex items-center gap-1.5 text-slate-700">
-                        {isIOS ? '🍎 iOS Mobil' : '🤖 Android Mobil'}
+                        {isIOS ? (
+                          <>
+                            <AppleIcon className="h-3.5 w-3.5 text-slate-900 fill-current shrink-0" />
+                            <span>iOS Mobil</span>
+                          </>
+                        ) : (
+                          <>
+                            <AndroidIcon className="h-3.5 w-3.5 text-emerald-600 fill-current shrink-0" />
+                            <span>Android Mobil</span>
+                          </>
+                        )}
+                        {!isIOS && p.count === 0 && (
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200">
+                            İncelemede
+                          </span>
+                        )}
                       </span>
                       <span className="text-slate-900 font-bold tabular-nums">
                         {p.count} cihaz <span className="text-slate-400 font-medium">({pct}%)</span>
@@ -238,12 +259,18 @@ export default async function AdminOverviewPage() {
                         className={`h-full rounded-full transition-all duration-500 ${
                           isIOS ? 'bg-gradient-to-r from-blue-500 to-indigo-600' : 'bg-gradient-to-r from-emerald-500 to-teal-600'
                         }`}
-                        style={{ width: `${Math.max(pct, 4)}%` }}
+                        style={{ width: p.count === 0 ? '0%' : `${Math.max(pct, 4)}%` }}
                       />
                     </div>
                   </div>
                 );
               })}
+              {stats.androidUsers === 0 && (
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-amber-50/70 border border-amber-200/60 text-[11px] text-amber-800 font-medium">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
+                  <span>Google Play Store sürümü şu anda incelemededir. Canlı mobil kullanıcılar Apple App Store üzerinden gelmektedir.</span>
+                </div>
+              )}
               {!hasUsers && (
                 <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-500 italic">
                   <Server className="h-4 w-4 text-slate-400 shrink-0" />

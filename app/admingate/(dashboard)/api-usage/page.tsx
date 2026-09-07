@@ -10,6 +10,7 @@ import { AdminTopCreatorsCard } from '@/components/admin/top-creators-card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Activity, AlertCircle, Clock, Smartphone } from 'lucide-react';
+import { AppleIcon, AndroidIcon } from '@/components/admin/platform-icons';
 
 export default async function AdminApiUsagePage() {
   const user = await requireAdmin();
@@ -207,8 +208,20 @@ export default async function AdminApiUsagePage() {
                 return (
                   <div key={p.platform}>
                     <div className="mb-1 flex items-center justify-between text-sm">
-                      <span className="capitalize font-semibold text-slate-800">
-                        {p.platform === 'ios' ? '🍎 iOS' : p.platform === 'android' ? '🤖 Android' : '🌐 Web'}
+                      <span className="capitalize font-semibold text-slate-800 flex items-center gap-1.5">
+                        {p.platform === 'ios' ? (
+                          <>
+                            <AppleIcon className="h-3.5 w-3.5 fill-current text-slate-900 shrink-0" />
+                            <span>iOS</span>
+                          </>
+                        ) : p.platform === 'android' ? (
+                          <>
+                            <AndroidIcon className="h-3.5 w-3.5 fill-current text-emerald-600 shrink-0" />
+                            <span>Android</span>
+                          </>
+                        ) : (
+                          <span>🌐 Web</span>
+                        )}
                       </span>
                       <span className="text-slate-500 text-xs font-mono">
                         {p.count} çağrı · %{pct}

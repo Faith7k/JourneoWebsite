@@ -73,7 +73,7 @@ export function AdminDownloadsChart({
           pointHoverBorderWidth: 2.5,
         },
         {
-          label: 'Google Play Store (Android)',
+          label: playStoreDownloads === 0 ? 'Google Play Store (İncelemede)' : 'Google Play Store (Android)',
           data: data.map((d) => (viewMode === 'monthly' ? d.android : d.cumulativeAndroid)),
           borderColor: '#059669', // Emerald-600
           backgroundColor: androidGradient,
@@ -90,7 +90,7 @@ export function AdminDownloadsChart({
           pointHoverBorderWidth: 2.5,
         },
         {
-          label: 'Toplam İndirme (All Stores)',
+          label: 'Toplam Organik Kayıt',
           data: data.map((d) => (viewMode === 'monthly' ? d.total : d.cumulativeTotal)),
           borderColor: '#8b5cf6', // Violet-500
           backgroundColor: totalGradient,
@@ -158,7 +158,7 @@ export function AdminDownloadsChart({
             label: function (context) {
               const val = context.parsed.y ?? 0;
               const formattedVal = val.toLocaleString('tr-TR');
-              return ` ${context.dataset.label}: ${formattedVal} indirme`;
+              return ` ${context.dataset.label}: ${formattedVal} kullanıcı`;
             },
             afterBody: function (contexts) {
               if (contexts.length >= 2) {
@@ -166,7 +166,7 @@ export function AdminDownloadsChart({
                 const totalVal = totalItem?.parsed.y ?? 1;
                 return [
                   '───────────────────────',
-                  `📊 Toplam: ${totalVal.toLocaleString('tr-TR')} indirme`,
+                  `📊 Toplam: ${totalVal.toLocaleString('tr-TR')} kayıt`,
                 ];
               }
               return [];
@@ -207,7 +207,7 @@ export function AdminDownloadsChart({
           display: true,
           title: {
             display: true,
-            text: viewMode === 'monthly' ? 'Aylık İndirme Sayısı (Adet)' : 'Kümülatif Toplam İndirme (Adet)',
+            text: viewMode === 'monthly' ? 'Aylık Kayıt Sayısı (Kişi)' : 'Kümülatif Toplam Kayıt (Kişi)',
             color: '#475569',
             font: {
               size: 12,
@@ -249,7 +249,7 @@ export function AdminDownloadsChart({
         chartInstanceRef.current.destroy();
       }
     };
-  }, [data, viewMode]);
+  }, [data, viewMode, playStoreDownloads]);
 
   return (
     <div className="w-full space-y-4">
@@ -272,7 +272,13 @@ export function AdminDownloadsChart({
             <span className="font-extrabold tabular-nums">
               {playStoreDownloads.toLocaleString('tr-TR')}
             </span>
-            <span className="text-[10px] text-emerald-500 font-bold">({androidRatio}%)</span>
+            {playStoreDownloads === 0 ? (
+              <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 border border-amber-200">
+                İncelemede
+              </span>
+            ) : (
+              <span className="text-[10px] text-emerald-500 font-bold">({androidRatio}%)</span>
+            )}
           </div>
 
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-50/80 border border-purple-200/70 text-xs font-semibold text-purple-700">

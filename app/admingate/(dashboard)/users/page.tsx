@@ -8,6 +8,7 @@ import { UserGrowthChart } from '@/components/admin/user-growth-chart';
 import { AdminTopCreatorsCard } from '@/components/admin/top-creators-card';
 import { Admin3DGlobeCard } from '@/components/admin/globe-3d';
 import { Users, UserCheck, Smartphone, Crown, Globe, Layers } from 'lucide-react';
+import { AppleIcon, AndroidIcon } from '@/components/admin/platform-icons';
 import type { UserItem } from '@/components/admin/users-table';
 
 export const dynamic = 'force-dynamic';
@@ -65,7 +66,7 @@ export default async function AdminUsersPage() {
         <AdminStatCard
           title="iOS / Android"
           value={stats.iosUsers}
-          subtitle={`${stats.androidUsers} Android kullanıcısı`}
+          subtitle={stats.androidUsers > 0 ? `${stats.androidUsers} Android kullanıcısı` : 'Google Play incelemede'}
           icon={Smartphone}
           accent="bg-purple-50 text-purple-600 border border-purple-100"
         />
@@ -79,7 +80,7 @@ export default async function AdminUsersPage() {
         <CardHeader className="pb-2">
           <CardTitle className="text-base font-bold text-slate-900">Kullanıcı Büyümesi — Son 30 Gün</CardTitle>
           <CardDescription className="text-xs text-slate-500">
-            Günlük yeni organik mobil kullanıcı kayıtları.
+            Günlük yeni organik mobil kullanıcı kayıtları ve kümülatif büyüme eğilimi.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -101,10 +102,28 @@ export default async function AdminUsersPage() {
             {stats.platformBreakdown.map((p) => {
               const total = stats.platformBreakdown.reduce((s, x) => s + x.count, 0) || 1;
               const pct = Math.round((p.count / total) * 100);
+              const isAndroid = p.platform.toLowerCase().includes('android');
               return (
                 <div key={p.platform}>
                   <div className="mb-1 flex items-center justify-between text-sm">
-                    <span className="font-semibold text-slate-800">{p.platform === 'iOS' ? '🍎 iOS' : '🤖 Android'}</span>
+                    <span className="font-semibold text-slate-800 flex items-center gap-2">
+                      {isAndroid ? (
+                        <>
+                          <AndroidIcon className="h-4 w-4 text-emerald-600 fill-current shrink-0" />
+                          <span>Android</span>
+                        </>
+                      ) : (
+                        <>
+                          <AppleIcon className="h-4 w-4 text-slate-900 fill-current shrink-0" />
+                          <span>iOS</span>
+                        </>
+                      )}
+                      {isAndroid && p.count === 0 && (
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200">
+                          İncelemede
+                        </span>
+                      )}
+                    </span>
                     <span className="text-slate-500 font-mono text-xs">
                       {p.count} · %{pct}
                     </span>
@@ -112,7 +131,7 @@ export default async function AdminUsersPage() {
                   <div className="h-2 overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
                     <div
                       className={`h-full rounded-full transition-all ${p.platform === 'iOS' ? 'bg-blue-600' : 'bg-emerald-600'}`}
-                      style={{ width: `${Math.max(pct, 2)}%` }}
+                      style={{ width: p.count === 0 ? '0%' : `${Math.max(pct, 2)}%` }}
                     />
                   </div>
                 </div>
@@ -173,7 +192,7 @@ export default async function AdminUsersPage() {
             <div className="h-2 overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
               <div
                 className="h-full rounded-full bg-amber-500 transition-all"
-                style={{ width: `${Math.max(5, premiumRate)}%` }}
+                style={{ width: `${premiumRate}%` }}
               />
             </div>
             <p className="text-[11px] text-slate-500 font-medium">Toplam %{premiumRate} ödeme dönüşüm oranı</p>
@@ -350,7 +369,17 @@ async function RawUsersTableData() {
     const unconsumedPasses = unconsumedPassMap.get(userId) ?? 0;
     const consumedPasses = consumedPassMap.get(userId) ?? 0;
 
-    const platforms = Array.from(new Set(userTokens.map((t: any) => t.platform).filter(Boolean)));
+    const detectedPlatforms = Array.from(
+      new Set(userTokens.map((t: any) => t.platform).filter(Boolean))
+    );
+    if (detectedPlatforms.length === 0) {
+      if (s?.store === 'play_store' || u?.email?.includes('play') || u?.email?.includes('google')) {
+        detectedPlatforms.push('android');
+      } else {
+        detectedPlatforms.push('ios');
+      }
+    }
+
     const countries = Array.from(
       new Set(userTrips.map((t: any) => t.destination_country).filter(Boolean))
     );
@@ -408,7 +437,7 @@ async function RawUsersTableData() {
       email,
       name,
       username,
-      platforms: platforms.length > 0 ? platforms : ['ios'],
+      platforms: detectedPlatforms,
       subscription: (hasAnnual ? 'premium' : unconsumedPasses > 0 ? 'trip_pass' : 'free') as 'premium' | 'trip_pass' | 'free',
       planType,
       hasUnlimited,

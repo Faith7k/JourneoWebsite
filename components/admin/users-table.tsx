@@ -25,6 +25,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { AppleIcon, AndroidIcon } from '@/components/admin/platform-icons';
 
 export type UserItem = {
   id: string;
@@ -449,19 +450,21 @@ export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) 
             </button>
             <button
               onClick={() => setPlatformFilter('ios')}
-              className={`px-2.5 py-1 text-[11px] font-bold rounded-lg transition-colors ${
+              className={`px-2.5 py-1 text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1.5 ${
                 platformFilter === 'ios' ? 'bg-blue-600 text-white shadow-2xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              🍎 iOS
+              <AppleIcon className="h-3.5 w-3.5 fill-current shrink-0" />
+              <span>iOS</span>
             </button>
             <button
               onClick={() => setPlatformFilter('android')}
-              className={`px-2.5 py-1 text-[11px] font-bold rounded-lg transition-colors ${
+              className={`px-2.5 py-1 text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1.5 ${
                 platformFilter === 'android' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              🤖 Android
+              <AndroidIcon className="h-3.5 w-3.5 fill-current shrink-0" />
+              <span>Android</span>
             </button>
           </div>
 
@@ -497,7 +500,7 @@ export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) 
                 subFilter === 'free' ? 'bg-slate-600 text-white shadow-2xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Free
+              Free ({users.filter((u) => !u.hasUnlimited && u.unconsumedPasses === 0).length})
             </button>
           </div>
 
@@ -567,19 +570,32 @@ export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) 
                   {/* Device Platforms */}
                   <TableCell onClick={() => setSelectedUser(u)} className="cursor-pointer">
                     <div className="flex items-center gap-1 flex-wrap">
-                      {u.platforms.map((plt: string) => (
-                        <Badge
-                          key={plt}
-                          variant="outline"
-                          className={
-                            plt === 'ios'
-                              ? 'border-blue-200 bg-blue-50 text-blue-700 text-[10px] font-bold shadow-2xs'
-                              : 'border-emerald-200 bg-emerald-50 text-emerald-700 text-[10px] font-bold shadow-2xs'
-                          }
-                        >
-                          {plt === 'ios' ? '🍎 iOS' : plt === 'android' ? '🤖 Android' : '🌐 Web'}
-                        </Badge>
-                      ))}
+                      {u.platforms.map((plt: string) => {
+                        const isAndroid = plt.toLowerCase() === 'android';
+                        return (
+                          <Badge
+                            key={plt}
+                            variant="outline"
+                            className={
+                              isAndroid
+                                ? 'border-emerald-200 bg-emerald-50 text-emerald-800 text-[11px] font-bold shadow-2xs inline-flex items-center gap-1.5 px-2 py-0.5'
+                                : 'border-blue-200 bg-blue-50 text-blue-800 text-[11px] font-bold shadow-2xs inline-flex items-center gap-1.5 px-2 py-0.5'
+                            }
+                          >
+                            {isAndroid ? (
+                              <>
+                                <AndroidIcon className="h-3.5 w-3.5 fill-current text-emerald-600 shrink-0" />
+                                <span>Android</span>
+                              </>
+                            ) : (
+                              <>
+                                <AppleIcon className="h-3.5 w-3.5 fill-current text-blue-700 shrink-0" />
+                                <span>iOS</span>
+                              </>
+                            )}
+                          </Badge>
+                        );
+                      })}
                     </div>
                   </TableCell>
 
@@ -827,7 +843,20 @@ export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) 
                   {selectedUser.name.slice(0, 1).toUpperCase()}
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">{selectedUser.name}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-slate-900">{selectedUser.name}</h3>
+                    {selectedUser.platforms.some((p) => p.toLowerCase() === 'android') ? (
+                      <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-800 text-[10px] font-bold shadow-2xs inline-flex items-center gap-1 py-0.5 px-2">
+                        <AndroidIcon className="h-3 w-3 fill-current text-emerald-600" />
+                        <span>Android</span>
+                      </Badge>
+                    ) : (
+                      <Badge variant="outline" className="border-blue-200 bg-blue-50 text-blue-800 text-[10px] font-bold shadow-2xs inline-flex items-center gap-1 py-0.5 px-2">
+                        <AppleIcon className="h-3 w-3 fill-current text-blue-700" />
+                        <span>iOS</span>
+                      </Badge>
+                    )}
+                  </div>
                   <p className="text-xs font-mono text-slate-500">{selectedUser.email}</p>
                 </div>
               </div>

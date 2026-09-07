@@ -87,6 +87,7 @@ const nameToIdMap: Record<string, string> = {
   'Greece': '300', 'Yunanistan': '300', 'GR': '300',
   'Switzerland': '756', 'İsviçre': '756', 'CH': '756',
   'Austria': '040', 'Avusturya': '040', 'AT': '040',
+  'Egypt': '818', 'Mısır': '818', 'EG': '818',
 };
 
 export function Admin3DGlobeCard({ stats }: Globe3DProps) {
@@ -190,36 +191,37 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
 
       // 1. Atmosphere / Ocean Background
       if (viewMode === '3d') {
-        // Outer Atmosphere Halo
+        // Outer Atmosphere Halo (Light soft blue ambient)
         const glowGrad = ctx.createRadialGradient(
           centerX,
           centerY,
           radius * 0.85,
           centerX,
           centerY,
-          radius * 1.3
+          radius * 1.25
         );
-        glowGrad.addColorStop(0, 'rgba(14, 165, 233, 0.22)');
-        glowGrad.addColorStop(0.5, 'rgba(99, 102, 241, 0.1)');
-        glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        glowGrad.addColorStop(0, 'rgba(59, 130, 246, 0.12)');
+        glowGrad.addColorStop(0.5, 'rgba(147, 197, 253, 0.05)');
+        glowGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
         ctx.fillStyle = glowGrad;
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radius * 1.3, 0, Math.PI * 2);
+        ctx.arc(centerX, centerY, radius * 1.25, 0, Math.PI * 2);
         ctx.fill();
 
-        // Ocean Sphere Body
+        // Ocean Sphere Body (Crisp, clean light water)
         const oceanGrad = ctx.createRadialGradient(
-          centerX - radius * 0.3,
-          centerY - radius * 0.3,
-          radius * 0.1,
+          centerX - radius * 0.25,
+          centerY - radius * 0.25,
+          radius * 0.05,
           centerX,
           centerY,
           radius
         );
-        oceanGrad.addColorStop(0, '#0f172a');
-        oceanGrad.addColorStop(0.7, '#070b13');
-        oceanGrad.addColorStop(1, '#02040a');
+        oceanGrad.addColorStop(0, '#ffffff');
+        oceanGrad.addColorStop(0.5, '#f0f9ff');
+        oceanGrad.addColorStop(0.85, '#e0f2fe');
+        oceanGrad.addColorStop(1, '#bae6fd');
 
         ctx.fillStyle = oceanGrad;
         ctx.beginPath();
@@ -227,7 +229,7 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
         ctx.fill();
 
         // Sphere Rim
-        ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.6)';
         ctx.lineWidth = 1.2;
         ctx.stroke();
       }
@@ -235,7 +237,7 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
       // 2. Graticules (Latitude & Longitude Grid)
       ctx.beginPath();
       geoPathGenerator(graticuleGenerator());
-      ctx.strokeStyle = 'rgba(100, 116, 139, 0.12)';
+      ctx.strokeStyle = 'rgba(203, 213, 225, 0.7)';
       ctx.lineWidth = 0.5;
       ctx.stroke();
 
@@ -253,31 +255,30 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
 
         if (isHovered) {
           // Highlighted Country Fill
-          ctx.fillStyle = 'rgba(236, 72, 153, 0.45)';
+          ctx.fillStyle = 'rgba(244, 63, 94, 0.28)';
           ctx.fill();
           ctx.strokeStyle = '#f43f5e';
           ctx.lineWidth = 1.8;
           ctx.stroke();
         } else if (activeStat && getDisplayCount(activeStat) > 0) {
           // Country with active members / subscribers
-          const count = getDisplayCount(activeStat);
           ctx.fillStyle =
             activeStat.premiumSubscribers > 0
-              ? 'rgba(245, 158, 11, 0.35)'
-              : 'rgba(56, 189, 248, 0.35)';
+              ? 'rgba(245, 158, 11, 0.4)'
+              : 'rgba(37, 99, 235, 0.32)';
           ctx.fill();
           ctx.strokeStyle =
             activeStat.premiumSubscribers > 0
-              ? 'rgba(245, 158, 11, 0.9)'
-              : 'rgba(56, 189, 248, 0.9)';
+              ? '#d97706'
+              : '#2563eb';
           ctx.lineWidth = 1.2;
           ctx.stroke();
         } else {
-          // Standard Country Landmass
-          ctx.fillStyle = '#1e293b';
+          // Standard Country Landmass (Soft, elegant light slate)
+          ctx.fillStyle = '#e2e8f0';
           ctx.fill();
-          ctx.strokeStyle = 'rgba(71, 85, 105, 0.4)';
-          ctx.lineWidth = 0.6;
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 0.7;
           ctx.stroke();
         }
       });
@@ -297,10 +298,10 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
         ctx.beginPath();
         ctx.arc(screenX, screenY, isHovered ? 8 : 5, 0, Math.PI * 2);
         ctx.fillStyle = isHovered
-          ? 'rgba(244, 63, 94, 0.4)'
+          ? 'rgba(244, 63, 94, 0.25)'
           : stat.premiumSubscribers > 0
-          ? 'rgba(245, 158, 11, 0.35)'
-          : 'rgba(56, 189, 248, 0.35)';
+          ? 'rgba(245, 158, 11, 0.25)'
+          : 'rgba(37, 99, 235, 0.25)';
         ctx.fill();
 
         // Pin Beacon Dot
@@ -309,16 +310,16 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
         ctx.fillStyle = isHovered
           ? '#f43f5e'
           : stat.premiumSubscribers > 0
-          ? '#fbbf24'
-          : '#38bdf8';
+          ? '#d97706'
+          : '#2563eb';
         ctx.fill();
         ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1.5;
         ctx.stroke();
 
         // Badge Label (Flag + Country Name + Count)
         const labelText = `${stat.flag} ${stat.country}: ${count}`;
-        ctx.font = isHovered ? 'bold 11px system-ui, sans-serif' : '500 10px system-ui, sans-serif';
+        ctx.font = isHovered ? 'bold 11px system-ui, sans-serif' : '600 10px system-ui, sans-serif';
         const textMetrics = ctx.measureText(labelText);
         const paddingX = 6;
         const paddingY = 3;
@@ -327,8 +328,8 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
         const boxX = screenX - boxWidth / 2;
         const boxY = screenY - boxHeight - 7;
 
-        // Badge Box
-        ctx.fillStyle = isHovered ? 'rgba(15, 23, 42, 0.95)' : 'rgba(15, 23, 42, 0.85)';
+        // Badge Box (Clean white card pill)
+        ctx.fillStyle = '#ffffff';
         ctx.beginPath();
         ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 8);
         ctx.fill();
@@ -336,13 +337,13 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
         ctx.strokeStyle = isHovered
           ? '#f43f5e'
           : stat.premiumSubscribers > 0
-          ? 'rgba(245, 158, 11, 0.8)'
-          : 'rgba(56, 189, 248, 0.7)';
-        ctx.lineWidth = 1;
+          ? 'rgba(245, 158, 11, 0.85)'
+          : 'rgba(37, 99, 235, 0.75)';
+        ctx.lineWidth = 1.2;
         ctx.stroke();
 
-        // Badge Text
-        ctx.fillStyle = isHovered ? '#ffffff' : '#f8fafc';
+        // Badge Text (Dark slate, crisp and clear)
+        ctx.fillStyle = '#0f172a';
         ctx.fillText(labelText, boxX + paddingX, boxY + 13);
       });
 
@@ -460,7 +461,7 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
       <CardContent>
         <div className="grid gap-6 lg:grid-cols-12 items-center">
           {/* Real Country Boundaries Canvas Viewport */}
-          <div className="lg:col-span-7 relative flex items-center justify-center rounded-xl border border-slate-900/10 bg-slate-950 p-4 shadow-inner">
+          <div className="lg:col-span-7 relative flex items-center justify-center rounded-xl border border-slate-200/80 bg-gradient-to-b from-slate-50/60 via-white to-sky-50/30 p-4 shadow-inner overflow-hidden">
             <canvas
               ref={canvasRef}
               width={560}
@@ -475,15 +476,15 @@ export function Admin3DGlobeCard({ stats }: Globe3DProps) {
             />
 
             {/* Top Metric Indicator */}
-            <div className="absolute top-4 left-4 flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900/90 px-3 py-1.5 text-xs text-slate-300 backdrop-blur">
-              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+            <div className="absolute top-4 left-4 flex items-center gap-2 rounded-lg border border-slate-200/80 bg-white/95 px-3 py-1.5 text-xs text-slate-700 shadow-2xs backdrop-blur">
+              <Sparkles className="h-3.5 w-3.5 text-amber-500" />
               <span>
                 Toplam:{' '}
-                <strong className="text-cyan-300 font-mono text-sm">{totalFilteredSubscribers}</strong> Kayıtlı Üye
+                <strong className="text-blue-600 font-mono text-sm">{totalFilteredSubscribers}</strong> Kayıtlı Üye
               </span>
             </div>
 
-            <div className="absolute bottom-4 right-4 text-[10px] text-slate-400 bg-slate-900/80 px-2.5 py-1 rounded-md border border-slate-800">
+            <div className="absolute bottom-4 right-4 text-[10px] text-slate-500 bg-white/95 px-2.5 py-1 rounded-md border border-slate-200/80 shadow-2xs backdrop-blur">
               {viewMode === '3d'
                 ? '💡 Haritayı döndürmek için sürükleyin · Ülkelere tıklayarak odaklanın'
                 : '💡 Gerçek ülke sınırları ve canlı üye lokasyonları'}

@@ -163,14 +163,14 @@ export function SettingsForm({ initial }: Props) {
             label="Gizlilik Politikası URL"
             value={form.privacy_policy_url}
             onChange={update('privacy_policy_url')}
-            placeholder="https://journeo.app/privacy"
+            placeholder="https://journeo.ai/privacy"
             required
           />
           <UrlField
             label="Kullanım Koşulları URL"
             value={form.terms_of_service_url}
             onChange={update('terms_of_service_url')}
-            placeholder="https://journeo.app/terms"
+            placeholder="https://journeo.ai/terms"
             required
           />
         </CardContent>
@@ -421,7 +421,7 @@ function TextareaField({
   value,
   onChange,
   placeholder,
-  rows = 8,
+  rows = 12,
 }: {
   label: string;
   value: string;
@@ -431,12 +431,19 @@ function TextareaField({
 }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs font-bold text-slate-700">{label}</Label>
+      <div className="flex items-center justify-between">
+        <Label className="text-xs font-bold text-slate-700">{label}</Label>
+        {value ? (
+          <span className="text-[11px] text-slate-400 font-medium">
+            {value.length.toLocaleString('tr-TR')} karakter
+          </span>
+        ) : null}
+      </div>
       <textarea
         value={value}
         onChange={onChange}
         rows={rows}
-        className="w-full rounded-xl border border-slate-200/80 bg-white p-3.5 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none leading-relaxed font-sans"
+        className="w-full rounded-xl border border-slate-200/80 bg-white p-3.5 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none leading-relaxed font-mono"
         placeholder={placeholder}
       />
     </div>
