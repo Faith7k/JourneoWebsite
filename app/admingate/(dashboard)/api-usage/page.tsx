@@ -19,47 +19,17 @@ export default async function AdminApiUsagePage() {
   const supabase = await createAdminClient();
   const stats = await getAdminStats();
 
-  const since14d = new Date(Date.now() - 13 * 86400_000);
-  since14d.setHours(0, 0, 0, 0);
-
-  const [{ data: recent }, { data: byEndpointRaw }] = await Promise.all([
-    supabase
-      .from('api_usage')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(50),
-    supabase
-      .from('api_usage')
-      .select('endpoint')
-      .gte('created_at', since14d.toISOString()),
-  ]);
-
-  const byDay: Record<string, number> = {};
-  for (let i = 0; i < 14; i++) {
-    const d = new Date(Date.now() - (13 - i) * 86400_000);
-    d.setHours(0, 0, 0, 0);
-    byDay[d.toISOString().slice(0, 10)] = 0;
-  }
-
-  const { data: chartRows } = await supabase
+  // Only the live table is fetched here; the 14-day series and endpoint split
+  // come from getAdminStats (paged, UTC-keyed) so this page cannot disagree
+  // with the overview.
+  const { data: recent } = await supabase
     .from('api_usage')
-    .select('created_at')
-    .gte('created_at', since14d.toISOString())
-    .order('created_at', { ascending: true });
-  (chartRows ?? []).forEach((row: { created_at: string }) => {
-    const key = row.created_at.slice(0, 10);
-    if (key in byDay) byDay[key] += 1;
-  });
-  const chartData = Object.entries(byDay).map(([date, count]) => ({ date, count }));
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(50);
 
-  const endpointCounts: Record<string, number> = {};
-  (byEndpointRaw ?? []).forEach((row: { endpoint: string }) => {
-    endpointCounts[row.endpoint] = (endpointCounts[row.endpoint] ?? 0) + 1;
-  });
-  const endpoints = Object.entries(endpointCounts)
-    .map(([endpoint, count]) => ({ endpoint, count }))
-    .sort((a, b) => b.count - a.count);
-
+  const chartData = stats.apiCallsByDay;
+  const endpoints = stats.apiCallsByEndpoint;
   const totalEndpointCalls = endpoints.reduce((s, e) => s + e.count, 0) || 1;
 
   return (
@@ -107,12 +77,18 @@ export default async function AdminApiUsagePage() {
 
       {/* Akıllı Analiz & Unit Economics */}
       <AdminUnitEconomicsCard
-        premiumUsers={stats.premiumUsers}
-        freeUsers={stats.freeUsers}
-        mapboxCallsMonth={stats.mapboxCallsMonth}
+        annualSubscribers={stats.annualSubscribers}
+        trialUsers={stats.trialUsers}
+        mrr={stats.mrr}
+        monthlyPricePerSubscriber={stats.monthlyPricePerSubscriber}
+        tripPassSales30d={stats.tripPassSales30d}
+        tripPassRevenue30d={stats.tripPassRevenue30d}
+        mapboxGeocodingCallsMonth={stats.mapboxGeocodingCallsMonth}
+        mapboxDirectionsCallsMonth={stats.mapboxDirectionsCallsMonth}
         affiliateClicksTotal={stats.affiliateClicksTotal}
         affiliateConvertedTotal={stats.affiliateConvertedTotal}
         affiliateCommissionTotal={stats.affiliateCommissionTotal}
+        affiliateCommission30d={stats.affiliateCommission30d}
         estimatedTotalApiCost={stats.estimatedTotalApiCost}
         costPerTrip={stats.costPerTrip}
         breakevenTripsPerUser={stats.breakevenTripsPerUser}
@@ -127,8 +103,14 @@ export default async function AdminApiUsagePage() {
         aiCalls30d={stats.aiCalls30d}
         aiByKind={stats.aiByKind}
         googlePlacesCallsMonth={stats.googlePlacesCallsMonth}
+        googlePlacesMonthlyBudget={stats.googlePlacesMonthlyBudget}
         cachedPlacesCount={stats.cachedPlacesCount}
         cachedAiPlansCount={stats.cachedAiPlansCount}
+        cacheSavingsUsd30d={stats.cacheSavingsUsd30d}
+        placesCacheHits30d={stats.placesCacheHits30d}
+        placesPaidCalls30d={stats.placesPaidCalls30d}
+        cacheHitRatioPct={stats.cacheHitRatioPct}
+        unpricedEvents30d={stats.unpricedEvents30d}
       />
 
       {/* Top Power Users Leaderboard */}

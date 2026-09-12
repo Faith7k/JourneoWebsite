@@ -13,12 +13,18 @@ import {
 } from 'lucide-react';
 
 type UnitEconomicsProps = {
-  premiumUsers: number;
-  freeUsers: number;
-  mapboxCallsMonth: number;
+  annualSubscribers: number;
+  trialUsers: number;
+  mrr: number;
+  monthlyPricePerSubscriber: number;
+  tripPassSales30d: number;
+  tripPassRevenue30d: number;
+  mapboxGeocodingCallsMonth: number;
+  mapboxDirectionsCallsMonth: number;
   affiliateClicksTotal: number;
   affiliateConvertedTotal: number;
   affiliateCommissionTotal: number;
+  affiliateCommission30d: number;
   estimatedTotalApiCost: number;
   costPerTrip: number;
   breakevenTripsPerUser: number;
@@ -26,22 +32,32 @@ type UnitEconomicsProps = {
   estimatedNetProfit: number;
 };
 
+// Mapbox free tiers are per API — Geocoding and Directions each get
+// 100,000 requests/month before billing starts.
+const MAPBOX_FREE_TIER = 100_000;
+
 export function AdminUnitEconomicsCard({
-  premiumUsers,
-  freeUsers,
-  mapboxCallsMonth,
+  annualSubscribers,
+  trialUsers,
+  mrr,
+  monthlyPricePerSubscriber,
+  tripPassSales30d,
+  tripPassRevenue30d,
+  mapboxGeocodingCallsMonth,
+  mapboxDirectionsCallsMonth,
   affiliateClicksTotal,
   affiliateConvertedTotal,
   affiliateCommissionTotal,
+  affiliateCommission30d,
   estimatedTotalApiCost,
   costPerTrip,
   breakevenTripsPerUser,
   estimatedMonthlyRevenue,
   estimatedNetProfit,
 }: UnitEconomicsProps) {
-  // Mapbox free quota: 100,000 geocoding calls/month
-  const mapboxQuota = 100000;
-  const mapboxQuotaPct = Math.min(100, Math.round((mapboxCallsMonth / mapboxQuota) * 100));
+  const geocodingPct = Math.min(100, Math.round((mapboxGeocodingCallsMonth / MAPBOX_FREE_TIER) * 100));
+  const directionsPct = Math.min(100, Math.round((mapboxDirectionsCallsMonth / MAPBOX_FREE_TIER) * 100));
+  const mapboxQuotaPct = Math.max(geocodingPct, directionsPct);
 
   const conversionRate =
     affiliateClicksTotal > 0
@@ -57,7 +73,7 @@ export function AdminUnitEconomicsCard({
             Akıllı Analiz & Birim Ekonomisi (Unit Economics)
           </h3>
           <p className="text-xs text-slate-500">
-            Abonelik gelirleri, başabaş (breakeven) gezi sınırı, Mapbox harita kotası ve Affiliate komisyon takibi.
+            Son 30 günün geliri ve API gideri aynı pencerede; başabaş (breakeven) gezi sınırı, Mapbox kotaları ve Affiliate komisyon takibi.
           </p>
         </div>
         <Badge
@@ -67,7 +83,7 @@ export function AdminUnitEconomicsCard({
               : 'bg-rose-50 text-rose-700 border-rose-200 font-semibold'
           }
         >
-          Net Kar: ${estimatedNetProfit} / ay
+          Net Kar: ${estimatedNetProfit.toFixed(2)} / 30 gün
         </Badge>
       </div>
 
@@ -91,11 +107,11 @@ export function AdminUnitEconomicsCard({
           </CardHeader>
           <CardContent className="text-xs text-slate-600">
             <p>
-              $9.99 abonelik ücretine karşılık bir üye ayda{' '}
+              Yıllık abonelikten aya düşen ${monthlyPricePerSubscriber.toFixed(2)} gelire karşılık bir üye ayda{' '}
               <strong className="text-slate-900 font-semibold">{breakevenTripsPerUser} gezi</strong> yapana kadar karlı kalırsınız.
             </p>
             <div className="mt-2 text-[11px] text-slate-500 font-mono bg-slate-50 p-1.5 rounded border border-slate-100">
-              Gezi başı ort. maliyet: ${costPerTrip}
+              Gezi başı ort. maliyet: ${costPerTrip} (son 30 gün, tüm servisler)
             </div>
           </CardContent>
         </Card>
@@ -106,27 +122,37 @@ export function AdminUnitEconomicsCard({
             <CardDescription className="flex items-center justify-between text-xs text-slate-500">
               <span className="flex items-center gap-1.5 font-semibold text-emerald-700">
                 <DollarSign className="h-4 w-4 text-emerald-600" />
-                Aylık Gelir vs Gider
+                Gelir vs Gider (30g)
               </span>
               <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-700 text-[10px]">
                 Finansal
               </Badge>
             </CardDescription>
             <CardTitle className="text-2xl font-bold tracking-tight text-emerald-600 mt-1 tabular-nums">
-              ${estimatedMonthlyRevenue}{' '}
+              ${estimatedMonthlyRevenue.toFixed(2)}{' '}
               <span className="text-xs font-normal text-slate-500">gelir</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="text-xs text-slate-600 space-y-1.5">
             <div className="flex justify-between">
-              <span className="text-slate-500">Toplam API Harcaması:</span>
-              <span className="font-mono font-semibold text-rose-600">${estimatedTotalApiCost}</span>
+              <span className="text-slate-500">API Harcaması (30g):</span>
+              <span className="font-mono font-semibold text-rose-600">-${estimatedTotalApiCost.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-slate-500">Abonelik (MRR):</span>
               <span className="font-mono font-semibold text-slate-900">
-                ${(premiumUsers * 9.99).toFixed(2)} ({premiumUsers} premium)
+                ${mrr.toFixed(2)} ({annualSubscribers} ödeyen{trialUsers > 0 ? ` · ${trialUsers} trial hariç` : ''})
               </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-slate-500">Trip Pass (30g):</span>
+              <span className="font-mono font-semibold text-slate-900">
+                ${tripPassRevenue30d.toFixed(2)} ({tripPassSales30d} satış)
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-slate-500">Affiliate (30g):</span>
+              <span className="font-mono font-semibold text-slate-900">${affiliateCommission30d.toFixed(2)}</span>
             </div>
           </CardContent>
         </Card>
@@ -137,28 +163,43 @@ export function AdminUnitEconomicsCard({
             <CardDescription className="flex items-center justify-between text-xs text-slate-500">
               <span className="flex items-center gap-1.5 font-semibold text-cyan-700">
                 <Map className="h-4 w-4 text-cyan-600" />
-                Mapbox Harita Kotası
+                Mapbox Kotaları (bu ay)
               </span>
               <Badge variant="outline" className="border-cyan-200 bg-cyan-50 text-cyan-700 text-[10px]">
                 {mapboxQuotaPct}%
               </Badge>
             </CardDescription>
             <CardTitle className="text-2xl font-bold tracking-tight text-slate-900 mt-1 tabular-nums">
-              {mapboxCallsMonth.toLocaleString('tr-TR')}{' '}
+              {(mapboxGeocodingCallsMonth + mapboxDirectionsCallsMonth).toLocaleString('tr-TR')}{' '}
               <span className="text-xs font-normal text-slate-500">çağrı</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="text-xs text-slate-600 space-y-2">
+            <div className="flex justify-between text-[11px] text-slate-500">
+              <span>Geocoding</span>
+              <span className="font-mono">
+                {mapboxGeocodingCallsMonth.toLocaleString('tr-TR')} / 100k
+              </span>
+            </div>
             <div className="h-2 overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
               <div
                 className="h-full rounded-full bg-cyan-500 transition-all"
-                style={{ width: `${Math.max(mapboxQuotaPct, 1)}%` }}
+                style={{ width: `${Math.max(geocodingPct, 1)}%` }}
               />
             </div>
             <div className="flex justify-between text-[11px] text-slate-500">
-              <span>100k Ücretsiz Tier</span>
-              <span>Kalan: {(mapboxQuota - mapboxCallsMonth).toLocaleString('tr-TR')}</span>
+              <span>Directions</span>
+              <span className="font-mono">
+                {mapboxDirectionsCallsMonth.toLocaleString('tr-TR')} / 100k
+              </span>
             </div>
+            <div className="h-2 overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
+              <div
+                className="h-full rounded-full bg-blue-500 transition-all"
+                style={{ width: `${Math.max(directionsPct, 1)}%` }}
+              />
+            </div>
+            <p className="text-[10px] text-slate-400">Her API'nin ayrı 100k/ay ücretsiz kademesi var.</p>
           </CardContent>
         </Card>
 
@@ -175,10 +216,15 @@ export function AdminUnitEconomicsCard({
               </Badge>
             </CardDescription>
             <CardTitle className="text-2xl font-bold tracking-tight text-purple-700 mt-1 tabular-nums">
-              ${affiliateCommissionTotal.toFixed(2)}
+              ${affiliateCommissionTotal.toFixed(2)}{' '}
+              <span className="text-xs font-normal text-slate-500">toplam</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="text-xs text-slate-600 space-y-1.5">
+            <div className="flex justify-between">
+              <span className="text-slate-500">Son 30 gün:</span>
+              <span className="font-mono font-semibold text-slate-900">${affiliateCommission30d.toFixed(2)}</span>
+            </div>
             <div className="flex justify-between">
               <span className="text-slate-500">Tıklama Sayısı:</span>
               <span className="font-mono font-semibold text-slate-900">{affiliateClicksTotal}</span>

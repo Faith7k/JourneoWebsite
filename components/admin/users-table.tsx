@@ -43,6 +43,9 @@ export type UserItem = {
   tripCount: number;
   aiCount: number;
   countries: string[];
+  country?: string;
+  flag?: string;
+  countryCode?: string;
   createdAt: string;
   lastActiveAt: string;
   role?: 'admin' | 'user';
@@ -53,9 +56,26 @@ export type UserItem = {
 export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) {
   const [users, setUsers] = useState<UserItem[]>(initialUsers);
   const [search, setSearch] = useState('');
+  const [countryFilter, setCountryFilter] = useState<string>('all');
   const [platformFilter, setPlatformFilter] = useState<'all' | 'ios' | 'android'>('all');
   const [subFilter, setSubFilter] = useState<'all' | 'unlimited' | 'passes' | 'free'>('all');
   const [sortBy, setSortBy] = useState<'newest' | 'trips' | 'ai' | 'passes'>('newest');
+
+  // Compute available countries dynamically from user list
+  const availableCountries = useMemo(() => {
+    const map = new Map<string, { country: string; flag: string; count: number }>();
+    users.forEach((u) => {
+      const country = u.country || 'Türkiye';
+      const flag = u.flag || '🇹🇷';
+      const existing = map.get(country);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        map.set(country, { country, flag, count: 1 });
+      }
+    });
+    return Array.from(map.values()).sort((a, b) => b.count - a.count);
+  }, [users]);
 
   // Selected User for Detail Modal
   const [selectedUser, setSelectedUser] = useState<UserItem | null>(null);
@@ -106,16 +126,20 @@ export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) 
           u.name.toLowerCase().includes(search.toLowerCase()) ||
           u.email.toLowerCase().includes(search.toLowerCase()) ||
           u.username.toLowerCase().includes(search.toLowerCase()) ||
-          u.id.toLowerCase().includes(search.toLowerCase());
+          u.id.toLowerCase().includes(search.toLowerCase()) ||
+          (u.country && u.country.toLowerCase().includes(search.toLowerCase()));
 
         const matchPlatform = platformFilter === 'all' || u.platforms.includes(platformFilter);
+
+        const matchCountry =
+          countryFilter === 'all' || (u.country || 'Türkiye') === countryFilter;
 
         let matchSub = true;
         if (subFilter === 'unlimited') matchSub = u.hasUnlimited;
         else if (subFilter === 'passes') matchSub = u.unconsumedPasses > 0 && !u.hasUnlimited;
         else if (subFilter === 'free') matchSub = !u.hasUnlimited && u.unconsumedPasses === 0;
 
-        return matchSearch && matchPlatform && matchSub;
+        return matchSearch && matchPlatform && matchSub && matchCountry;
       })
       .sort((a, b) => {
         if (sortBy === 'trips') return b.tripCount - a.tripCount;
@@ -123,7 +147,7 @@ export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) 
         if (sortBy === 'passes') return b.unconsumedPasses - a.unconsumedPasses;
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
-  }, [users, search, platformFilter, subFilter, sortBy]);
+  }, [users, search, countryFilter, platformFilter, subFilter, sortBy]);
 
   // Handler: Toggle Premium (Annual Unlimited Subscription)
   async function handleTogglePremium(user: UserItem, targetState: boolean) {
@@ -438,6 +462,36 @@ export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) 
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          {/* Country Filter */}
+          <div className="flex items-center rounded-xl bg-white border border-slate-200 p-0.5 shadow-2xs">
+            <button
+              type="button"
+              onClick={() => setCountryFilter('all')}
+              className={`px-2.5 py-1 text-[11px] font-bold rounded-lg transition-colors ${
+                countryFilter === 'all' ? 'bg-slate-900 text-white shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Tüm Ülkeler
+            </button>
+            {availableCountries.map((c) => (
+              <button
+                key={c.country}
+                type="button"
+                onClick={() => setCountryFilter(c.country)}
+                title={c.country}
+                className={`px-2.5 py-1 text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1.5 ${
+                  countryFilter === c.country ? 'bg-blue-600 text-white shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <span>{c.flag}</span>
+                <span className="hidden sm:inline">
+                  {c.country === 'Amerika Birleşik Devletleri' ? 'ABD' : c.country}
+                </span>
+                <span className="text-[10px] opacity-75">({c.count})</span>
+              </button>
+            ))}
+          </div>
+
           {/* Platform Filter */}
           <div className="flex items-center rounded-xl bg-white border border-slate-200 p-0.5 shadow-2xs">
             <button
@@ -556,6 +610,13 @@ export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) 
                           <p className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                             {u.name}
                           </p>
+                          <span
+                            className="text-sm select-none cursor-help transition-transform hover:scale-125 inline-block"
+                            title={u.country || 'Türkiye'}
+                            aria-label={u.country || 'Türkiye'}
+                          >
+                            {u.flag || '🇹🇷'}
+                          </span>
                           {u.role === 'admin' && (
                             <Badge className="bg-red-50 text-red-700 border-red-200 text-[9px] font-bold py-0.5 px-1.5 shadow-2xs">
                               Yönetici
@@ -845,6 +906,13 @@ export function AdminUsersTable({ users: initialUsers }: { users: UserItem[] }) 
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-bold text-slate-900">{selectedUser.name}</h3>
+                    <span
+                      className="text-base select-none cursor-help"
+                      title={selectedUser.country || 'Türkiye'}
+                      aria-label={selectedUser.country || 'Türkiye'}
+                    >
+                      {selectedUser.flag || '🇹🇷'}
+                    </span>
                     {selectedUser.platforms.some((p) => p.toLowerCase() === 'android') ? (
                       <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-800 text-[10px] font-bold shadow-2xs inline-flex items-center gap-1 py-0.5 px-2">
                         <AndroidIcon className="h-3 w-3 fill-current text-emerald-600" />

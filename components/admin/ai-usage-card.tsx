@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, MapPin, Database, Zap, Cpu } from 'lucide-react';
+import { Sparkles, MapPin, Database, Zap, AlertTriangle } from 'lucide-react';
+import { formatUsd } from '@/lib/costs';
 
 type AIUsageProps = {
   aiCallsToday: number;
@@ -9,8 +10,16 @@ type AIUsageProps = {
   aiCalls30d: number;
   aiByKind: { kind: string; count: number }[];
   googlePlacesCallsMonth: number;
+  /** Backend GOOGLE_PLACES_MONTHLY_BUDGET mirror — the gate lives there. */
+  googlePlacesMonthlyBudget: number;
   cachedPlacesCount: number;
   cachedAiPlansCount: number;
+  /** Measured by cost_summary() over the last 30 days — not a price × count guess. */
+  cacheSavingsUsd30d: number;
+  placesCacheHits30d: number;
+  placesPaidCalls30d: number;
+  cacheHitRatioPct: number;
+  unpricedEvents30d: number;
 };
 
 export function AdminAIUsageCard({
@@ -19,11 +28,16 @@ export function AdminAIUsageCard({
   aiCalls30d,
   aiByKind,
   googlePlacesCallsMonth,
+  googlePlacesMonthlyBudget,
   cachedPlacesCount,
   cachedAiPlansCount,
+  cacheSavingsUsd30d,
+  placesCacheHits30d,
+  placesPaidCalls30d,
+  cacheHitRatioPct,
+  unpricedEvents30d,
 }: AIUsageProps) {
-  // Monthly Google Places budget limit from backend config (e.g. 5,000 requests)
-  const placesBudget = 5000;
+  const placesBudget = googlePlacesMonthlyBudget;
   const placesBudgetPct = Math.min(100, Math.round((googlePlacesCallsMonth / placesBudget) * 100));
 
   const totalAiKindCalls = aiByKind.reduce((s, k) => s + k.count, 0) || 1;
@@ -51,7 +65,7 @@ export function AdminAIUsageCard({
             </Badge>
           </div>
           <CardDescription className="text-xs text-slate-500">
-            LLM seyahat planı üretimleri ve sohbet turnlerinin canlı takibi.
+            Yalnızca gerçekten Gemini'ye giden istekler (token/model ölçümü olan satırlar).
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -141,7 +155,7 @@ export function AdminAIUsageCard({
             <div className="flex items-center justify-between text-xs">
               <span className="text-slate-600 font-medium">Aylık Çağrı Bütçesi</span>
               <span className="font-mono text-slate-500">
-                {googlePlacesCallsMonth} / {placesBudget} çağrı
+                {googlePlacesCallsMonth.toLocaleString('tr-TR')} / {placesBudget.toLocaleString('tr-TR')} çağrı
               </span>
             </div>
             <div className="h-2 overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
@@ -169,11 +183,24 @@ export function AdminAIUsageCard({
                 Önbellek Tasarrufu
               </div>
               <p className="mt-1 text-xl font-bold text-amber-700 tabular-nums">
-                ~${(cachedPlacesCount * 0.017).toFixed(1)}
+                {formatUsd(cacheSavingsUsd30d, 2)}
               </p>
-              <p className="text-[10px] text-slate-500">Cache Hit ile Korunan Bütçe</p>
+              <p className="text-[10px] text-slate-500">
+                Son 30 gün · %{cacheHitRatioPct} isabet ({placesCacheHits30d.toLocaleString('tr-TR')} hit /{' '}
+                {placesPaidCalls30d.toLocaleString('tr-TR')} ücretli)
+              </p>
             </div>
           </div>
+
+          {unpricedEvents30d > 0 && (
+            <div className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50/80 p-2.5 text-[11px] text-amber-800">
+              <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-600" />
+              <span>
+                <strong>{unpricedEvents30d.toLocaleString('tr-TR')} olay fiyatlandırılamadı</strong> (30g) — SKU{' '}
+                <code>cost_price_book</code>'ta yok. Yukarıdaki maliyetler bu kadar eksik.
+              </span>
+            </div>
+          )}
 
           <div className="space-y-2 pt-1">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">

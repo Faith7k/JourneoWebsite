@@ -1,5 +1,5 @@
 import { requireAdmin } from '@/lib/supabase/admin';
-import { getAdminStats } from '@/lib/supabase/stats';
+import { getAdminStats, resolveUserCountry } from '@/lib/supabase/stats';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -73,7 +73,7 @@ export default async function AdminUsersPage() {
       </div>
 
       {/* 3D Interactive World Globe */}
-      <Admin3DGlobeCard stats={stats.countrySubscriberStats} />
+      <Admin3DGlobeCard stats={stats.countrySubscriberStats} tripStats={stats.tripDestinationStats} />
 
       {/* Growth Chart */}
       <Card className="border-slate-200/80 bg-white shadow-xs">
@@ -242,7 +242,9 @@ export default async function AdminUsersPage() {
               <Globe className="h-4 w-4 text-blue-600" />
               Ülkelere Göre Kullanıcılar
             </CardTitle>
-            <CardDescription className="text-slate-500 text-xs">En aktif ilk 10 ülke.</CardDescription>
+            <CardDescription className="text-slate-500 text-xs">
+              Kayıtlı kullanıcı ve abonelerin bulunduğu ülke lokasyonları.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-2 sm:grid-cols-2">
@@ -287,13 +289,13 @@ export default async function AdminUsersPage() {
 }
 
 async function RawUsersTableData() {
-  const { createAdminClient } = await import('@/lib/supabase/server');
+  const { createAdminClient, listAllAuthUsers } = await import('@/lib/supabase/server');
   const { AdminUsersTable } = await import('@/components/admin/users-table');
   const supabase = await createAdminClient();
 
-  const [authUsersRes, profilesRes, subsRes, passesRes, tokensRes, tripsRes, aiLogsRes] =
+  const [authUsers, profilesRes, subsRes, passesRes, tokensRes, tripsRes, aiLogsRes] =
     await Promise.all([
-      supabase.auth.admin.listUsers({ page: 1, perPage: 1000 }),
+      listAllAuthUsers(supabase),
       supabase.from('profiles').select('*'),
       supabase.from('user_subscriptions').select('*'),
       supabase.from('trip_pass_credits').select('*'),
@@ -302,7 +304,6 @@ async function RawUsersTableData() {
       supabase.from('ai_generation_log').select('id, user_id'),
     ]);
 
-  const authUsers = authUsersRes.data?.users ?? [];
   const profiles = profilesRes.data ?? [];
   const subs = subsRes.data ?? [];
   const passes = passesRes.data ?? [];
@@ -432,6 +433,18 @@ async function RawUsersTableData() {
     const createdAt = u?.created_at || p?.created_at || new Date().toISOString();
     const lastActiveAt = u?.last_sign_in_at || u?.created_at || createdAt;
 
+    // Resolve user's actual residence / origin country
+    const {
+      country: userCountry,
+      flag: userFlag,
+      countryCode: userCountryCode,
+    } = resolveUserCountry({
+      email,
+      timezone: p?.timezone,
+      currency: p?.preferred_currency,
+      locale: p?.preferred_locale,
+    });
+
     return {
       id: userId,
       email,
@@ -448,6 +461,9 @@ async function RawUsersTableData() {
       tripCount: userTrips.length,
       aiCount,
       countries,
+      country: userCountry,
+      flag: userFlag,
+      countryCode: userCountryCode,
       createdAt,
       lastActiveAt,
       role: (p?.role as 'admin' | 'user') || (email === 'admin@journeo.ai' ? 'admin' : 'user'),

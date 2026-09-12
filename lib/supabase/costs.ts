@@ -2,6 +2,17 @@ import { createAdminClient } from './server';
 import { resolveRange, type CostRange, type CostSummary, type RecentCostEvent } from '@/lib/costs';
 
 /**
+ * PostgREST `.or()` filter selecting only the `ai_generation_log` rows that
+ * were an LLM call. The table is the generic rate-limit counter — it also
+ * holds `friend_request`, `profile_search`, `fx_rate`… rows that never touch
+ * Gemini. `cost_summary()` (migration 20260822110000) uses exactly this
+ * predicate; every TS query over the table must use it too, or the recent
+ * events table and the AI-usage counters disagree with the totals.
+ */
+export const LLM_ROW_FILTER =
+  'model.not.is.null,prompt_tokens.not.is.null,output_tokens.not.is.null,cache_hit.not.is.null';
+
+/**
  * Cost monitoring data access.
  *
  * Every figure here comes from `public.cost_summary()`, which applies unit
@@ -33,16 +44,18 @@ export async function getCostSummary(range: CostRange): Promise<CostSummary | nu
 /**
  * The most recent billable events, newest first, for the live table.
  *
- * Three separate logs rather than one: they are the same tables the cost
- * report reads, so the table can never disagree with the totals above it.
+ * Four separate logs rather than one: they are the same tables (and the same
+ * LLM-row predicate) the cost report reads, so the table can never disagree
+ * with the totals above it.
  */
 export async function getRecentCostEvents(limit = 50): Promise<RecentCostEvent[]> {
   const supabase = await createAdminClient();
 
-  const [gemini, places, mapbox] = await Promise.all([
+  const [gemini, places, mapbox, covers] = await Promise.all([
     supabase
       .from('ai_generation_log')
       .select('id, created_at, kind, model, prompt_tokens, output_tokens, cache_hit')
+      .or(LLM_ROW_FILTER)
       .order('created_at', { ascending: false })
       .limit(limit),
     supabase
@@ -54,6 +67,11 @@ export async function getRecentCostEvents(limit = 50): Promise<RecentCostEvent[]
       .from('mapbox_usage_log')
       .select('id, called_at, service_type')
       .order('called_at', { ascending: false })
+      .limit(limit),
+    supabase
+      .from('city_cover_images')
+      .select('id, created_at, city, country')
+      .order('created_at', { ascending: false })
       .limit(limit),
   ]);
 
@@ -82,6 +100,13 @@ export async function getRecentCostEvents(limit = 50): Promise<RecentCostEvent[]
       provider: 'mapbox',
       feature: `map_${r.service_type ?? 'unknown'}`,
       detail: (r.service_type as string) ?? null,
+    })),
+    ...(covers.data ?? []).map((r) => ({
+      id: `cover-${r.id}`,
+      occurred_at: r.created_at as string,
+      provider: 'fal_ai',
+      feature: 'city_cover',
+      detail: [r.city, r.country].filter(Boolean).join(', ') || null,
     })),
   ];
 

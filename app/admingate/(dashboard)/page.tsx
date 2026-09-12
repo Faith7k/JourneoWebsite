@@ -390,7 +390,7 @@ export default async function AdminOverviewPage() {
               Popüler Uç Noktalar
             </CardTitle>
             <CardDescription className="text-slate-500 text-xs">
-              Son 7 gün içindeki en yoğun endpointler
+              Son 14 gün içindeki en yoğun endpointler
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-4 space-y-2">

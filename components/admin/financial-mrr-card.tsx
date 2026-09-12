@@ -24,7 +24,8 @@ type FinancialMRRProps = {
   sharedTripsCount: number;
   activeMeetupsCount: number;
   estimatedTotalApiCost: number;
-  premiumUsers: number;
+  /** Paying subscribers (status active, not trial) — what MRR is built from. */
+  annualSubscribers: number;
 };
 
 export function AdminFinancialMRRCard({
@@ -37,7 +38,7 @@ export function AdminFinancialMRRCard({
   sharedTripsCount,
   activeMeetupsCount,
   estimatedTotalApiCost,
-  premiumUsers,
+  annualSubscribers,
 }: FinancialMRRProps) {
   return (
     <div className="space-y-4">
@@ -66,7 +67,7 @@ export function AdminFinancialMRRCard({
                 Aylık Tekrarlayan Gelir (MRR)
               </span>
               <Badge className="bg-amber-50 text-amber-700 border border-amber-200/60 text-[10px] font-semibold">
-                {premiumUsers} Abone
+                {annualSubscribers} Ödeyen Abone
               </Badge>
             </CardDescription>
             <CardTitle className="text-2xl font-bold tracking-tight text-emerald-600 mt-1 tabular-nums">
@@ -76,7 +77,7 @@ export function AdminFinancialMRRCard({
           </CardHeader>
           <CardContent className="text-xs text-slate-600">
             <p>
-              Yıllık aboneliklerden ($49.99/yıl) ve Trip Pass ($7.99) satışlarından oluşan aylık düzenli gelir.
+              Yalnızca ödeyen yıllık abonelerden ($49.99/yıl ÷ 12) oluşan tekrarlayan gelir; trial ve Trip Pass dahil değil.
             </p>
           </CardContent>
         </Card>
@@ -109,7 +110,7 @@ export function AdminFinancialMRRCard({
             <CardDescription className="flex items-center justify-between text-xs text-slate-500">
               <span className="flex items-center gap-1.5 font-semibold text-purple-700">
                 <PieChart className="h-4 w-4 text-purple-600" />
-                Brüt vs Net Aylık Gelir
+                Brüt vs Net Gelir (30g)
               </span>
               <Badge variant="outline" className="border-purple-200 bg-purple-50 text-purple-700 text-[10px] font-semibold">
                 %{grossMarginPct} Marj
@@ -126,7 +127,7 @@ export function AdminFinancialMRRCard({
               <span className="font-mono font-semibold text-emerald-600">${grossMonthlyRevenue}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">API Harcamaları:</span>
+              <span className="text-slate-500">API Harcamaları (30g):</span>
               <span className="font-mono font-semibold text-rose-600">-${estimatedTotalApiCost}</span>
             </div>
           </CardContent>

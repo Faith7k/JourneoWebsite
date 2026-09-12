@@ -47,10 +47,13 @@ export default async function AdminCostsPage({
     );
   }
 
-  const todayStart = new Date();
-  todayStart.setHours(0, 0, 0, 0);
+  // Buckets come from date_trunc() in a UTC database, so "today" has to be
+  // the UTC day too. A local-midnight cutoff on a TZ≠UTC host (or a Turkish
+  // admin reading between 00:00 and 03:00 TR) would silently show yesterday.
+  const now = new Date();
+  const todayStartUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
   const todaysCost = summary.breakdown
-    .filter((b) => new Date(b.bucket) >= todayStart)
+    .filter((b) => new Date(b.bucket).getTime() >= todayStartUtc)
     .reduce((sum, b) => sum + b.cost_usd, 0);
 
   return (
@@ -90,14 +93,14 @@ export default async function AdminCostsPage({
         <AdminStatCard
           title="Bugünkü Harcama"
           value={formatUsd(todaysCost, 4)}
-          subtitle="Yerel geceyarısından beri"
+          subtitle="UTC geceyarısından beri (TR 03:00)"
           icon={Wallet}
           accent="bg-blue-50 text-blue-600 border border-blue-100"
         />
         <AdminStatCard
-          title="AI Gezi Başı Maliyet"
+          title="Gezi Başı Karma Maliyet"
           value={formatUsd(summary.average_cost_per_trip, 4)}
-          subtitle={`${summary.ai_trip_count.toLocaleString('tr-TR')} AI rotası üretildi`}
+          subtitle={`Tüm servis harcaması ÷ ${summary.ai_trip_count.toLocaleString('tr-TR')} AI rotası`}
           icon={Route}
           accent="bg-purple-50 text-purple-600 border border-purple-100"
         />
@@ -139,7 +142,7 @@ export default async function AdminCostsPage({
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-bold text-slate-900">Son Faturalandırılabilir Olaylar</CardTitle>
           <CardDescription className="text-xs text-slate-500">
-            Gemini, Google Places ve Mapbox üzerinde gerçekleşen son 50 API çağrısı.
+            Gemini, Google Places, Mapbox ve fal.ai üzerinde gerçekleşen son 50 ücretli olay.
           </CardDescription>
         </CardHeader>
         <CardContent>

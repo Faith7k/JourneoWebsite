@@ -1,5 +1,5 @@
-import { createAdminClient } from './server';
-import { getCostSummary } from './costs';
+import { createAdminClient, fetchAllRows, listAllAuthUsers } from './server';
+import { getCostSummary, LLM_ROW_FILTER } from './costs';
 
 export type TopTripCreator = {
   userId: string;
@@ -22,6 +22,18 @@ export type CountrySubscriberStat = {
   premiumSubscribers: number;
   subscribersThisMonth: number;
   subscribersLast3Months: number;
+};
+
+export type TripDestinationStat = {
+  country: string;
+  countryCode: string;
+  flag: string;
+  lat: number;
+  lng: number;
+  totalTrips: number;
+  tripsThisMonth: number;
+  tripsLast3Months: number;
+  cities: string[];
 };
 
 export type MonthlyDownloadStat = {
@@ -78,6 +90,7 @@ export type AdminStats = {
   appVersions: { version: string; count: number }[];
   usersByCountry: { country: string; count: number }[];
   countrySubscriberStats: CountrySubscriberStat[];
+  tripDestinationStats: TripDestinationStat[];
   aiCallsToday: number;
   aiCalls7d: number;
   aiCalls30d: number;
@@ -85,12 +98,31 @@ export type AdminStats = {
   googlePlacesCallsMonth: number;
   cachedPlacesCount: number;
   cachedAiPlansCount: number;
+  /** Geocoding + Directions rows this calendar month (dashboard counter). */
   mapboxCallsMonth: number;
+  /** Split out because each Mapbox API has its own 100k/month free tier. */
+  mapboxGeocodingCallsMonth: number;
+  mapboxDirectionsCallsMonth: number;
+  /** Backend's GOOGLE_PLACES_MONTHLY_BUDGET, mirrored via env (default 2000). */
+  googlePlacesMonthlyBudget: number;
   affiliateClicksTotal: number;
   affiliateConvertedTotal: number;
   affiliateCommissionTotal: number;
+  /** Last 30 days — the only affiliate figure that belongs in monthly revenue. */
+  affiliateCommission30d: number;
+  /** Active (non-refunded) Trip Pass sales in the last 30 days. */
+  tripPassSales30d: number;
+  tripPassRevenue30d: number;
+  /** Monthly price per paying subscriber (annualPrice / 12). */
+  monthlyPricePerSubscriber: number;
   estimatedTotalApiCost: number;
   costPerTrip: number;
+  /** Measured by cost_summary(): plan-cache hits × cold avg + POI cache hits × Text Search price. */
+  cacheSavingsUsd30d: number;
+  /** Events cost_summary() could not price in the last 30 days (>0 = bill understated). */
+  unpricedEvents30d: number;
+  placesCacheHits30d: number;
+  placesPaidCalls30d: number;
   breakevenTripsPerUser: number;
   estimatedMonthlyRevenue: number;
   estimatedNetProfit: number;
@@ -116,8 +148,14 @@ const countryDict: Record<string, { code: string; flag: string; lat: number; lng
   Turkey: { code: 'TR', flag: '🇹🇷', lat: 38.9637, lng: 35.2433 },
   Türkiye: { code: 'TR', flag: '🇹🇷', lat: 38.9637, lng: 35.2433 },
   'United States': { code: 'US', flag: '🇺🇸', lat: 37.0902, lng: -95.7129 },
+  'Amerika Birleşik Devletleri': { code: 'US', flag: '🇺🇸', lat: 37.0902, lng: -95.7129 },
+  USA: { code: 'US', flag: '🇺🇸', lat: 37.0902, lng: -95.7129 },
+  US: { code: 'US', flag: '🇺🇸', lat: 37.0902, lng: -95.7129 },
   Germany: { code: 'DE', flag: '🇩🇪', lat: 51.1657, lng: 10.4515 },
+  Almanya: { code: 'DE', flag: '🇩🇪', lat: 51.1657, lng: 10.4515 },
   'United Kingdom': { code: 'GB', flag: '🇬🇧', lat: 55.3781, lng: -3.436 },
+  'Birleşik Krallık': { code: 'GB', flag: '🇬🇧', lat: 55.3781, lng: -3.436 },
+  UK: { code: 'GB', flag: '🇬🇧', lat: 55.3781, lng: -3.436 },
   France: { code: 'FR', flag: '🇫🇷', lat: 46.2276, lng: 2.2137 },
   Fransa: { code: 'FR', flag: '🇫🇷', lat: 46.2276, lng: 2.2137 },
   Japan: { code: 'JP', flag: '🇯🇵', lat: 36.2048, lng: 138.2529 },
@@ -146,24 +184,96 @@ const countryDict: Record<string, { code: string; flag: string; lat: number; lng
   Avusturya: { code: 'AT', flag: '🇦🇹', lat: 47.5162, lng: 14.5501 },
   Egypt: { code: 'EG', flag: '🇪🇬', lat: 26.8206, lng: 30.8025 },
   Mısır: { code: 'EG', flag: '🇪🇬', lat: 27.9158, lng: 34.3299 },
+  'South Korea': { code: 'KR', flag: '🇰🇷', lat: 35.9078, lng: 127.7669 },
+  'Güney Kore': { code: 'KR', flag: '🇰🇷', lat: 35.9078, lng: 127.7669 },
 };
 
 function normalizeCountryName(raw: string): string {
   const trimmed = raw.trim();
   if (['Türkiye', 'Turkey', 'TR'].includes(trimmed)) return 'Türkiye';
-  if (['United States', 'USA', 'US'].includes(trimmed)) return 'United States';
-  if (['United Kingdom', 'UK', 'GB'].includes(trimmed)) return 'United Kingdom';
-  if (['Germany', 'Almanya', 'DE'].includes(trimmed)) return 'Germany';
-  if (['France', 'Fransa', 'FR'].includes(trimmed)) return 'France';
-  if (['Italy', 'İtalya', 'IT'].includes(trimmed)) return 'Italy';
-  if (['Spain', 'İspanya', 'ES'].includes(trimmed)) return 'Spain';
-  if (['Japan', 'Japonya', 'JP'].includes(trimmed)) return 'Japan';
-  if (['Portugal', 'Portekiz', 'PT'].includes(trimmed)) return 'Portugal';
-  if (['Netherlands', 'Hollanda', 'NL'].includes(trimmed)) return 'Netherlands';
+  if (['United States', 'USA', 'US', 'Amerika Birleşik Devletleri'].includes(trimmed)) return 'Amerika Birleşik Devletleri';
+  if (['United Kingdom', 'UK', 'GB', 'Birleşik Krallık'].includes(trimmed)) return 'Birleşik Krallık';
+  if (['Germany', 'Almanya', 'DE'].includes(trimmed)) return 'Almanya';
+  if (['France', 'Fransa', 'FR'].includes(trimmed)) return 'Fransa';
+  if (['Italy', 'İtalya', 'IT'].includes(trimmed)) return 'İtalya';
+  if (['Spain', 'İspanya', 'ES'].includes(trimmed)) return 'İspanya';
+  if (['Japan', 'Japonya', 'JP'].includes(trimmed)) return 'Japonya';
+  if (['Portugal', 'Portekiz', 'PT'].includes(trimmed)) return 'Portekiz';
+  if (['Netherlands', 'Hollanda', 'NL'].includes(trimmed)) return 'Hollanda';
   if (['Mısır', 'Egypt', 'EG'].includes(trimmed)) return 'Mısır';
   if (['Avusturya', 'Austria', 'AT'].includes(trimmed)) return 'Avusturya';
+  if (['South Korea', 'Güney Kore', 'KR', 'Korea'].includes(trimmed)) return 'Güney Kore';
   return trimmed;
 }
+
+/**
+ * Best-effort classification of a user's country for admin analytics.
+ *
+ * Store review / QA tester accounts (Google Play & App Store reviewers) are
+ * reclassified as US so they don't skew the "real" country breakdown. Everyone
+ * else defaults to Türkiye, which is intentionally the safe fallback: an
+ * Apple private-relay email only flips to US when the profile *positively*
+ * confirms a non-Turkish timezone/currency/locale, never on missing data.
+ */
+export function resolveUserCountry(params: {
+  email?: string | null;
+  timezone?: string | null;
+  currency?: string | null;
+  locale?: string | null;
+}): { country: string; flag: string; countryCode: string } {
+  const email = (params.email || '').toLowerCase();
+  const tz = params.timezone || '';
+  const currency = params.currency || '';
+  const locale = params.locale || '';
+
+  const isKnownReviewerEmail =
+    email.includes('playreview') ||
+    email.includes('playconsole') ||
+    email.includes('googletester') ||
+    email.includes('conarhenry') ||
+    email.includes('mikeshaun');
+
+  const isAppleReviewCandidate =
+    email.includes('appreview') || email.endsWith('@privaterelay.appleid.com');
+
+  let country = 'Türkiye';
+
+  if (isKnownReviewerEmail) {
+    country = 'Amerika Birleşik Devletleri';
+  } else if (
+    isAppleReviewCandidate &&
+    tz !== '' &&
+    tz !== '+03:00' &&
+    currency !== '' &&
+    currency !== 'TRY' &&
+    locale !== '' &&
+    locale !== 'tr'
+  ) {
+    // Only flip to US once the profile *positively* confirms a non-Turkish
+    // timezone/currency/locale — missing profile data must never do it.
+    country = 'Amerika Birleşik Devletleri';
+  }
+
+  const meta = countryDict[country] ?? {
+    code: 'TR',
+    flag: '🇹🇷',
+    lat: 38.9637,
+    lng: 35.2433,
+  };
+
+  return { country, flag: meta.flag, countryCode: meta.code };
+}
+
+/**
+ * Mirror of the backend's GOOGLE_PLACES_MONTHLY_BUDGET (Journeo-App
+ * config.py, default 2000). The budget gate lives in the backend; this only
+ * draws the bar. Set GOOGLE_PLACES_MONTHLY_BUDGET in the web env whenever the
+ * backend value changes, or the gauge lies.
+ */
+const googlePlacesMonthlyBudget = (() => {
+  const raw = Number(process.env.GOOGLE_PLACES_MONTHLY_BUDGET);
+  return Number.isFinite(raw) && raw > 0 ? raw : 2000;
+})();
 
 export async function getAdminStats(): Promise<AdminStats> {
   const supabase = await createAdminClient();
@@ -175,10 +285,14 @@ export async function getAdminStats(): Promise<AdminStats> {
   const startOf7dTime = Date.now() - 7 * 86400_000;
   const startOfMonthTime = new Date(new Date().setDate(1)).getTime();
   const startOf3MonthsAgoTime = Date.now() - 90 * 86400_000;
+  // Provider usage logs are metered per calendar month (Google Places budget,
+  // Mapbox free tiers), so those windows start at the 1st, not 30 days ago.
+  const startOfMonth = new Date(startOfMonthTime).toISOString();
 
-  // 1. Parallel fetch from all authentic database tables
+  // 1. Parallel fetch from all authentic database tables.
+  // Row-returning queries go through fetchAllRows — see its docstring.
   const [
-    authUsersRes,
+    authUsersList,
     profilesRes,
     subscriptionsRes,
     tripPassesRes,
@@ -199,36 +313,66 @@ export async function getAdminStats(): Promise<AdminStats> {
     placesLogRes,
     globalPlacesRes,
     aiPlanCacheRes,
-    mapboxLogRes,
+    mapboxGeocodingRes,
+    mapboxDirectionsRes,
     affiliateClicksRes,
     sharedTripsRes,
     meetupsRes,
     notifRes,
     weatherCacheRes,
   ] = await Promise.all([
-    supabase.auth.admin.listUsers({ page: 1, perPage: 1000 }),
-    supabase.from('profiles').select('*'),
-    supabase.from('user_subscriptions').select('*'),
-    supabase.from('trip_pass_credits').select('*'),
-    supabase.from('fcm_tokens').select('*'),
-    supabase.from('trips').select('id, owner_id, destination_country, destination_city, city_lat, city_lng, created_at, is_deleted'),
-    supabase.from('trip_expenses').select('amount, is_deleted'),
+    listAllAuthUsers(supabase),
+    fetchAllRows<any>(() => supabase.from('profiles').select('*'), 'id'),
+    fetchAllRows<any>(() => supabase.from('user_subscriptions').select('*'), 'user_id'),
+    fetchAllRows<any>(() => supabase.from('trip_pass_credits').select('*'), 'id'),
+    fetchAllRows<any>(() => supabase.from('fcm_tokens').select('*'), 'id'),
+    fetchAllRows<any>(
+      () =>
+        supabase
+          .from('trips')
+          .select('id, owner_id, destination_country, destination_city, city_lat, city_lng, created_at, ai_generated_at, is_deleted'),
+      'id'
+    ),
+    fetchAllRows<any>(() => supabase.from('trip_expenses').select('id, amount, is_deleted'), 'id'),
     supabase.from('api_usage').select('*', { count: 'exact', head: true }).gte('created_at', startOfToday),
     supabase.from('api_usage').select('*', { count: 'exact', head: true }).gte('created_at', startOf7d),
     supabase.from('api_usage').select('*', { count: 'exact', head: true }).gte('created_at', startOf30d),
-    supabase.from('api_usage').select('status_code, duration_ms, platform, app_version').gte('created_at', startOf7d),
+    fetchAllRows<{ status_code: number; duration_ms: number | null; platform: string | null; app_version: string | null }>(
+      () =>
+        supabase
+          .from('api_usage')
+          .select('id, status_code, duration_ms, platform, app_version')
+          .gte('created_at', startOf7d),
+      'id'
+    ),
     supabase.from('screenshots').select('*', { count: 'exact', head: true }),
     supabase.from('contact_messages').select('*', { count: 'exact', head: true }),
     supabase.from('contact_messages').select('*', { count: 'exact', head: true }).eq('is_read', false),
-    supabase.from('ai_generation_log').select('*', { count: 'exact', head: true }).gte('created_at', startOfToday),
-    supabase.from('ai_generation_log').select('*', { count: 'exact', head: true }).gte('created_at', startOf7d),
-    supabase.from('ai_generation_log').select('*', { count: 'exact', head: true }).gte('created_at', startOf30d),
-    supabase.from('ai_generation_log').select('user_id, kind').gte('created_at', startOf30d),
-    supabase.from('google_places_usage_log').select('*', { count: 'exact', head: true }).gte('called_at', new Date(new Date().setDate(1)).toISOString()),
+    // LLM rows only — see LLM_ROW_FILTER. Without it every friend request
+    // and profile search shows up as a "Gemini call".
+    supabase.from('ai_generation_log').select('*', { count: 'exact', head: true }).gte('created_at', startOfToday).or(LLM_ROW_FILTER),
+    supabase.from('ai_generation_log').select('*', { count: 'exact', head: true }).gte('created_at', startOf7d).or(LLM_ROW_FILTER),
+    supabase.from('ai_generation_log').select('*', { count: 'exact', head: true }).gte('created_at', startOf30d).or(LLM_ROW_FILTER),
+    fetchAllRows<any>(
+      () =>
+        supabase
+          .from('ai_generation_log')
+          .select('id, user_id, kind, cache_hit, places_cache_hits, places_paid_calls')
+          .gte('created_at', startOf30d)
+          .or(LLM_ROW_FILTER),
+      'id'
+    ),
+    supabase.from('google_places_usage_log').select('*', { count: 'exact', head: true }).gte('called_at', startOfMonth),
     supabase.from('global_places_cache').select('*', { count: 'exact', head: true }),
     supabase.from('ai_plan_cache').select('*', { count: 'exact', head: true }),
-    supabase.from('mapbox_usage_log').select('*', { count: 'exact', head: true }).gte('called_at', new Date(new Date().setDate(1)).toISOString()),
-    supabase.from('affiliate_clicks').select('converted, commission_amount'),
+    // Geocoding and Directions have separate 100k/month free tiers, so they
+    // are metered separately — a combined count against one quota is wrong.
+    supabase.from('mapbox_usage_log').select('*', { count: 'exact', head: true }).gte('called_at', startOfMonth).eq('service_type', 'geocoding'),
+    supabase.from('mapbox_usage_log').select('*', { count: 'exact', head: true }).gte('called_at', startOfMonth).eq('service_type', 'directions'),
+    fetchAllRows<{ clicked_at: string; converted: boolean | null; commission_amount: number | null }>(
+      () => supabase.from('affiliate_clicks').select('id, clicked_at, converted, commission_amount'),
+      'id'
+    ),
     supabase.from('trip_share_log').select('*', { count: 'exact', head: true }),
     supabase.from('trip_meetups').select('*', { count: 'exact', head: true }),
     supabase.from('notification_log').select('*', { count: 'exact', head: true }),
@@ -236,7 +380,7 @@ export async function getAdminStats(): Promise<AdminStats> {
   ]);
 
   // Build lookup maps
-  const authUsers = authUsersRes.data?.users ?? [];
+  const authUsers = authUsersList;
   const profiles = profilesRes.data ?? [];
   const subscriptions = subscriptionsRes.data ?? [];
   const tripPassCredits = tripPassesRes.data ?? [];
@@ -245,15 +389,31 @@ export async function getAdminStats(): Promise<AdminStats> {
   const expenses = (expensesRes.data ?? []).filter((e: any) => !e.is_deleted);
 
   const profileMap = new Map(profiles.map((p: any) => [p.id, p]));
-  const subMap = new Map(
-    subscriptions
-      .filter((s: any) => s.status === 'active' || s.status === 'trial')
-      .map((s: any) => [s.user_id, s])
-  );
 
-  const tripPassHolders = new Set(tripPassCredits.map((p: any) => p.user_id));
-  const tripPassCreditsCount = tripPassCredits.length;
+  // Entitlement vs. revenue are different questions.
+  // `subscription_status` is active | expired | in_grace | refunded — there is
+  // no 'trial' status. A trial is `status='active', period_type='trial'`
+  // (RevenueCat webhook), so it is *entitled* but pays nothing; counting it
+  // as a paying subscriber inflates MRR by $4.17 per trial.
+  // period_type: normal | intro (discounted, still paid) | trial | promotional
+  // (granted by us for free) | NULL (pre-trial rows → treat as normal, never
+  // downgrade a payer over a missing field).
+  const FREE_PERIOD_TYPES = new Set(['trial', 'promotional']);
+  const isEntitledSub = (s: any) => s.status === 'active' || s.status === 'in_grace';
+  const isPayingSub = (s: any) => s.status === 'active' && !FREE_PERIOD_TYPES.has(s.period_type);
+
+  const subMap = new Map(subscriptions.filter(isEntitledSub).map((s: any) => [s.user_id, s]));
+
+  // A refund flips is_active to false (audit trail kept) — not revenue.
+  const activeTripPasses = tripPassCredits.filter((p: any) => p.is_active !== false);
+  const tripPassHolders = new Set(activeTripPasses.map((p: any) => p.user_id));
+  const tripPassCreditsCount = activeTripPasses.length;
   const tripPassHoldersCount = tripPassHolders.size;
+  // Only this month's sales belong in a monthly revenue figure; the lifetime
+  // count above is a sales counter, not income.
+  const tripPassSales30d = activeTripPasses.filter(
+    (p: any) => new Date(p.purchased_at ?? p.created_at).getTime() >= startOf30dTime
+  ).length;
 
   // Group FCM tokens and trips by user
   const tokenMap = new Map<string, any[]>();
@@ -307,54 +467,61 @@ export async function getAdminStats(): Promise<AdminStats> {
     if (lastSeenTime >= startOf7dTime) active7dCount += 1;
   });
 
-  const annualSubscribers = subscriptions.filter(
-    (s: any) => s.status === 'active' || s.status === 'trial'
-  ).length;
+  const annualSubscribers = subscriptions.filter(isPayingSub).length;
   const trialUsers = subscriptions.filter(
-    (s: any) => s.status === 'trial' || s.period_type === 'trial'
+    (s: any) => s.status === 'active' && s.period_type === 'trial'
   ).length;
 
-  const premiumUsers = Math.max(annualSubscribers, annualSubscribers + tripPassHoldersCount);
+  // Distinct users with any paid entitlement — someone who bought a Trip Pass
+  // and later subscribed is one premium user, not two.
+  const premiumUserIds = new Set<string>([...subMap.keys(), ...tripPassHolders]);
+  const premiumUsers = premiumUserIds.size;
   const freeUsers = Math.max(0, totalAppUsers - premiumUsers);
 
+  // ⚠️ USD list prices. Turkish subscribers pay ₺699/yr (~$17) but the
+  // webhook does not store price/currency, so every subscriber is valued at
+  // the US price — an upper bound until the webhook records what was paid.
   const annualPrice = 49.99; // $49.99 / year
   const tripPassPrice = 7.99; // $7.99 / one-time pass
+  const monthlyPricePerSubscriber = annualPrice / 12;
 
-  // 14-day API call series for the chart
-  const since14d = new Date(Date.now() - 13 * 86400_000);
-  since14d.setHours(0, 0, 0, 0);
-  const { data: apiSeries } = await supabase
-    .from('api_usage')
-    .select('created_at')
-    .gte('created_at', since14d.toISOString())
-    .order('created_at', { ascending: true });
+  // 14-day API call series for the chart.
+  // Day keys are UTC on purpose: rows are bucketed by `created_at.slice(0, 10)`
+  // (a UTC date), so the slots must be UTC too. Local-midnight slots on a
+  // TZ≠UTC host shift every label a day and drop today's rows entirely.
+  const todayUtc = Date.UTC(
+    new Date().getUTCFullYear(),
+    new Date().getUTCMonth(),
+    new Date().getUTCDate()
+  );
+  const since14d = new Date(todayUtc - 13 * 86400_000);
+  const { data: apiSeries } = await fetchAllRows<{ id: string; created_at: string; endpoint: string }>(
+    () =>
+      supabase
+        .from('api_usage')
+        .select('id, created_at, endpoint')
+        .gte('created_at', since14d.toISOString()),
+    'id'
+  );
 
   const byDay: Record<string, number> = {};
   for (let i = 0; i < 14; i++) {
-    const d = new Date(Date.now() - (13 - i) * 86400_000);
-    d.setHours(0, 0, 0, 0);
-    byDay[d.toISOString().slice(0, 10)] = 0;
+    byDay[new Date(todayUtc - (13 - i) * 86400_000).toISOString().slice(0, 10)] = 0;
   }
-  (apiSeries ?? []).forEach((row: { created_at: string }) => {
+  apiSeries.forEach((row) => {
     const key = row.created_at.slice(0, 10);
     if (key in byDay) byDay[key] += 1;
   });
   const apiCallsByDay = Object.entries(byDay).map(([date, count]) => ({ date, count }));
 
-  // Top endpoints (7d)
-  const { data: endpointRows } = await supabase
-    .from('api_usage')
-    .select('endpoint')
-    .gte('created_at', startOf7d);
-
+  // Top endpoints (14d) — same rows as the chart, one query instead of two.
   const endpointCounts: Record<string, number> = {};
-  (endpointRows ?? []).forEach((row: { endpoint: string }) => {
+  apiSeries.forEach((row) => {
     endpointCounts[row.endpoint] = (endpointCounts[row.endpoint] ?? 0) + 1;
   });
   const apiCallsByEndpoint = Object.entries(endpointCounts)
     .map(([endpoint, count]) => ({ endpoint, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 8);
+    .sort((a, b) => b.count - a.count);
 
   // User growth (30d) based on authentic signup dates
   const daysRange = 30;
@@ -440,41 +607,73 @@ export async function getAdminStats(): Promise<AdminStats> {
     .map(([kind, count]) => ({ kind, count }))
     .sort((a, b) => b.count - a.count);
 
-  // Affiliate conversions & commission sum
+  // Affiliate conversions & commission sum. Lifetime totals are counters;
+  // only the last 30 days go into the monthly revenue figure below.
   let affiliateClicksTotal = 0;
   let affiliateConvertedTotal = 0;
   let affiliateCommissionTotal = 0;
-  if (affiliateClicksRes.data) {
-    affiliateClicksTotal = affiliateClicksRes.data.length;
-    affiliateClicksRes.data.forEach((row: { converted?: boolean; commission_amount?: number | null }) => {
-      if (row.converted) affiliateConvertedTotal += 1;
-      if (row.commission_amount) affiliateCommissionTotal += Number(row.commission_amount);
-    });
-  }
+  let affiliateCommission30d = 0;
+  affiliateClicksRes.data.forEach((row) => {
+    affiliateClicksTotal += 1;
+    if (row.converted) affiliateConvertedTotal += 1;
+    if (row.commission_amount) {
+      const amount = Number(row.commission_amount);
+      affiliateCommissionTotal += amount;
+      if (new Date(row.clicked_at).getTime() >= startOf30dTime) affiliateCommission30d += amount;
+    }
+  });
 
-  // Cost summary from cost engine
+  // Cost summary from cost engine. Every figure below is a 30-day window so
+  // that revenue and cost are subtracted over the SAME period — mixing a
+  // lifetime Trip Pass total with a 30-day API bill made "net profit" drift
+  // upward forever.
   const costs = await getCostSummary('30d');
   const estimatedTotalApiCost = Number((costs?.total_cost_usd ?? 0).toFixed(2));
   const costPerTrip = Number((costs?.average_cost_per_trip ?? 0).toFixed(4));
-  const subscriptionPrice = 9.99; // $9.99 / month premium MRR per member
+  const cacheSavingsUsd30d = Number((costs?.cache_savings_usd ?? 0).toFixed(4));
+  const unpricedEvents30d = costs?.unpriced_events ?? 0;
+  // Breakeven against what a subscriber actually pays per month (annual /
+  // 12). There is no $9.99 monthly plan.
   const breakevenTripsPerUser =
-    costPerTrip > 0 ? Math.round(subscriptionPrice / costPerTrip) : 0;
+    costPerTrip > 0 ? Math.round(monthlyPricePerSubscriber / costPerTrip) : 0;
 
-  const estimatedMonthlyRevenue = Number((annualSubscribers * (annualPrice / 12) + tripPassCreditsCount * tripPassPrice + affiliateCommissionTotal).toFixed(2));
-  const estimatedNetProfit = Number((estimatedMonthlyRevenue - estimatedTotalApiCost).toFixed(2));
+  // SaaS Financial & Executive Metrics (Annual Plan $49.99/yr, Trip Pass $7.99/pass)
+  const mrr = Number((annualSubscribers * monthlyPricePerSubscriber).toFixed(2));
+  const arr = Number((annualSubscribers * annualPrice).toFixed(2));
+  const tripPassRevenue30d = Number((tripPassSales30d * tripPassPrice).toFixed(2));
+  const grossMonthlyRevenue = Number((mrr + tripPassRevenue30d + affiliateCommission30d).toFixed(2));
+  const netMonthlyRevenue = Number((grossMonthlyRevenue - estimatedTotalApiCost).toFixed(2));
+  const grossMarginPct =
+    grossMonthlyRevenue > 0
+      ? Math.max(0, Math.round((netMonthlyRevenue / grossMonthlyRevenue) * 100))
+      : 0;
+  // One number, two cards: the unit-economics and MRR cards used to compute
+  // "monthly revenue" independently and disagree on the same page.
+  const estimatedMonthlyRevenue = grossMonthlyRevenue;
+  const estimatedNetProfit = netMonthlyRevenue;
 
-  // Top Trip Creators & Active AI Users Leaderboard
-  const userActivityMap = new Map<string, { tripCount: number; aiCount: number }>();
+  // Top Trip Creators & Active AI Users Leaderboard.
+  // aiTrips30d = trips this user had AI-generated in the window — the same
+  // denominator cost_summary() uses for average_cost_per_trip, so
+  // aiTrips30d × costPerTrip is that user's share of the measured bill
+  // rather than a made-up per-call constant.
+  const userActivityMap = new Map<string, { tripCount: number; aiCount: number; aiTrips30d: number }>();
   trips.forEach((t: any) => {
     if (t.owner_id) {
-      const prev = userActivityMap.get(t.owner_id) ?? { tripCount: 0, aiCount: 0 };
-      userActivityMap.set(t.owner_id, { ...prev, tripCount: prev.tripCount + 1 });
+      const prev = userActivityMap.get(t.owner_id) ?? { tripCount: 0, aiCount: 0, aiTrips30d: 0 };
+      const aiInWindow =
+        t.ai_generated_at && new Date(t.ai_generated_at).getTime() >= startOf30dTime ? 1 : 0;
+      userActivityMap.set(t.owner_id, {
+        ...prev,
+        tripCount: prev.tripCount + 1,
+        aiTrips30d: prev.aiTrips30d + aiInWindow,
+      });
     }
   });
 
   (aiRowsRes.data ?? []).forEach((row: any) => {
     if (row.user_id) {
-      const prev = userActivityMap.get(row.user_id) ?? { tripCount: 0, aiCount: 0 };
+      const prev = userActivityMap.get(row.user_id) ?? { tripCount: 0, aiCount: 0, aiTrips30d: 0 };
       userActivityMap.set(row.user_id, { ...prev, aiCount: prev.aiCount + 1 });
     }
   });
@@ -487,7 +686,7 @@ export async function getAdminStats(): Promise<AdminStats> {
   sortedActiveUsers.forEach(([userId, act]) => {
     const profile = profileMap.get(userId);
     const authUser = authUsers.find((u) => u.id === userId);
-    const isPremium = subMap.has(userId);
+    const isPremium = premiumUserIds.has(userId);
 
     const name =
       profile?.full_name ||
@@ -510,28 +709,36 @@ export async function getAdminStats(): Promise<AdminStats> {
       tripCount: act.tripCount,
       aiGenerationsCount: act.aiCount,
       subscription: isPremium ? 'premium' : 'free',
-      estimatedCost: Number((act.tripCount * (costPerTrip || 0.05) + act.aiCount * 0.005).toFixed(2)),
+      estimatedCost: Number((act.aiTrips30d * costPerTrip).toFixed(2)),
     });
   });
 
-  // Country and 3D Globe statistics from real trips and user profiles
-  const countryStatsMap = new Map<string, CountrySubscriberStat>();
+  // 1. Country statistics of REAL REGISTERED USERS (from authentic user profiles & auth metadata)
+  const userCountryStatsMap = new Map<string, CountrySubscriberStat>();
 
-  // Aggregate from real trips
-  trips.forEach((t: any) => {
-    const rawCountry = t.destination_country;
-    if (!rawCountry) return;
-    const countryName = normalizeCountryName(rawCountry);
-    const meta = countryDict[countryName] ?? {
-      code: countryName.slice(0, 2).toUpperCase(),
-      flag: '📍',
-      lat: t.city_lat ?? 41.0,
-      lng: t.city_lng ?? 29.0,
+  authUsers.forEach((u) => {
+    const prof = profileMap.get(u.id);
+    const isPremium = subMap.has(u.id) || tripPassHolders.has(u.id);
+    const createdAt = u.created_at ? new Date(u.created_at).getTime() : 0;
+
+    // Resolve user's actual country
+    const { country: userCountry } = resolveUserCountry({
+      email: u.email,
+      timezone: prof?.timezone,
+      currency: prof?.preferred_currency,
+      locale: prof?.preferred_locale,
+    });
+
+    const meta = countryDict[userCountry] ?? {
+      code: 'TR',
+      flag: '🇹🇷',
+      lat: 38.9637,
+      lng: 35.2433,
     };
 
-    if (!countryStatsMap.has(countryName)) {
-      countryStatsMap.set(countryName, {
-        country: countryName,
+    if (!userCountryStatsMap.has(userCountry)) {
+      userCountryStatsMap.set(userCountry, {
+        country: userCountry,
         countryCode: meta.code,
         flag: meta.flag,
         lat: meta.lat,
@@ -543,23 +750,14 @@ export async function getAdminStats(): Promise<AdminStats> {
       });
     }
 
-    const stat = countryStatsMap.get(countryName)!;
+    const stat = userCountryStatsMap.get(userCountry)!;
     stat.totalSubscribers += 1;
-
-    const isOwnerPremium = subMap.has(t.owner_id);
-    if (isOwnerPremium) {
-      stat.premiumSubscribers += 1;
-    }
-
-    if (t.created_at) {
-      const createdTime = new Date(t.created_at).getTime();
-      if (createdTime >= startOfMonthTime) stat.subscribersThisMonth += 1;
-      if (createdTime >= startOf3MonthsAgoTime) stat.subscribersLast3Months += 1;
-    }
+    if (isPremium) stat.premiumSubscribers += 1;
+    if (createdAt >= startOfMonthTime) stat.subscribersThisMonth += 1;
+    if (createdAt >= startOf3MonthsAgoTime) stat.subscribersLast3Months += 1;
   });
 
-
-  const countrySubscriberStats = Array.from(countryStatsMap.values()).sort(
+  const countrySubscriberStats = Array.from(userCountryStatsMap.values()).sort(
     (a, b) => b.totalSubscribers - a.totalSubscribers
   );
 
@@ -568,28 +766,73 @@ export async function getAdminStats(): Promise<AdminStats> {
     count: c.totalSubscribers,
   }));
 
-  // SaaS Financial & Executive Metrics (Annual Plan $49.99/yr, Trip Pass $7.99/pass)
-  const mrr = Number((annualSubscribers * (annualPrice / 12)).toFixed(2));
-  const arr = Number((annualSubscribers * annualPrice).toFixed(2));
-  const grossMonthlyRevenue = Number(
-    (mrr + tripPassCreditsCount * tripPassPrice + affiliateCommissionTotal).toFixed(2)
+  // 2. Real Trip Destinations Distribution (from authentic user-planned trips)
+  const tripDestinationMap = new Map<string, TripDestinationStat>();
+
+  trips.forEach((t: any) => {
+    const rawCountry = t.destination_country;
+    if (!rawCountry) return;
+    const countryName = normalizeCountryName(rawCountry);
+    const meta = countryDict[countryName] ?? {
+      code: countryName.slice(0, 2).toUpperCase(),
+      flag: '📍',
+      lat: t.city_lat ?? 41.0,
+      lng: t.city_lng ?? 29.0,
+    };
+
+    if (!tripDestinationMap.has(countryName)) {
+      tripDestinationMap.set(countryName, {
+        country: countryName,
+        countryCode: meta.code,
+        flag: meta.flag,
+        lat: meta.lat,
+        lng: meta.lng,
+        totalTrips: 0,
+        tripsThisMonth: 0,
+        tripsLast3Months: 0,
+        cities: [],
+      });
+    }
+
+    const stat = tripDestinationMap.get(countryName)!;
+    stat.totalTrips += 1;
+    if (t.destination_city && !stat.cities.includes(t.destination_city)) {
+      stat.cities.push(t.destination_city);
+    }
+
+    if (t.created_at) {
+      const createdTime = new Date(t.created_at).getTime();
+      if (createdTime >= startOfMonthTime) stat.tripsThisMonth += 1;
+      if (createdTime >= startOf3MonthsAgoTime) stat.tripsLast3Months += 1;
+    }
+  });
+
+  const tripDestinationStats = Array.from(tripDestinationMap.values()).sort(
+    (a, b) => b.totalTrips - a.totalTrips
   );
-  const netMonthlyRevenue = Number((grossMonthlyRevenue - estimatedTotalApiCost).toFixed(2));
-  const grossMarginPct =
-    grossMonthlyRevenue > 0
-      ? Math.max(0, Math.round((netMonthlyRevenue / grossMonthlyRevenue) * 100))
-      : 100;
 
   const placesMonthCount = placesLogRes.count ?? 0;
   const cachedPlaces = globalPlacesRes.count ?? 0;
+
+  // Real hit ratio: POIs served from global_places_cache vs. POIs that
+  // triggered a paid Google call, both measured per generation by the
+  // backend (ai_generation_log.places_cache_hits / places_paid_calls).
+  // Cache row count ÷ (row count + paid calls) was a stock/flow mix that
+  // trended to 100% as the cache grew regardless of actual hit rate.
+  let placesCacheHits30d = 0;
+  let placesPaidCalls30d = 0;
+  (aiRowsRes.data ?? []).forEach((row: any) => {
+    placesCacheHits30d += Number(row.places_cache_hits ?? 0);
+    placesPaidCalls30d += Number(row.places_paid_calls ?? 0);
+  });
   const cacheHitRatioPct =
-    cachedPlaces + placesMonthCount > 0
-      ? Math.round((cachedPlaces / (cachedPlaces + placesMonthCount)) * 100)
+    placesCacheHits30d + placesPaidCalls30d > 0
+      ? Math.round((placesCacheHits30d / (placesCacheHits30d + placesPaidCalls30d)) * 100)
       : 0;
 
   const sharedTripsCount = sharedTripsRes.count ?? 0;
   const activeMeetupsCount = meetupsRes.count ?? 0;
-  const fcmTokensCount = fcmTokensRes.data?.length ?? fcmTokensRes.count ?? 0;
+  const fcmTokensCount = fcmTokens.length;
   const notificationsDeliveredCount = notifRes.count ?? 0;
   const dataExportRequestsCount = 0;
 
@@ -704,6 +947,7 @@ export async function getAdminStats(): Promise<AdminStats> {
     appVersions,
     usersByCountry,
     countrySubscriberStats,
+    tripDestinationStats,
     aiCallsToday: aiTodayRes.count ?? 0,
     aiCalls7d: ai7dRes.count ?? 0,
     aiCalls30d: ai30dRes.count ?? 0,
@@ -711,12 +955,23 @@ export async function getAdminStats(): Promise<AdminStats> {
     googlePlacesCallsMonth: placesMonthCount,
     cachedPlacesCount: cachedPlaces,
     cachedAiPlansCount: aiPlanCacheRes.count ?? 0,
-    mapboxCallsMonth: mapboxLogRes.count ?? 0,
+    mapboxCallsMonth: (mapboxGeocodingRes.count ?? 0) + (mapboxDirectionsRes.count ?? 0),
+    mapboxGeocodingCallsMonth: mapboxGeocodingRes.count ?? 0,
+    mapboxDirectionsCallsMonth: mapboxDirectionsRes.count ?? 0,
+    googlePlacesMonthlyBudget,
     affiliateClicksTotal,
     affiliateConvertedTotal,
     affiliateCommissionTotal,
+    affiliateCommission30d: Number(affiliateCommission30d.toFixed(2)),
+    tripPassSales30d,
+    tripPassRevenue30d,
+    monthlyPricePerSubscriber: Number(monthlyPricePerSubscriber.toFixed(2)),
     estimatedTotalApiCost,
     costPerTrip,
+    cacheSavingsUsd30d,
+    unpricedEvents30d,
+    placesCacheHits30d,
+    placesPaidCalls30d,
     breakevenTripsPerUser,
     estimatedMonthlyRevenue,
     estimatedNetProfit,
